@@ -13,10 +13,18 @@ const Toolbar = () => {
     setCameraStream(stream);
   };
 
+  const getScreenShare = async () => {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: true,
+      audio: false,
+    });
+    setCameraStream(stream);
+  };
+
   return (
     <div className={styles.container}>
       <button onClick={getCamera}>Get camera</button>
-      <button>Share screen</button>
+      <button onClick={getScreenShare}>Share screen</button>
     </div>
   );
 };
