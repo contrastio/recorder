@@ -4,7 +4,9 @@ type StreamsContextType = {
   cameraStream: MediaStream | null;
   screenshareStream: MediaStream | null;
   setCameraStream: (value: React.SetStateAction<MediaStream | null>) => void;
-  setScreenshareStream: (value: React.SetStateAction<MediaStream | null>) => void;
+  setScreenshareStream: (
+    value: React.SetStateAction<MediaStream | null>
+  ) => void;
 };
 
 const StreamsContext = createContext<StreamsContextType | undefined>(undefined);
