@@ -14,8 +14,6 @@ const VideoStreams = () => {
 
     const cameraStream = streams.find((stream) =>
       stream.getTracks().forEach((track) => {
-        console.log("zob");
-        console.log({ track });
         return track.kind === "camera";
       })
     );
