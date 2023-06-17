@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { useStreams } from "./contexts/streams";
 
@@ -8,18 +8,25 @@ const VideoStreams = () => {
   const cameraRef = useRef<HTMLVideoElement | null>(null);
   const { streams } = useStreams();
 
-  const video = cameraRef.current;
+  console.log({ streams });
+  useEffect(() => {
+    const video = cameraRef.current;
 
-  const cameraStream = streams.find((stream) =>
-    stream.getTracks().forEach((track) => track.kind === "camera")
-  );
+    const cameraStream = streams.find((stream) =>
+      stream.getTracks().forEach((track) => {
+        console.log("zob");
+        console.log({ track });
+        return track.kind === "camera";
+      })
+    );
 
-  if (cameraStream && video) {
-    video.srcObject = cameraStream;
-    video.onloadedmetadata = () => {
-      video.play();
-    };
-  }
+    if (cameraStream && video) {
+      video.srcObject = cameraStream;
+      video.onloadedmetadata = () => {
+        video.play();
+      };
+    }
+  }, [streams]);
 
   return (
     <div className={styles.container}>

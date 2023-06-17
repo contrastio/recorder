@@ -6,7 +6,7 @@ const Toolbar = () => {
   const { addStream } = useStreams();
 
   const getCamera = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     addStream(stream);
   };
 
