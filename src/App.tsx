@@ -7,15 +7,15 @@ import styles from "./App.module.scss";
 
 function App() {
   return (
-    <main className={styles.container}>
+    <>
       <Header />
-      <main>
+      <main className={styles.main}>
         <StreamsProvider>
           <VideoStreams />
           <Toolbar />
         </StreamsProvider>
       </main>
-    </main>
+    </>
   );
 }
 

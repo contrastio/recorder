@@ -13,8 +13,14 @@ body {
   height: 100vh;
 }
 
-main {
+.main {
   display: grid;
   grid-template-rows: 1fr auto;
-  height: 100%;
+  height: calc(100vh - 56px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
