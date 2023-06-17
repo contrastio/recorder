@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import { useStreams } from "./contexts/streams";
 
@@ -6,24 +6,16 @@ import styles from "./VideoStreams.module.scss";
 
 const VideoStreams = () => {
   const cameraRef = useRef<HTMLVideoElement | null>(null);
-  const { streams } = useStreams();
+  const { cameraStream } = useStreams();
 
-  useEffect(() => {
-    const video = cameraRef.current;
+  const video = cameraRef.current;
 
-    const cameraStream = streams.find((stream) =>
-      stream.getTracks().forEach((track) => {
-        return track.kind === "camera";
-      })
-    );
-
-    if (cameraStream && video) {
-      video.srcObject = cameraStream;
-      video.onloadedmetadata = () => {
-        video.play();
-      };
-    }
-  }, [streams]);
+  if (cameraStream && video) {
+    video.srcObject = cameraStream;
+    video.onloadedmetadata = () => {
+      video.play();
+    };
+  }
 
   return (
     <div className={styles.container}>

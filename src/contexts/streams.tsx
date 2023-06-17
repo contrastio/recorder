@@ -1,8 +1,10 @@
 import { createContext, useContext, useState } from "react";
 
 type StreamsContextType = {
-  streams: MediaStream[];
-  addStream: (stream: MediaStream) => void;
+  cameraStream: MediaStream | null;
+  screenshareStream: MediaStream | null;
+  setCameraStream: (value: React.SetStateAction<MediaStream | null>) => void;
+  setScreenshareStream: (value: React.SetStateAction<MediaStream | null>) => void;
 };
 
 const StreamsContext = createContext<StreamsContextType | undefined>(undefined);
@@ -13,15 +15,21 @@ type StreamsProviderProps = {
 export const StreamsProvider: React.FC<StreamsProviderProps> = ({
   ...props
 }) => {
-  const initialStreams: MediaStream[] = [];
-  const [streams, setStreams] = useState(initialStreams);
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const [screenshareStream, setScreenshareStream] =
+    useState<MediaStream | null>(null);
 
-  const addStream = (stream: MediaStream) => {
-    streams.push(stream);
-    setStreams(streams);
-  };
-
-  return <StreamsContext.Provider value={{ streams, addStream }} {...props} />;
+  return (
+    <StreamsContext.Provider
+      value={{
+        cameraStream,
+        screenshareStream,
+        setCameraStream,
+        setScreenshareStream,
+      }}
+      {...props}
+    />
+  );
 };
 
 export const useStreams = (): StreamsContextType => {
