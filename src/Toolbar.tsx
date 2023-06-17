@@ -3,7 +3,7 @@ import { useStreams } from "./contexts/streams";
 import styles from "./Toolbar.module.scss";
 
 const Toolbar = () => {
-  const { setCameraStream } = useStreams();
+  const { setCameraStream, setScreenshareStream } = useStreams();
 
   const getCamera = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -18,7 +18,7 @@ const Toolbar = () => {
       video: true,
       audio: false,
     });
-    setCameraStream(stream);
+    setScreenshareStream(stream);
   };
 
   return (
