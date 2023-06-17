@@ -8,7 +8,6 @@ const VideoStreams = () => {
   const cameraRef = useRef<HTMLVideoElement | null>(null);
   const { streams } = useStreams();
 
-  console.log({ streams });
   useEffect(() => {
     const video = cameraRef.current;
 
