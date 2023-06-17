@@ -4,4 +4,24 @@
   background-color: black;
   margin: 50px auto;
   border-radius: 8px;
+  position: relative;
+}
+
+.camera {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.pip .camera {
+  bottom: 0px;
+  right: 0px;
+  width: 300px;
+  aspect-ratio: 16/9;
+}
+
+.screenshare {
+  position: absolute;
+  width: 100%;
+  z-index: 0;
 }

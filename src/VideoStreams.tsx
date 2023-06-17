@@ -1,3 +1,4 @@
+import cx from "classnames";
 import { useRef } from "react";
 
 import { useStreams } from "./contexts/streams";
@@ -20,9 +21,27 @@ const VideoStreams = () => {
     screenshareVideoElement.srcObject = screenshareStream;
 
   return (
-    <div className={styles.container}>
-      <video ref={cameraRef} autoPlay playsInline muted controls={false} />
-      <video ref={screenshareRef} autoPlay playsInline muted controls={false} />
+    <div
+      className={cx(styles.container, {
+        [styles.pip]: cameraStream && screenshareStream,
+      })}
+    >
+      <video
+        ref={cameraRef}
+        className={styles.camera}
+        autoPlay
+        playsInline
+        muted
+        controls={false}
+      />
+      <video
+        ref={screenshareRef}
+        className={styles.screenshare}
+        autoPlay
+        playsInline
+        muted
+        controls={false}
+      />
     </div>
   );
 };
