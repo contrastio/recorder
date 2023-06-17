@@ -6,7 +6,10 @@ const Toolbar = () => {
   const { setCameraStream } = useStreams();
 
   const getCamera = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
     setCameraStream(stream);
   };
 

@@ -10,12 +10,7 @@ const VideoStreams = () => {
 
   const video = cameraRef.current;
 
-  if (cameraStream && video) {
-    video.srcObject = cameraStream;
-    video.onloadedmetadata = () => {
-      video.play();
-    };
-  }
+  if (cameraStream && video) video.srcObject = cameraStream;
 
   return (
     <div className={styles.container}>
