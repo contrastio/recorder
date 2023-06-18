@@ -1,6 +1,8 @@
+import { useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useRecording } from "./contexts/recording";
+import { useStreams } from "./contexts/streams";
 
 import styles from "./PiPWindow.module.scss";
 
@@ -14,22 +16,38 @@ const PiPWindow = () => {
     resumeRecording,
   } = useRecording();
 
+  const { cameraStream } = useStreams();
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const videoElement = videoRef.current;
+  if (cameraStream && videoElement) {
+    videoElement.srcObject = cameraStream;
+  }
+
   return createPortal(
     <div className={styles.container}>
-      <video />
+      <video
+        className={styles.camera}
+        autoPlay
+        playsInline
+        muted
+        controls={false}
+        ref={videoRef}
+      />
       <div className={styles.toolbar}>
-        {!isRecording && (
-          <button onClick={startRecording}>Start recording</button>
-        )}
-        {isRecording && !isPaused && (
-          <button onClick={stopRecording}>Stop recording</button>
-        )}
-        {isRecording && !isPaused && (
-          <button onClick={pauseRecording}>Pause recording</button>
-        )}
-        {isRecording && isPaused && (
-          <button onClick={resumeRecording}>Resume recording</button>
-        )}
+        <button onClick={startRecording} disabled={isRecording}>
+          Start
+        </button>
+        <button onClick={stopRecording} disabled={!isRecording}>
+          Stop
+        </button>
+        <button onClick={pauseRecording} disabled={!isRecording || isPaused}>
+          Pause
+        </button>
+        <button onClick={resumeRecording} disabled={!isRecording || !isPaused}>
+          Resume
+        </button>
       </div>
     </div>,
     document.body

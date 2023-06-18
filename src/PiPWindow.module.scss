@@ -1,9 +1,17 @@
 .container {
-  color: red;
+  width: 500px;
+}
+
+.camera {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .toolbar {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  margin-top: 20px;
 }
