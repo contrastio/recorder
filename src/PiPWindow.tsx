@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useRecording } from "./contexts/recording";
@@ -16,8 +16,9 @@ const PiPWindow = () => {
     resumeRecording,
   } = useRecording();
 
-  const { cameraStream } = useStreams();
+  const { cameraStream, screenshareStream } = useStreams();
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const videoElement = videoRef.current;
@@ -25,8 +26,24 @@ const PiPWindow = () => {
     videoElement.srcObject = cameraStream;
   }
 
+  useEffect(() => {
+    const requestPipWindow = async () => {
+      return await (window as any).documentPictureInPicture.requestWindow({
+        width: 500,
+        height: 500,
+      });
+    };
+
+    if (screenshareStream && containerRef) {
+      const pipWindow = requestPipWindow();
+      pipWindow.then((window) =>
+        window.document.body.append(containerRef.current)
+      );
+    }
+  }, [containerRef, screenshareStream]);
+
   return createPortal(
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <video
         className={styles.camera}
         autoPlay
