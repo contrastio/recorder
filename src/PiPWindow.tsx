@@ -29,8 +29,8 @@ const PiPWindow = () => {
   useEffect(() => {
     const requestPipWindow = async () => {
       return await (window as any).documentPictureInPicture.requestWindow({
-        width: 500,
-        height: 500,
+        width: 300,
+        height: 300,
       });
     };
 
