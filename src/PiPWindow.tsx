@@ -36,9 +36,19 @@ const PiPWindow = () => {
 
     if (screenshareStream && containerRef) {
       const pipWindow = requestPipWindow();
-      pipWindow.then((window) =>
-        window.document.body.append(containerRef.current)
-      );
+      pipWindow.then((window) => {
+        const allCSS = [...document.styleSheets]
+          .map((styleSheet) =>
+            [...styleSheet.cssRules].map((r) => r.cssText).join("")
+          )
+          .filter(Boolean)
+          .join("\n");
+        const style = document.createElement("style");
+        style.textContent = allCSS;
+        window.document.head.appendChild(style);
+
+        window.document.body.append(containerRef.current);
+      });
     }
   }, [containerRef, screenshareStream]);
 
