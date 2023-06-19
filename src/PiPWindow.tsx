@@ -48,9 +48,17 @@ const PiPWindow = () => {
         window.document.head.appendChild(style);
 
         window.document.body.append(containerRef.current);
+
+        window.document
+          .querySelector("#startRecording")
+          .addEventListener("click", startRecording);
+
+        window.document
+          .querySelector("#stopRecording")
+          .addEventListener("click", stopRecording);
       });
     }
-  }, [containerRef, screenshareStream]);
+  }, [containerRef, screenshareStream, startRecording, stopRecording]);
 
   return createPortal(
     <div className={styles.container} ref={containerRef}>
@@ -63,10 +71,10 @@ const PiPWindow = () => {
         ref={videoRef}
       />
       <div className={styles.toolbar}>
-        <button onClick={startRecording} disabled={isRecording}>
+        <button id="startRecording" disabled={isRecording}>
           Start
         </button>
-        <button onClick={stopRecording} disabled={!isRecording}>
+        <button id="stopRecording" disabled={!isRecording}>
           Stop
         </button>
         <button onClick={pauseRecording} disabled={!isRecording || isPaused}>
