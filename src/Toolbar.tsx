@@ -18,6 +18,10 @@ const Toolbar = () => {
       video: true,
       audio: false,
     });
+    console.log(
+      "Screen share settings:",
+      stream.getVideoTracks()[0].getSettings()
+    );
     setScreenshareStream(stream);
   };
 
