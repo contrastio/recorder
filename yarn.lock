@@ -1974,6 +1974,18 @@
   dependencies:
     "@types/node" "*"
 
+"@types/dom-mediacapture-transform@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@types/dom-mediacapture-transform/-/dom-mediacapture-transform-0.1.5.tgz#66e0bc919c4c18542644c6658d4e4dc1abd49740"
+  integrity sha512-Mgu6H5LVJPgJuAumx0xFEdZvn9whHy+J3gEJbJz5xdWrUJ8ZwZ/JTvWwYOQPkCGzGWykPN7ufQn94iil+VCWGw==
+  dependencies:
+    "@types/dom-webcodecs" "*"
+
+"@types/dom-webcodecs@*":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@types/dom-webcodecs/-/dom-webcodecs-0.1.7.tgz#29d3e7d4e0b9902676c599d74c1b6c15eafce714"
+  integrity sha512-1euwRyJ7rQrddOa24d5ZcoDRMp68xEIwyb7PKb3Wpc2OullUxHQ4a63WPa5V8R+KtCWISKjgS+f83HCUVhXS/w==
+
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.4.tgz#37fc1223f0786c39627068a12e94d6e6fc61de16"
