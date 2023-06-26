@@ -1,4 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { useStreams } from "./streams";
 
 type RecordingContextType = {
@@ -24,8 +30,8 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const { screenshareStream } = useStreams();
 
-  let mediaRecorder: MediaRecorder;
-  let chunks: Blob[];
+  const mediaRecorder = useRef<MediaRecorder>();
+  const chunks = useRef<Blob[]>([]);
 
   const startRecording = useCallback(async () => {
     console.log("startRecording");
@@ -34,23 +40,25 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
     if (!screenshareStream) return;
 
     setIsRecording(true);
-    mediaRecorder = new MediaRecorder(screenshareStream, {
+
+    chunks.current = [];
+    mediaRecorder.current = new MediaRecorder(screenshareStream, {
       mimeType: "video/webm; codecs=vp9",
     });
-
-    mediaRecorder.start();
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) chunks.push(event.data);
+    mediaRecorder.current.ondataavailable = (event) => {
+      console.log({ data: event.data });
+      if (event.data.size > 0) chunks.current.push(event.data);
     };
+    mediaRecorder.current.start();
   }, [screenshareStream]);
 
   const stopRecording = useCallback(() => {
     console.log("stopRecording");
 
     setIsRecording(false);
-    mediaRecorder.stop();
+    mediaRecorder.current?.stop();
 
-    const blob = new Blob(chunks, {
+    const blob = new Blob(chunks.current, {
       type: "video/webm",
     });
 
