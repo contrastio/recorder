@@ -33,6 +33,8 @@ const PiPWindow = () => {
     videoElement.srcObject = cameraStream;
   }
 
+  // FIXME request PiP directly on user action to prevent the error
+  //       "Document PiP requires user activation"
   useEffect(() => {
     if (!screenshareStream) return;
 
