@@ -34,7 +34,7 @@ const PiPWindow = () => {
       });
     };
 
-    if (screenshareStream && containerRef) {
+    if (screenshareStream && containerRef.current) {
       const pipWindow = requestPipWindow();
       pipWindow.then((window) => {
         const allCSS = [...document.styleSheets]
@@ -58,7 +58,7 @@ const PiPWindow = () => {
           .addEventListener("click", stopRecording);
       });
     }
-  }, [containerRef, screenshareStream, startRecording, stopRecording]);
+  }, [screenshareStream, startRecording, stopRecording]);
 
   return createPortal(
     <div className={styles.container} ref={containerRef}>
