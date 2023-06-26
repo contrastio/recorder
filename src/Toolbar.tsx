@@ -1,9 +1,11 @@
+import { usePictureInPicture } from "./contexts/pictureInPicture";
 import { useStreams } from "./contexts/streams";
 
 import styles from "./Toolbar.module.scss";
 
 const Toolbar = () => {
   const { setCameraStream, setScreenshareStream } = useStreams();
+  const { requestPipWindow } = usePictureInPicture();
 
   const getCamera = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -14,6 +16,7 @@ const Toolbar = () => {
   };
 
   const getScreenShare = async () => {
+    requestPipWindow();
     const stream = await navigator.mediaDevices.getDisplayMedia({
       video: true,
       audio: false,

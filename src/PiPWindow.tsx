@@ -1,17 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useRecording } from "./contexts/recording";
 import { useStreams } from "./contexts/streams";
 
 import styles from "./PiPWindow.module.scss";
-
-const requestPipWindow = async () => {
-  return await (window as any).documentPictureInPicture.requestWindow({
-    width: 300,
-    height: 300,
-  });
-};
+import { usePictureInPicture } from "./contexts/pictureInPicture";
 
 const PiPWindow = () => {
   const {
@@ -23,35 +17,15 @@ const PiPWindow = () => {
     resumeRecording,
   } = useRecording();
 
-  const { cameraStream, screenshareStream } = useStreams();
+  const { cameraStream } = useStreams();
+  const { pipWindow } = usePictureInPicture();
 
-  const [pipWindow, setPipWindow] = useState<Window | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const videoElement = videoRef.current;
   if (cameraStream && videoElement) {
     videoElement.srcObject = cameraStream;
   }
-
-  // FIXME request PiP directly on user action to prevent the error
-  //       "Document PiP requires user activation"
-  useEffect(() => {
-    if (!screenshareStream) return;
-
-    requestPipWindow().then((pipWindow) => {
-      const allCSS = [...document.styleSheets]
-        .map((styleSheet) =>
-          [...styleSheet.cssRules].map((r) => r.cssText).join("")
-        )
-        .filter(Boolean)
-        .join("\n");
-      const style = document.createElement("style");
-      style.textContent = allCSS;
-      pipWindow.document.head.appendChild(style);
-
-      setPipWindow(pipWindow);
-    });
-  }, [screenshareStream, startRecording, stopRecording]);
 
   if (!pipWindow) return null;
 

@@ -6,6 +6,7 @@ import { RecordingProvider } from "./contexts/recording";
 import { StreamsProvider } from "./contexts/streams";
 
 import styles from "./App.module.scss";
+import { PictureInPictureProvider } from "./contexts/pictureInPicture";
 
 function App() {
   return (
@@ -14,9 +15,11 @@ function App() {
       <main className={styles.main}>
         <StreamsProvider>
           <RecordingProvider>
-            <VideoStreams />
-            <Toolbar />
-            <PiPWindow />
+            <PictureInPictureProvider>
+              <VideoStreams />
+              <Toolbar />
+              <PiPWindow />
+            </PictureInPictureProvider>
           </RecordingProvider>
         </StreamsProvider>
       </main>
