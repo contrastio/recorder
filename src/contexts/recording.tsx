@@ -31,7 +31,6 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
   const { screenshareStream } = useStreams();
 
   const mediaRecorder = useRef<MediaRecorder>();
-  const chunks = useRef<Blob[]>([]);
 
   const startRecording = useCallback(async () => {
     console.log("startRecording");
@@ -41,14 +40,30 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
 
     setIsRecording(true);
 
-    chunks.current = [];
+    const chunks: Blob[] = [];
+
     mediaRecorder.current = new MediaRecorder(screenshareStream, {
       mimeType: "video/webm; codecs=vp9",
     });
+
     mediaRecorder.current.ondataavailable = (event) => {
-      console.log({ data: event.data });
-      if (event.data.size > 0) chunks.current.push(event.data);
+      if (event.data.size > 0) chunks.push(event.data);
     };
+
+    mediaRecorder.current.onstop = () => {
+      const blob = new Blob(chunks, {
+        type: "video/webm",
+      });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "recording.webm";
+      link.click();
+
+      window.URL.revokeObjectURL(url);
+    };
+
     mediaRecorder.current.start();
   }, [screenshareStream]);
 
@@ -57,18 +72,6 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
 
     setIsRecording(false);
     mediaRecorder.current?.stop();
-
-    const blob = new Blob(chunks.current, {
-      type: "video/webm",
-    });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "recording.webm";
-    link.click();
-
-    window.URL.revokeObjectURL(url);
   }, []);
 
   const pauseRecording = useCallback(() => {
