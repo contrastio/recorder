@@ -1,10 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { useRecording } from "./contexts/recording";
 import { useStreams } from "./contexts/streams";
 
 import styles from "./PiPWindow.module.scss";
+
+const requestPipWindow = async () => {
+  return await (window as any).documentPictureInPicture.requestWindow({
+    width: 300,
+    height: 300,
+  });
+};
 
 const PiPWindow = () => {
   const {
@@ -18,7 +25,7 @@ const PiPWindow = () => {
 
   const { cameraStream, screenshareStream } = useStreams();
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [pipWindow, setPipWindow] = useState<Window | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const videoElement = videoRef.current;
@@ -27,41 +34,27 @@ const PiPWindow = () => {
   }
 
   useEffect(() => {
-    const requestPipWindow = async () => {
-      return await (window as any).documentPictureInPicture.requestWindow({
-        width: 300,
-        height: 300,
-      });
-    };
+    if (!screenshareStream) return;
 
-    if (screenshareStream && containerRef.current) {
-      const pipWindow = requestPipWindow();
-      pipWindow.then((window) => {
-        const allCSS = [...document.styleSheets]
-          .map((styleSheet) =>
-            [...styleSheet.cssRules].map((r) => r.cssText).join("")
-          )
-          .filter(Boolean)
-          .join("\n");
-        const style = document.createElement("style");
-        style.textContent = allCSS;
-        window.document.head.appendChild(style);
+    requestPipWindow().then((pipWindow) => {
+      const allCSS = [...document.styleSheets]
+        .map((styleSheet) =>
+          [...styleSheet.cssRules].map((r) => r.cssText).join("")
+        )
+        .filter(Boolean)
+        .join("\n");
+      const style = document.createElement("style");
+      style.textContent = allCSS;
+      pipWindow.document.head.appendChild(style);
 
-        window.document.body.append(containerRef.current);
-
-        window.document
-          .querySelector("#startRecording")
-          .addEventListener("click", startRecording);
-
-        window.document
-          .querySelector("#stopRecording")
-          .addEventListener("click", stopRecording);
-      });
-    }
+      setPipWindow(pipWindow);
+    });
   }, [screenshareStream, startRecording, stopRecording]);
 
+  if (!pipWindow) return null;
+
   return createPortal(
-    <div className={styles.container} ref={containerRef}>
+    <div className={styles.container}>
       <video
         className={styles.camera}
         autoPlay
@@ -71,10 +64,10 @@ const PiPWindow = () => {
         ref={videoRef}
       />
       <div className={styles.toolbar}>
-        <button id="startRecording" disabled={isRecording}>
+        <button onClick={startRecording} disabled={isRecording}>
           Start
         </button>
-        <button id="stopRecording" disabled={!isRecording}>
+        <button onClick={stopRecording} disabled={!isRecording}>
           Stop
         </button>
         <button onClick={pauseRecording} disabled={!isRecording || isPaused}>
@@ -85,7 +78,7 @@ const PiPWindow = () => {
         </button>
       </div>
     </div>,
-    document.body
+    pipWindow.document.body
   );
 };
 
