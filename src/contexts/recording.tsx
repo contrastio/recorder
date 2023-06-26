@@ -27,7 +27,7 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
   let mediaRecorder: MediaRecorder;
   let chunks: Blob[];
 
-  const startRecording = async () => {
+  const startRecording = useCallback(async () => {
     console.log("startRecording");
     console.log({ document: window.document });
 
@@ -42,9 +42,9 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
     mediaRecorder.ondataavailable = (event) => {
       if (event.data.size > 0) chunks.push(event.data);
     };
-  };
+  }, [screenshareStream]);
 
-  const stopRecording = () => {
+  const stopRecording = useCallback(() => {
     console.log("stopRecording");
 
     setIsRecording(false);
@@ -61,17 +61,17 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
     link.click();
 
     window.URL.revokeObjectURL(url);
-  };
+  }, []);
 
-  const pauseRecording = () => {
+  const pauseRecording = useCallback(() => {
     setIsPaused(true);
     console.log("pauseRecording");
-  };
+  }, []);
 
-  const resumeRecording = () => {
+  const resumeRecording = useCallback(() => {
     setIsPaused(false);
     console.log("resumeRecording");
-  };
+  }, []);
 
   return (
     <RecordingContext.Provider
