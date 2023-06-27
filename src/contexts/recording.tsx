@@ -44,6 +44,7 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
     const composedStream = composeStreams(cameraStream, screenshareStream);
     mediaRecorder.current = new MediaRecorder(composedStream, {
       mimeType: "video/webm; codecs=vp9",
+      videoBitsPerSecond: 8e6,
     });
 
     const chunks: Blob[] = [];
@@ -53,9 +54,7 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
     };
 
     mediaRecorder.current.onstop = () => {
-      const blob = new Blob(chunks, {
-        type: "video/webm",
-      });
+      const blob = new Blob(chunks);
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
