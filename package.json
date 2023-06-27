@@ -1,46 +1,58 @@
 {
   "name": "recorder",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "format": "prettier . --cache",
+    "format:fix": "yarn format --write",
+    "format:check": "yarn format --check",
+    "lint": "eslint . --cache --max-warnings 0",
+    "lint:fix": "yarn lint --fix",
+    "lint:check": "yarn lint",
+    "lint:css": "stylelint '**/*.css' --cache --max-warnings 0",
+    "lint:css:fix": "yarn lint:css --fix",
+    "lint:css:check": "yarn lint:css",
+    "type:check": "tsc --noEmit",
+    "prepare": "husky install"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/dom-mediacapture-transform": "^0.1.5",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "sass": "^1.63.4",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "react-dom": "^18.2.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@types/dom-mediacapture-transform": "^0.1.6",
+    "@types/node": "^20.3.2",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "@vitejs/plugin-react-swc": "^3.3.2",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "postcss": "^8.4.24",
+    "postcss-nesting": "^11.3.0",
+    "prettier": "^2.8.8",
+    "stylelint": "^15.9.0",
+    "stylelint-config-standard": "^33.0.0",
+    "stylelint-order": "^6.0.3",
+    "typescript": "^5.1.3",
+    "typescript-plugin-css-modules": "^5.0.1",
+    "vite": "^4.3.9"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix --max-warnings 0",
+    "*.css": "stylelint --cache --fix --max-warnings 0",
+    "*.{js,jsx,ts,tsx,css,htm,html,md}": "prettier --cache --write"
   }
 }

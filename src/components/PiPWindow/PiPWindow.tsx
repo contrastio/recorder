@@ -1,11 +1,11 @@
-import { useRef } from "react";
-import { createPortal } from "react-dom";
+import { useRef } from 'react';
+import { createPortal } from 'react-dom';
 
-import { useRecording } from "./contexts/recording";
-import { useStreams } from "./contexts/streams";
+import { usePictureInPicture } from 'contexts/pictureInPicture';
+import { useRecording } from 'contexts/recording';
+import { useStreams } from 'contexts/streams';
 
-import styles from "./PiPWindow.module.scss";
-import { usePictureInPicture } from "./contexts/pictureInPicture";
+import styles from './PiPWindow.module.css';
 
 const PiPWindow = () => {
   const {
@@ -30,7 +30,7 @@ const PiPWindow = () => {
   if (!pipWindow) return null;
 
   return createPortal(
-    <div className={styles.container}>
+    <div className={styles.root}>
       <video
         className={styles.camera}
         autoPlay

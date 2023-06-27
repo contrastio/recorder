@@ -14,11 +14,15 @@ export const composeStreams = (
     track: screenshareVideoTrack,
   });
   const screenshareReader = screenshareProcessor.readable.getReader();
-  const recordingGenerator = new MediaStreamTrackGenerator({ kind: "video" });
+  const recordingGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
 
   if (cameraProcessor) {
     const canvas = new OffscreenCanvas(0, 0);
-    const ctx = canvas.getContext("2d") as OffscreenCanvasRenderingContext2D;
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      throw new Error('Canvas API not supported');
+    }
 
     let latestScreenshareFrame: VideoFrame | undefined;
 

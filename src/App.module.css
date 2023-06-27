@@ -1,0 +1,5 @@
+.main {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: calc(100vh - 56px);
+}

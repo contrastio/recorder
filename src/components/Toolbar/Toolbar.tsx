@@ -1,7 +1,7 @@
-import { usePictureInPicture } from "./contexts/pictureInPicture";
-import { useStreams } from "./contexts/streams";
+import { usePictureInPicture } from 'contexts/pictureInPicture';
+import { useStreams } from 'contexts/streams';
 
-import styles from "./Toolbar.module.scss";
+import styles from './Toolbar.module.css';
 
 const Toolbar = () => {
   const { setCameraStream, setScreenshareStream } = useStreams();
@@ -22,14 +22,14 @@ const Toolbar = () => {
       audio: false,
     });
     console.log(
-      "Screen share settings:",
+      'Screen share settings:',
       stream.getVideoTracks()[0].getSettings()
     );
     setScreenshareStream(stream);
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.root}>
       <button onClick={getCamera}>Get camera</button>
       <button onClick={getScreenShare}>Share screen</button>
     </div>

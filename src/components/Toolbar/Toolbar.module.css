@@ -1,7 +1,7 @@
-.container {
-  margin: 0 auto;
-  padding-bottom: 50px;
+.root {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  margin: 0 auto;
+  padding-bottom: 50px;
 }

@@ -1,14 +1,14 @@
-import Header from "./Header";
-import PiPWindow from "./PiPWindow";
-import Toolbar from "./Toolbar";
-import VideoStreams from "./VideoStreams";
-import { RecordingProvider } from "./contexts/recording";
-import { StreamsProvider } from "./contexts/streams";
+import Header from 'components/Header';
+import PiPWindow from 'components/PiPWindow';
+import Toolbar from 'components/Toolbar';
+import VideoStreams from 'components/VideoStreams';
+import { PictureInPictureProvider } from 'contexts/pictureInPicture';
+import { RecordingProvider } from 'contexts/recording';
+import { StreamsProvider } from 'contexts/streams';
 
-import styles from "./App.module.scss";
-import { PictureInPictureProvider } from "./contexts/pictureInPicture";
+import styles from './App.module.css';
 
-function App() {
+const App = () => {
   return (
     <>
       <Header />
@@ -25,6 +25,6 @@ function App() {
       </main>
     </>
   );
-}
+};
 
 export default App;

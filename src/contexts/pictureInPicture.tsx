@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 
 type PictureInPictureContextType = {
   pipWindow: Window | null;
@@ -19,20 +19,18 @@ export const PictureInPictureProvider = ({
   const [pipWindow, setPipWindow] = useState<Window | null>(null);
 
   const requestPipWindow = async () => {
-    const pipWindow: Window = await (
-      window as any
-    ).documentPictureInPicture.requestWindow({
+    const pipWindow = await window.documentPictureInPicture.requestWindow({
       width: 300,
       height: 300,
     });
 
     const allCSS = [...document.styleSheets]
       .map((styleSheet) =>
-        [...styleSheet.cssRules].map((r) => r.cssText).join("")
+        [...styleSheet.cssRules].map((r) => r.cssText).join('')
       )
       .filter(Boolean)
-      .join("\n");
-    const style = document.createElement("style");
+      .join('\n');
+    const style = document.createElement('style');
     style.textContent = allCSS;
     pipWindow.document.head.appendChild(style);
 
@@ -51,7 +49,7 @@ export const usePictureInPicture = (): PictureInPictureContextType => {
 
   if (context === undefined) {
     throw new Error(
-      "usePictureInPicture must be used within a PictureInPictureProvider"
+      'usePictureInPicture must be used within a PictureInPictureProvider'
     );
   }
 

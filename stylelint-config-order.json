@@ -1,0 +1,394 @@
+{
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "order/properties-order": [
+      [
+        {
+          "groupName": "cssModuleComposition",
+          "properties": ["composes"]
+        },
+        {
+          "groupName": "all",
+          "properties": ["all"]
+        },
+        {
+          "groupName": "appearance",
+          "properties": ["appearance"]
+        },
+        {
+          "groupName": "boxSizing",
+          "properties": ["box-sizing"]
+        },
+        {
+          "groupName": "position",
+          "properties": [
+            "display",
+            "position",
+            "top",
+            "right",
+            "bottom",
+            "left",
+            "inset"
+          ]
+        },
+        {
+          "groupName": "float",
+          "properties": ["float", "clear"]
+        },
+        {
+          "groupName": "flex",
+          "properties": [
+            "flex",
+            "flex-basis",
+            "flex-direction",
+            "flex-flow",
+            "flex-grow",
+            "flex-shrink",
+            "flex-wrap"
+          ]
+        },
+        {
+          "groupName": "grid",
+          "properties": [
+            "grid",
+            "grid-area",
+            "grid-template",
+            "grid-template-areas",
+            "grid-template-rows",
+            "grid-template-columns",
+            "grid-row",
+            "grid-row-start",
+            "grid-row-end",
+            "grid-column",
+            "grid-column-start",
+            "grid-column-end",
+            "grid-auto-rows",
+            "grid-auto-columns",
+            "grid-auto-flow",
+            "grid-gap",
+            "grid-row-gap",
+            "grid-column-gap",
+            "gap"
+          ]
+        },
+        {
+          "groupName": "placeContent",
+          "properties": ["place-content", "place-items", "place-self"]
+        },
+        {
+          "groupName": "alignContent",
+          "properties": ["align-content", "align-items", "align-self"]
+        },
+        {
+          "groupName": "justifyContent",
+          "properties": ["justify-content", "justify-items", "justify-self"]
+        },
+        {
+          "groupName": "order",
+          "properties": ["order"]
+        },
+        {
+          "groupName": "columns",
+          "properties": [
+            "columns",
+            "column-gap",
+            "column-fill",
+            "column-rule",
+            "column-rule-width",
+            "column-rule-style",
+            "column-rule-color",
+            "column-span",
+            "column-count",
+            "column-width"
+          ]
+        },
+        {
+          "groupName": "rows",
+          "properties": ["row-gap"]
+        },
+        {
+          "groupName": "transform",
+          "properties": [
+            "backface-visibility",
+            "perspective",
+            "perspective-origin",
+            "transform",
+            "transform-origin",
+            "transform-style"
+          ]
+        },
+        {
+          "groupName": "transitions",
+          "properties": [
+            "transition",
+            "transition-delay",
+            "transition-duration",
+            "transition-property",
+            "transition-timing-function"
+          ]
+        },
+        {
+          "groupName": "visibility",
+          "properties": ["visibility", "opacity", "z-index"]
+        },
+        {
+          "groupName": "margin",
+          "properties": [
+            "margin",
+            "margin-top",
+            "margin-right",
+            "margin-bottom",
+            "margin-left"
+          ]
+        },
+        {
+          "groupName": "colorScheme",
+          "properties": ["color-scheme"]
+        },
+        {
+          "groupName": "outline",
+          "properties": [
+            "outline",
+            "outline-offset",
+            "outline-width",
+            "outline-style",
+            "outline-color"
+          ]
+        },
+        {
+          "groupName": "border",
+          "properties": [
+            "border",
+            "border-top",
+            "border-right",
+            "border-bottom",
+            "border-left",
+            "border-width",
+            "border-top-width",
+            "border-right-width",
+            "border-bottom-width",
+            "border-left-width"
+          ]
+        },
+        {
+          "groupName": "borderStyle",
+          "properties": [
+            "border-style",
+            "border-top-style",
+            "border-right-style",
+            "border-bottom-style",
+            "border-left-style"
+          ]
+        },
+        {
+          "groupName": "borderRadius",
+          "properties": [
+            "border-radius",
+            "border-top-left-radius",
+            "border-top-right-radius",
+            "border-bottom-left-radius",
+            "border-bottom-right-radius"
+          ]
+        },
+        {
+          "groupName": "borderColor",
+          "properties": [
+            "border-color",
+            "border-top-color",
+            "border-right-color",
+            "border-bottom-color",
+            "border-left-color"
+          ]
+        },
+        {
+          "groupName": "borderImage",
+          "properties": [
+            "border-image",
+            "border-image-source",
+            "border-image-width",
+            "border-image-outset",
+            "border-image-repeat",
+            "border-image-slice"
+          ]
+        },
+        {
+          "groupName": "boxShadow",
+          "properties": ["box-shadow"]
+        },
+        {
+          "groupName": "background",
+          "properties": [
+            "background",
+            "background-attachment",
+            "background-clip",
+            "background-color",
+            "background-image",
+            "background-origin",
+            "background-position",
+            "background-repeat",
+            "background-size"
+          ]
+        },
+        {
+          "groupName": "cursor",
+          "properties": ["cursor"]
+        },
+        {
+          "groupName": "padding",
+          "properties": [
+            "padding",
+            "padding-top",
+            "padding-right",
+            "padding-bottom",
+            "padding-left"
+          ]
+        },
+        {
+          "groupName": "width",
+          "properties": ["width", "min-width", "max-width"]
+        },
+        {
+          "groupName": "height",
+          "properties": ["height", "min-height", "max-height"]
+        },
+        {
+          "groupName": "aspectRatio",
+          "properties": ["aspect-ratio"]
+        },
+        {
+          "groupName": "overflow",
+          "properties": ["overflow", "overflow-x", "overflow-y", "resize"]
+        },
+        {
+          "groupName": "listStyle",
+          "properties": [
+            "list-style",
+            "list-style-type",
+            "list-style-position",
+            "list-style-image",
+            "caption-side"
+          ]
+        },
+        {
+          "groupName": "tables",
+          "properties": [
+            "table-layout",
+            "border-collapse",
+            "border-spacing",
+            "empty-cells"
+          ]
+        },
+        {
+          "groupName": "animation",
+          "properties": [
+            "animation",
+            "animation-name",
+            "animation-duration",
+            "animation-timing-function",
+            "animation-delay",
+            "animation-iteration-count",
+            "animation-direction",
+            "animation-fill-mode",
+            "animation-play-state"
+          ]
+        },
+        {
+          "groupName": "svg",
+          "properties": ["r", "fill", "stroke", "vector-effect"]
+        },
+        {
+          "groupName": "objectFit",
+          "properties": ["object-fit"]
+        },
+        {
+          "groupName": "verticalAlignment",
+          "properties": ["vertical-align"]
+        },
+        {
+          "groupName": "textAlignmentAndDecoration",
+          "properties": [
+            "direction",
+            "tab-size",
+            "text-align",
+            "text-align-last",
+            "text-justify",
+            "text-indent",
+            "text-transform",
+            "text-decoration",
+            "text-decoration-color",
+            "text-decoration-line",
+            "text-decoration-style",
+            "text-rendering",
+            "text-shadow",
+            "text-overflow"
+          ]
+        },
+        {
+          "groupName": "textSpacing",
+          "properties": [
+            "line-height",
+            "word-spacing",
+            "letter-spacing",
+            "white-space",
+            "word-break",
+            "word-wrap",
+            "color"
+          ]
+        },
+        {
+          "groupName": "font",
+          "properties": [
+            "font",
+            "font-family",
+            "font-size",
+            "font-size-adjust",
+            "font-stretch",
+            "font-weight",
+            "font-smoothing",
+            "osx-font-smoothing",
+            "font-variant",
+            "font-style",
+            "font-synthesis",
+            "text-size-adjust"
+          ]
+        },
+        {
+          "groupName": "content",
+          "properties": ["content", "quotes"]
+        },
+        {
+          "groupName": "counters",
+          "properties": ["counter-reset", "counter-increment"]
+        },
+        {
+          "groupName": "breaks",
+          "properties": [
+            "page-break-before",
+            "page-break-after",
+            "page-break-inside"
+          ]
+        },
+        {
+          "groupName": "pointerEvents",
+          "properties": ["pointer-events"]
+        },
+        {
+          "groupName": "touchAction",
+          "properties": ["touch-action"]
+        },
+        {
+          "groupName": "userSelect",
+          "properties": ["user-select"]
+        },
+        {
+          "groupName": "willChange",
+          "properties": ["will-change"]
+        }
+      ],
+      {
+        "unspecified": "bottomAlphabetical",
+        "emptyLineBeforeUnspecified": "always"
+      }
+    ]
+  }
+}

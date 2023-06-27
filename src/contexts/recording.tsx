@@ -4,9 +4,11 @@ import {
   useContext,
   useRef,
   useState,
-} from "react";
-import { composeStreams } from "../services/composer";
-import { useStreams } from "./streams";
+} from 'react';
+
+import { composeStreams } from 'services/composer';
+
+import { useStreams } from './streams';
 
 type RecordingContextType = {
   isRecording: boolean;
@@ -24,9 +26,7 @@ const RecordingContext = createContext<RecordingContextType | undefined>(
 type RecordingProviderProps = {
   children: React.ReactNode;
 };
-export const RecordingProvider: React.FC<RecordingProviderProps> = ({
-  ...props
-}) => {
+export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const { cameraStream, screenshareStream } = useStreams();
@@ -34,7 +34,7 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
   const mediaRecorder = useRef<MediaRecorder>();
 
   const startRecording = useCallback(async () => {
-    console.log("startRecording");
+    console.log('startRecording');
     console.log({ document: window.document });
 
     if (!screenshareStream) return;
@@ -43,7 +43,7 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
 
     const composedStream = composeStreams(cameraStream, screenshareStream);
     mediaRecorder.current = new MediaRecorder(composedStream, {
-      mimeType: "video/webm; codecs=vp9",
+      mimeType: 'video/webm; codecs=vp9',
       videoBitsPerSecond: 8e6,
     });
 
@@ -57,9 +57,9 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
       const blob = new Blob(chunks);
 
       const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = url;
-      link.download = "recording.webm";
+      link.download = 'recording.webm';
       link.click();
 
       window.URL.revokeObjectURL(url);
@@ -69,7 +69,7 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
   }, [cameraStream, screenshareStream]);
 
   const stopRecording = useCallback(() => {
-    console.log("stopRecording");
+    console.log('stopRecording');
 
     setIsRecording(false);
     mediaRecorder.current?.stop();
@@ -77,12 +77,12 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
 
   const pauseRecording = useCallback(() => {
     setIsPaused(true);
-    console.log("pauseRecording");
+    console.log('pauseRecording');
   }, []);
 
   const resumeRecording = useCallback(() => {
     setIsPaused(false);
-    console.log("resumeRecording");
+    console.log('resumeRecording');
   }, []);
 
   return (
@@ -95,8 +95,9 @@ export const RecordingProvider: React.FC<RecordingProviderProps> = ({
         pauseRecording,
         resumeRecording,
       }}
-      {...props}
-    />
+    >
+      {children}
+    </RecordingContext.Provider>
   );
 };
 
@@ -104,7 +105,7 @@ export const useRecording = (): RecordingContextType => {
   const context = useContext(RecordingContext);
 
   if (context === undefined) {
-    throw new Error("useRecording must be used within a RecordingProvider");
+    throw new Error('useRecording must be used within a RecordingProvider');
   }
 
   return context;

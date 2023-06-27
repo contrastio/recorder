@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# Vite React TypeScript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Vite starter template with opinionated predefined settings.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- [Vite](https://vitejs.dev/) with [React](https://reactjs.org/) and [TypeScript](https://www.typescriptlang.org/)
+- [ESLint](https://eslint.org/), [Stylelint](https://stylelint.io/) and [Prettier](https://prettier.io/)
+- Pre-commit hook with [Husky](https://typicode.github.io/husky/) and [lint-staged](https://github.com/okonet/lint-staged)
+- Static typing for CSS modules with [typescript-plugin-css-modules](https://github.com/mrmckeb/typescript-plugin-css-modules)
+- [PostCSS Nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)
+- Import aliases for an opinionated folder structure (can be customized in [vite.config.ts](vite.config.ts)). Highly inspired by [Robin Wieruch's post](https://www.robinwieruch.de/react-folder-structure)
 
-### `yarn start`
+## Getting started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Use this repository as a [GitHub template](https://github.com/Volcomix/vite-react-ts/generate) or use [degit](https://github.com/Rich-Harris/degit) to scaffold your project locally:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+npx degit volcomix/vite-react-ts my-project
+cd my-project
 
-### `yarn test`
+yarn
+yarn dev
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## VSCode integration
 
-### `yarn build`
+You need to [use the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript) in order to get CSS modules static typing working. See the [TypeScript plugin repository](https://github.com/mrmckeb/typescript-plugin-css-modules#visual-studio-code) for advanced usage.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This starter template works well with the following extensions:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [PostCSS Language Support](https://marketplace.visualstudio.com/items?itemName=csstools.postcss)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Fix all, organize imports and format on save work seamlessly when configured in user or workspace settings:
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}
+```

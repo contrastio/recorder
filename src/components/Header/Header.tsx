@@ -1,8 +1,8 @@
-import styles from "./Header.module.scss";
+import styles from './Header.module.css';
 
 const Header = () => {
   return (
-    <header className={styles.container}>
+    <header className={styles.root}>
       <div>Contrast recorder</div>
     </header>
   );

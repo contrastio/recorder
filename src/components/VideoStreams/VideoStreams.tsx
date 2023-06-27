@@ -1,9 +1,9 @@
-import cx from "classnames";
-import { useRef } from "react";
+import cx from 'classnames';
+import { useRef } from 'react';
 
-import { useStreams } from "./contexts/streams";
+import { useStreams } from 'contexts/streams';
 
-import styles from "./VideoStreams.module.scss";
+import styles from './VideoStreams.module.css';
 
 const VideoStreams = () => {
   const cameraRef = useRef<HTMLVideoElement | null>(null);
@@ -22,7 +22,7 @@ const VideoStreams = () => {
 
   return (
     <div
-      className={cx(styles.container, {
+      className={cx(styles.root, {
         [styles.pip]: cameraStream && screenshareStream,
       })}
     >

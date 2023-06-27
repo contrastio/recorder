@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 
 type StreamsContextType = {
   cameraStream: MediaStream | null;
@@ -14,9 +14,7 @@ const StreamsContext = createContext<StreamsContextType | undefined>(undefined);
 type StreamsProviderProps = {
   children: React.ReactNode;
 };
-export const StreamsProvider: React.FC<StreamsProviderProps> = ({
-  ...props
-}) => {
+export const StreamsProvider = ({ children }: StreamsProviderProps) => {
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const [screenshareStream, setScreenshareStream] =
     useState<MediaStream | null>(null);
@@ -29,8 +27,9 @@ export const StreamsProvider: React.FC<StreamsProviderProps> = ({
         setCameraStream,
         setScreenshareStream,
       }}
-      {...props}
-    />
+    >
+      {children}
+    </StreamsContext.Provider>
   );
 };
 
@@ -38,7 +37,7 @@ export const useStreams = (): StreamsContextType => {
   const context = useContext(StreamsContext);
 
   if (context === undefined) {
-    throw new Error("useStreams must be used within a StreamsProvider");
+    throw new Error('useStreams must be used within a StreamsProvider');
   }
 
   return context;
