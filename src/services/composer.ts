@@ -20,14 +20,27 @@ export const composeStreams = (
     const canvas = new OffscreenCanvas(0, 0);
     const ctx = canvas.getContext("2d") as OffscreenCanvasRenderingContext2D;
 
+    let latestScreenshareFrame: VideoFrame | undefined;
+
     const transformer = new TransformStream({
       async transform(cameraFrame: VideoFrame, controller) {
-        const { value: screenshareFrame } = await screenshareReader.read();
-        if (screenshareFrame) {
-          canvas.width = screenshareFrame.displayWidth;
-          canvas.height = screenshareFrame.displayHeight;
-          ctx.drawImage(screenshareFrame, 0, 0);
-          screenshareFrame.close();
+        if (latestScreenshareFrame) {
+          // Awaiting the read operation would block the recording until
+          // the next frame, which could come way later when the screen share
+          // is fully static
+          screenshareReader.read().then(({ value: screenshareFrame }) => {
+            latestScreenshareFrame?.close();
+            latestScreenshareFrame = screenshareFrame;
+          });
+        } else {
+          // Waits for the 1st frame to initialize the canvas dimensions
+          const { value: screenshareFrame } = await screenshareReader.read();
+          latestScreenshareFrame = screenshareFrame;
+        }
+        if (latestScreenshareFrame) {
+          canvas.width = latestScreenshareFrame.displayWidth;
+          canvas.height = latestScreenshareFrame.displayHeight;
+          ctx.drawImage(latestScreenshareFrame, 0, 0);
         }
 
         const cameraWidth = cameraFrame.displayWidth;
