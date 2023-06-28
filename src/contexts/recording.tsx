@@ -78,11 +78,13 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const pauseRecording = useCallback(() => {
     setIsPaused(true);
     console.log('pauseRecording');
+    mediaRecorder.current?.pause();
   }, []);
 
   const resumeRecording = useCallback(() => {
     setIsPaused(false);
     console.log('resumeRecording');
+    mediaRecorder.current?.resume();
   }, []);
 
   return (
