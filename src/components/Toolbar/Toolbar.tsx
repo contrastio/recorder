@@ -7,7 +7,7 @@ import styles from './Toolbar.module.css';
 
 const Toolbar = () => {
   const { setCameraStream, setScreenshareStream } = useStreams();
-  const { requestPipWindow } = usePictureInPicture();
+  const { requestPipWindow, exitPipWindow } = usePictureInPicture();
 
   const getCamera = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -18,17 +18,22 @@ const Toolbar = () => {
   };
 
   const getScreenShare = async () => {
-    requestPipWindow();
-    // TODO Set screenshare stream to null when ending stopping the screenshare
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: true,
-      audio: false,
-    });
-    console.log(
-      'Screen share settings:',
-      stream.getVideoTracks()[0].getSettings()
-    );
-    setScreenshareStream(stream);
+    await requestPipWindow();
+    try {
+      // TODO Set screenshare stream to null when ending stopping the screenshare
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: false,
+      });
+      console.log(
+        'Screen share settings:',
+        stream.getVideoTracks()[0].getSettings()
+      );
+      setScreenshareStream(stream);
+    } catch {
+      // Happens when the user aborts the screenshare
+      exitPipWindow();
+    }
   };
 
   return (

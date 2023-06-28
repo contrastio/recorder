@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 
 type PictureInPictureContextType = {
   pipWindow: Window | null;
@@ -17,7 +17,16 @@ type PictureInPictureProviderProps = {
 export const PictureInPictureProvider = ({
   children,
 }: PictureInPictureProviderProps) => {
-  const [pipWindow, setPipWindow] = useState<Window | null>(null);
+  const [pipWindow, _setPipWindow] = useState<Window | null>(null);
+
+  // Required to fix a race condition when trying close the window before
+  // setPipWindow had a chance to update the state
+  const pipWindowRef = useRef<Window | null>(null);
+
+  const updatePipWindow = (pipWindow: Window | null) => {
+    pipWindowRef.current = pipWindow;
+    _setPipWindow(pipWindow);
+  };
 
   const requestPipWindow = async () => {
     const pipWindow = await window.documentPictureInPicture.requestWindow({
@@ -28,7 +37,7 @@ export const PictureInPictureProvider = ({
     // TODO Stop recording when closing the PiP window
     //      or handle recording controls in main window
     pipWindow.onpagehide = () => {
-      setPipWindow(null);
+      updatePipWindow(null);
     };
 
     const allCSS = [...document.styleSheets]
@@ -41,12 +50,12 @@ export const PictureInPictureProvider = ({
     style.textContent = allCSS;
     pipWindow.document.head.appendChild(style);
 
-    setPipWindow(pipWindow);
+    updatePipWindow(pipWindow);
   };
 
   const exitPipWindow = () => {
-    pipWindow?.close();
-    setPipWindow(null);
+    pipWindowRef.current?.close();
+    updatePipWindow(null);
   };
 
   return (
