@@ -1,17 +1,20 @@
 .root {
-  width: 500px;
+  display: grid;
+  position: fixed;
+  inset: 0;
+  grid-template-rows: 1fr auto;
 }
 
 .camera {
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .toolbar {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px;
 }

@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from 'react';
 type PictureInPictureContextType = {
   pipWindow: Window | null;
   requestPipWindow: () => Promise<void>;
+  exitPipWindow: () => void;
 };
 
 const PictureInPictureContext = createContext<
@@ -24,6 +25,8 @@ export const PictureInPictureProvider = ({
       height: 300,
     });
 
+    // TODO Stop recording when closing the PiP window
+    //      or handle recording controls in main window
     pipWindow.onpagehide = () => {
       setPipWindow(null);
     };
@@ -41,8 +44,15 @@ export const PictureInPictureProvider = ({
     setPipWindow(pipWindow);
   };
 
+  const exitPipWindow = () => {
+    pipWindow?.close();
+    setPipWindow(null);
+  };
+
   return (
-    <PictureInPictureContext.Provider value={{ pipWindow, requestPipWindow }}>
+    <PictureInPictureContext.Provider
+      value={{ pipWindow, requestPipWindow, exitPipWindow }}
+    >
       {children}
     </PictureInPictureContext.Provider>
   );

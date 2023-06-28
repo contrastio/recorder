@@ -1,6 +1,7 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
 import button from './button';
+import tooltip from './tooltip';
 
 const theme = extendTheme({
   typography: {
@@ -22,6 +23,7 @@ const theme = extendTheme({
   },
   components: {
     MuiButton: button,
+    MuiTooltip: tooltip,
   },
 });
 
