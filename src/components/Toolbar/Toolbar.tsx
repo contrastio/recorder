@@ -20,7 +20,7 @@ const Toolbar = () => {
   const getScreenShare = async () => {
     await requestPipWindow();
     try {
-      // TODO Set screenshare stream to null when ending stopping the screenshare
+      // TODO Set screenshare stream to null when stopping the screenshare
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false,
