@@ -6,17 +6,17 @@ export const composeStreams = (
   const cameraAudioTrack = cameraStream?.getAudioTracks()[0];
   const screenshareVideoTrack = screenshareStream.getVideoTracks()[0];
 
-  const cameraProcessor = cameraVideoTrack
-    ? new MediaStreamTrackProcessor({ track: cameraVideoTrack })
-    : null;
-
   const screenshareProcessor = new MediaStreamTrackProcessor({
     track: screenshareVideoTrack,
   });
-  const screenshareReader = screenshareProcessor.readable.getReader();
   const recordingGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
 
-  if (cameraProcessor) {
+  if (cameraVideoTrack) {
+    const cameraProcessor = new MediaStreamTrackProcessor({
+      track: cameraVideoTrack,
+    });
+    const screenshareReader = screenshareProcessor.readable.getReader();
+
     const canvas = new OffscreenCanvas(0, 0);
     const ctx = canvas.getContext('2d');
 
