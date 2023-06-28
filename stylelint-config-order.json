@@ -66,9 +66,9 @@
             "grid-auto-columns",
             "grid-auto-flow",
             "grid-gap",
+            "gap",
             "grid-row-gap",
-            "grid-column-gap",
-            "gap"
+            "grid-column-gap"
           ]
         },
         {
@@ -135,6 +135,8 @@
           "groupName": "margin",
           "properties": [
             "margin",
+            "margin-block",
+            "margin-inline",
             "margin-top",
             "margin-right",
             "margin-bottom",
@@ -237,6 +239,8 @@
           "groupName": "padding",
           "properties": [
             "padding",
+            "padding-block",
+            "padding-inline",
             "padding-top",
             "padding-right",
             "padding-bottom",

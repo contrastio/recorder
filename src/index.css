@@ -1,0 +1,6 @@
+#root {
+  display: grid;
+  position: fixed;
+  inset: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}

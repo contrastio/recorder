@@ -1,5 +1,7 @@
 .main {
   display: grid;
-  grid-template-rows: 1fr auto;
-  height: calc(100vh - 56px);
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  row-gap: 16px;
+  padding: 24px;
 }

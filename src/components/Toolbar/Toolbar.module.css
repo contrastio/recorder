@@ -1,7 +1,5 @@
 .root {
   display: flex;
   flex-direction: row;
-  gap: 20px;
-  margin: 0 auto;
-  padding-bottom: 50px;
+  gap: 16px;
 }
