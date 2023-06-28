@@ -24,6 +24,10 @@ export const PictureInPictureProvider = ({
       height: 300,
     });
 
+    pipWindow.onpagehide = () => {
+      setPipWindow(null);
+    };
+
     const allCSS = [...document.styleSheets]
       .map((styleSheet) =>
         [...styleSheet.cssRules].map((r) => r.cssText).join('')

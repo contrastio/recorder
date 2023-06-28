@@ -24,14 +24,17 @@ const PiPWindow = () => {
   const { pipWindow } = usePictureInPicture();
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const cssCacheRef = useRef<EmotionCache>();
+  const cssCacheRef = useRef<EmotionCache | null>(null);
 
   const videoElement = videoRef.current;
   if (cameraStream && videoElement) {
     videoElement.srcObject = cameraStream;
   }
 
-  if (!pipWindow) return null;
+  if (!pipWindow) {
+    cssCacheRef.current = null;
+    return null;
+  }
 
   if (!cssCacheRef.current) {
     cssCacheRef.current = createCache({
