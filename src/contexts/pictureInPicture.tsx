@@ -19,7 +19,7 @@ export const PictureInPictureProvider = ({
 }: PictureInPictureProviderProps) => {
   const [pipWindow, _setPipWindow] = useState<Window | null>(null);
 
-  // Required to fix a race condition when trying close the window before
+  // Required to fix a race condition when trying to close the window before
   // setPipWindow had a chance to update the state
   const pipWindowRef = useRef<Window | null>(null);
 
