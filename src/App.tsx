@@ -12,12 +12,14 @@ import { PictureInPictureProvider } from 'contexts/pictureInPicture';
 import { RecordingProvider } from 'contexts/recording';
 import { StreamsProvider } from 'contexts/streams';
 
+import theme from './theme';
+
 import styles from './App.module.css';
 
 const App = () => {
   return (
     <StyledEngineProvider injectFirst>
-      <CssVarsProvider defaultMode="dark">
+      <CssVarsProvider theme={theme} defaultMode="dark">
         <CssBaseline />
         <Header />
         <main className={styles.main}>

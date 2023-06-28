@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -40,18 +41,26 @@ const PiPWindow = () => {
         ref={videoRef}
       />
       <div className={styles.toolbar}>
-        <button onClick={startRecording} disabled={isRecording}>
+        <Button size="small" onClick={startRecording} disabled={isRecording}>
           Start
-        </button>
-        <button onClick={stopRecording} disabled={!isRecording}>
+        </Button>
+        <Button size="small" onClick={stopRecording} disabled={!isRecording}>
           Stop
-        </button>
-        <button onClick={pauseRecording} disabled={!isRecording || isPaused}>
+        </Button>
+        <Button
+          size="small"
+          onClick={pauseRecording}
+          disabled={!isRecording || isPaused}
+        >
           Pause
-        </button>
-        <button onClick={resumeRecording} disabled={!isRecording || !isPaused}>
+        </Button>
+        <Button
+          size="small"
+          onClick={resumeRecording}
+          disabled={!isRecording || !isPaused}
+        >
           Resume
-        </button>
+        </Button>
       </div>
     </div>,
     pipWindow.document.body

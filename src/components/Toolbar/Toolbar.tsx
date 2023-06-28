@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useStreams } from 'contexts/streams';
 
@@ -30,8 +32,8 @@ const Toolbar = () => {
 
   return (
     <div className={styles.root}>
-      <button onClick={getCamera}>Get camera</button>
-      <button onClick={getScreenShare}>Share screen</button>
+      <Button onClick={getCamera}>Get camera</Button>
+      <Button onClick={getScreenShare}>Share screen</Button>
     </div>
   );
 };
