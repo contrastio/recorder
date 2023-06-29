@@ -1,13 +1,14 @@
 import createCache from '@emotion/cache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import PauseIcon from '@mui/icons-material/Pause';
-import PlayIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
+import ResumeIcon from 'components/icons/Resume';
+import ScreenRecordIcon from 'components/icons/ScreenRecord';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
@@ -57,40 +58,31 @@ const PiPWindow = () => {
           controls={false}
         />
         <div className={styles.toolbar}>
-          {isRecording ? (
-            <>
-              <Tooltip title="Finish recording">
-                <IconButton
-                  color="error"
-                  onClick={() => {
-                    stopRecording();
-                    exitPipWindow();
-                  }}
-                >
-                  <StopIcon />
-                </IconButton>
-              </Tooltip>
-              {isPaused ? (
-                <Tooltip title="Resume">
-                  <IconButton onClick={resumeRecording}>
-                    <PlayIcon />
-                  </IconButton>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Pause">
-                  <IconButton onClick={pauseRecording}>
-                    <PauseIcon />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </>
-          ) : (
-            <Tooltip title="Start recording">
-              <IconButton onClick={startRecording}>
-                <PlayIcon />
+          <Tooltip title={isRecording ? 'Finish recording' : 'Start recording'}>
+            <IconButton
+              color="error"
+              onClick={() => {
+                if (isRecording) {
+                  stopRecording();
+                  exitPipWindow();
+                } else {
+                  startRecording();
+                }
+              }}
+            >
+              {isRecording ? <StopIcon /> : <ScreenRecordIcon />}
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
+            <span>
+              <IconButton
+                disabled={!isRecording}
+                onClick={isPaused ? resumeRecording : pauseRecording}
+              >
+                {isPaused ? <ResumeIcon /> : <PauseIcon />}
               </IconButton>
-            </Tooltip>
-          )}
+            </span>
+          </Tooltip>
         </div>
       </div>
     </CacheProvider>,
