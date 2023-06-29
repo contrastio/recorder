@@ -8,6 +8,7 @@ import styles from './Footer.module.css';
 const Footer = () => {
   return (
     <footer className={styles.root}>
+      {/* TODO Link to contrast website */}
       <Typography component="span" variant="subtitle2" color="text.secondary">
         Powered by{' '}
         <span className={styles.companyName}>
