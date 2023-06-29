@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 
 import { composeStreams } from 'services/composer';
 
@@ -33,7 +27,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
 
   const mediaRecorder = useRef<MediaRecorder>();
 
-  const startRecording = useCallback(async () => {
+  const startRecording = async () => {
     console.log('startRecording');
     console.log({ document: window.document });
 
@@ -66,26 +60,26 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
     };
 
     mediaRecorder.current.start();
-  }, [cameraStream, screenshareStream]);
+  };
 
-  const stopRecording = useCallback(() => {
+  const stopRecording = () => {
     console.log('stopRecording');
 
     setIsRecording(false);
     mediaRecorder.current?.stop();
-  }, []);
+  };
 
-  const pauseRecording = useCallback(() => {
+  const pauseRecording = () => {
     setIsPaused(true);
     console.log('pauseRecording');
     mediaRecorder.current?.pause();
-  }, []);
+  };
 
-  const resumeRecording = useCallback(() => {
+  const resumeRecording = () => {
     setIsPaused(false);
     console.log('resumeRecording');
     mediaRecorder.current?.resume();
-  }, []);
+  };
 
   return (
     <RecordingContext.Provider
