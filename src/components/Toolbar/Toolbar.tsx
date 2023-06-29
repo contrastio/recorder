@@ -21,6 +21,7 @@ const Toolbar = () => {
     await requestPipWindow();
     try {
       // TODO Set screenshare stream to null when stopping the screenshare
+      // TODO Handle when a screenshare is already active and trying to create a new one
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false,

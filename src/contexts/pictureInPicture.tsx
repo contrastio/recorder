@@ -1,5 +1,7 @@
 import { createContext, useContext, useRef, useState } from 'react';
 
+import { useRecording } from './recording';
+
 type PictureInPictureContextType = {
   pipWindow: Window | null;
   requestPipWindow: () => Promise<void>;
@@ -17,6 +19,7 @@ type PictureInPictureProviderProps = {
 export const PictureInPictureProvider = ({
   children,
 }: PictureInPictureProviderProps) => {
+  const { stopRecording } = useRecording();
   const [pipWindow, _setPipWindow] = useState<Window | null>(null);
 
   // Required to fix a race condition when trying to close the window before
@@ -34,9 +37,8 @@ export const PictureInPictureProvider = ({
       height: 300,
     });
 
-    // TODO Stop recording when closing the PiP window
-    //      or handle recording controls in main window
     pipWindow.onpagehide = () => {
+      stopRecording();
       updatePipWindow(null);
     };
 
