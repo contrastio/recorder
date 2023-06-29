@@ -12,6 +12,7 @@ import ScreenRecordIcon from 'components/icons/ScreenRecord';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
+import useVideoSource from 'hooks/useUpdateVideoSource';
 
 import styles from './PiPWindow.module.css';
 
@@ -26,6 +27,7 @@ const PiPWindow = () => {
   } = useRecording();
 
   const { cameraStream } = useStreams();
+  const updateCameraSource = useVideoSource(cameraStream);
   const { pipWindow, exitPipWindow } = usePictureInPicture();
 
   const cssCacheRef = useRef<EmotionCache | null>(null);
@@ -47,11 +49,7 @@ const PiPWindow = () => {
       <div className={styles.root}>
         <video
           className={styles.camera}
-          ref={(videoElement) => {
-            if (videoElement) {
-              videoElement.srcObject = cameraStream;
-            }
-          }}
+          ref={updateCameraSource}
           autoPlay
           playsInline
           muted

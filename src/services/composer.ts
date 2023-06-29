@@ -1,3 +1,8 @@
+export const CAMERA_WIDTH = 200;
+export const CAMERA_HEIGHT = 200;
+export const CAMERA_MARGIN_RIGHT = 50;
+export const CAMERA_MARGIN_BOTTOM = 50;
+
 export const composeStreams = (
   cameraStream: MediaStream | null,
   screenshareStream: MediaStream
@@ -47,23 +52,26 @@ export const composeStreams = (
           ctx.drawImage(latestScreenshareFrame, 0, 0);
         }
 
-        const cameraWidth = cameraFrame.displayWidth;
-        const cameraHeight = cameraFrame.displayHeight;
-
         ctx.beginPath();
-        ctx.arc(canvas.width - 150, canvas.height - 150, 100, 0, 2 * Math.PI);
+        ctx.arc(
+          canvas.width - CAMERA_WIDTH / 2 - CAMERA_MARGIN_RIGHT,
+          canvas.height - CAMERA_HEIGHT / 2 - CAMERA_MARGIN_BOTTOM,
+          CAMERA_WIDTH / 2,
+          0,
+          2 * Math.PI
+        );
         ctx.clip();
 
         ctx.drawImage(
           cameraFrame,
-          (cameraWidth - cameraHeight) / 2,
+          (cameraFrame.displayWidth - cameraFrame.displayHeight) / 2,
           0,
-          cameraHeight,
-          cameraHeight,
-          canvas.width - 250,
-          canvas.height - 250,
-          200,
-          200
+          cameraFrame.displayHeight,
+          cameraFrame.displayHeight,
+          canvas.width - CAMERA_WIDTH - CAMERA_MARGIN_RIGHT,
+          canvas.height - CAMERA_HEIGHT - CAMERA_MARGIN_BOTTOM,
+          CAMERA_WIDTH,
+          CAMERA_HEIGHT
         );
 
         ctx.restore();
