@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.companyName {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.companyName .logo {
+  margin-bottom: -1px;
+  font-size: 10px;
+}
+
+.recordButton .logo {
+  font-size: 16px;
+}
