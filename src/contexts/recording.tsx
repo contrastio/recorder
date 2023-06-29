@@ -28,9 +28,6 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const mediaRecorder = useRef<MediaRecorder>();
 
   const startRecording = async () => {
-    console.log('startRecording');
-    console.log({ document: window.document });
-
     if (!screenshareStream) return;
 
     setIsRecording(true);
@@ -63,21 +60,17 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   };
 
   const stopRecording = () => {
-    console.log('stopRecording');
-
     setIsRecording(false);
     mediaRecorder.current?.stop();
   };
 
   const pauseRecording = () => {
     setIsPaused(true);
-    console.log('pauseRecording');
     mediaRecorder.current?.pause();
   };
 
   const resumeRecording = () => {
     setIsPaused(false);
-    console.log('resumeRecording');
     mediaRecorder.current?.resume();
   };
 
