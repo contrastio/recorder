@@ -6,7 +6,8 @@ import { useStreams } from 'contexts/streams';
 import styles from './Toolbar.module.css';
 
 const Toolbar = () => {
-  const { setCameraStream, setScreenshareStream } = useStreams();
+  const { screenshareStream, setCameraStream, setScreenshareStream } =
+    useStreams();
   const { requestPipWindow, exitPipWindow } = usePictureInPicture();
 
   const getCamera = async () => {
@@ -20,12 +21,17 @@ const Toolbar = () => {
   const getScreenShare = async () => {
     await requestPipWindow();
     try {
-      // TODO Set screenshare stream to null when stopping the screenshare
-      // TODO Handle when a screenshare is already active and trying to create a new one
+      if (screenshareStream) {
+        screenshareStream.getTracks().forEach((track) => track.stop());
+      }
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false,
       });
+      stream.getVideoTracks()[0].onended = () => {
+        setScreenshareStream(null);
+        exitPipWindow();
+      };
       setScreenshareStream(stream);
     } catch {
       // Happens when the user aborts the screenshare
