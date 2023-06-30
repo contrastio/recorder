@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useUpdateVideoSource';
 import {
@@ -20,6 +21,8 @@ type ScreenshareSize = {
 
 const VideoStreams = () => {
   const { cameraStream, screenshareStream } = useStreams();
+  const { recordingStream } = useRecording();
+  const updateRecordingSource = useVideoSource(recordingStream);
   const updateCameraSource = useVideoSource(cameraStream);
   const updateScreenshareSource = useVideoSource(screenshareStream);
   const [screenshareSize, setScreenshareSize] =
@@ -31,16 +34,27 @@ const VideoStreams = () => {
   const screenshareWidth = screenshareSize?.width ?? 1920;
   const screenshareHeight = screenshareSize?.height ?? 1080;
 
+  if (recordingStream) {
+    return (
+      <video
+        className={styles.mainVideo}
+        ref={updateRecordingSource}
+        autoPlay
+        playsInline
+        muted
+      />
+    );
+  }
+
   return (
     <>
       {screenshareStream && (
         <video
+          className={styles.mainVideo}
           ref={updateScreenshareSource}
-          className={styles.screenshare}
           autoPlay
           playsInline
           muted
-          controls={false}
           // The 'resize' event exists on HTMLMediaElement and is exactly what we need here:
           // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement#events
           //
@@ -62,8 +76,8 @@ const VideoStreams = () => {
       */}
       {cameraStream && (!screenshareStream || screenshareSize) && (
         <video
-          ref={updateCameraSource}
           className={styles.camera}
+          ref={updateCameraSource}
           style={{
             right: percentage(CAMERA_MARGIN_RIGHT / screenshareWidth),
             bottom: percentage(CAMERA_MARGIN_BOTTOM / screenshareHeight),
@@ -77,7 +91,6 @@ const VideoStreams = () => {
           autoPlay
           playsInline
           muted
-          controls={false}
         />
       )}
     </>

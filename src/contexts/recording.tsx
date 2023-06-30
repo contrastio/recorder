@@ -5,6 +5,7 @@ import { composeStreams } from 'services/composer';
 import { useStreams } from './streams';
 
 type RecordingContextType = {
+  recordingStream: MediaStream | null;
   isRecording: boolean;
   isPaused: boolean;
   startRecording: () => void;
@@ -21,6 +22,9 @@ type RecordingProviderProps = {
   children: React.ReactNode;
 };
 export const RecordingProvider = ({ children }: RecordingProviderProps) => {
+  const [recordingStream, setRecordingStream] = useState<MediaStream | null>(
+    null
+  );
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const { cameraStream, screenshareStream } = useStreams();
@@ -33,6 +37,9 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
     setIsRecording(true);
 
     const composedStream = composeStreams(cameraStream, screenshareStream);
+
+    setRecordingStream(composedStream);
+
     mediaRecorder.current = new MediaRecorder(composedStream, {
       mimeType: 'video/webm; codecs=vp9',
       videoBitsPerSecond: 8e6,
@@ -45,6 +52,8 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
     };
 
     mediaRecorder.current.onstop = () => {
+      setRecordingStream(null);
+
       const blob = new Blob(chunks);
 
       const url = URL.createObjectURL(blob);
@@ -77,6 +86,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   return (
     <RecordingContext.Provider
       value={{
+        recordingStream,
         isRecording,
         isPaused,
         startRecording,

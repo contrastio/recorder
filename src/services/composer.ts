@@ -54,12 +54,12 @@ export const composeStreams = (
         }
 
         ctx.beginPath();
-        ctx.arc(
-          canvas.width - CAMERA_WIDTH / 2 - CAMERA_MARGIN_RIGHT,
-          canvas.height - CAMERA_HEIGHT / 2 - CAMERA_MARGIN_BOTTOM,
-          CAMERA_WIDTH / 2,
-          0,
-          2 * Math.PI
+        ctx.roundRect(
+          canvas.width - CAMERA_WIDTH - CAMERA_MARGIN_RIGHT,
+          canvas.height - CAMERA_HEIGHT - CAMERA_MARGIN_BOTTOM,
+          CAMERA_WIDTH,
+          CAMERA_HEIGHT,
+          CAMERA_BORDER_RADIUS
         );
         ctx.clip();
 
