@@ -7,7 +7,9 @@ const button: Components<CssVarsTheme>['MuiButton'] = {
     disableRipple: true,
   },
   styleOverrides: {
-    contained: { borderRadius: 100 },
+    root: { borderRadius: 100 },
+    sizeLarge: { padding: '11px 24px' },
+    startIcon: { marginRight: 10 },
   },
 };
 
