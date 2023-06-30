@@ -1,42 +1,13 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useRef } from 'react';
 
 import ContrastLogo from 'components/icons/ContrastLogo';
-import { usePictureInPicture } from 'contexts/pictureInPicture';
-import { useStreams } from 'contexts/streams';
+import { useScreenshare } from 'contexts/screenshare';
 
 import styles from './Footer.module.css';
 
 const Footer = () => {
-  const { screenshareStream, setScreenshareStream } = useStreams();
-  const { pipWindow, requestPipWindow } = usePictureInPicture();
-
-  const pipWindowRef = useRef(pipWindow);
-  pipWindowRef.current = pipWindow;
-
-  const onRecordButtonClick = async () => {
-    if (!pipWindowRef.current) {
-      pipWindowRef.current = await requestPipWindow();
-    }
-    if (screenshareStream) {
-      return;
-    }
-    try {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: false,
-      });
-      stream.getVideoTracks()[0].onended = () => {
-        setScreenshareStream(null);
-        pipWindowRef.current?.close();
-      };
-      setScreenshareStream(stream);
-    } catch {
-      // Happens when the user aborts the screenshare
-      pipWindowRef.current?.close();
-    }
-  };
+  const { startScreenshare } = useScreenshare();
 
   return (
     <footer className={styles.root}>
@@ -52,7 +23,7 @@ const Footer = () => {
         variant="contained"
         color="primary"
         startIcon={<ContrastLogo />}
-        onClick={onRecordButtonClick}
+        onClick={startScreenshare}
       >
         record
       </Button>

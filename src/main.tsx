@@ -9,6 +9,7 @@ import { createRoot } from 'react-dom/client';
 import Compose from 'components/Compose';
 import { PictureInPictureProvider } from 'contexts/pictureInPicture';
 import { RecordingProvider } from 'contexts/recording';
+import { ScreenshareProvider } from 'contexts/screenshare';
 import { StreamsProvider } from 'contexts/streams';
 
 import App from './App';
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
             StreamsProvider,
             RecordingProvider,
             PictureInPictureProvider,
+            ScreenshareProvider,
           ]}
         >
           <App />
