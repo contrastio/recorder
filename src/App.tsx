@@ -4,10 +4,8 @@ import {
   StyledEngineProvider,
 } from '@mui/material/styles';
 
-import Header from 'components/Header';
+import Footer from 'components/Footer';
 import PiPWindow from 'components/PiPWindow';
-import Toolbar from 'components/Toolbar';
-import VideoStreams from 'components/VideoStreams';
 import { PictureInPictureProvider } from 'contexts/pictureInPicture';
 import { RecordingProvider } from 'contexts/recording';
 import { StreamsProvider } from 'contexts/streams';
@@ -21,18 +19,16 @@ const App = () => {
     <StyledEngineProvider injectFirst>
       <CssVarsProvider theme={theme} defaultMode="dark">
         <CssBaseline />
-        <Header />
-        <main className={styles.main}>
-          <StreamsProvider>
-            <RecordingProvider>
-              <PictureInPictureProvider>
-                <VideoStreams />
-                <Toolbar />
-                <PiPWindow />
-              </PictureInPictureProvider>
-            </RecordingProvider>
-          </StreamsProvider>
-        </main>
+        <StreamsProvider>
+          <RecordingProvider>
+            <PictureInPictureProvider>
+              {/* <VideoStreams /> */}
+              <main className={styles.main} />
+              <Footer />
+              <PiPWindow />
+            </PictureInPictureProvider>
+          </RecordingProvider>
+        </StreamsProvider>
       </CssVarsProvider>
     </StyledEngineProvider>
   );

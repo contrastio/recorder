@@ -5,6 +5,7 @@ import { useStreams } from 'contexts/streams';
 
 import styles from './Toolbar.module.css';
 
+// TODO Remove and use Footer instead
 const Toolbar = () => {
   const { screenshareStream, setCameraStream, setScreenshareStream } =
     useStreams();

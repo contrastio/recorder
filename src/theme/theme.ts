@@ -1,27 +1,15 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
 import button from './button';
+import colorSchemes from './colorSchemes';
 import tooltip from './tooltip';
+import typography, { fontFaces } from './typography';
 
 const theme = extendTheme({
-  typography: {
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    button: {
-      textTransform: undefined,
-    },
-  },
+  colorSchemes,
+  typography,
   components: {
+    MuiCssBaseline: { styleOverrides: fontFaces },
     MuiButton: button,
     MuiTooltip: tooltip,
   },

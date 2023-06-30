@@ -28,7 +28,7 @@ const VideoStreams = () => {
   });
 
   return (
-    <div
+    <main
       className={cx(styles.root, { [styles.placeholder]: !screenshareStream })}
     >
       <div className={styles.preview}>
@@ -71,7 +71,7 @@ const VideoStreams = () => {
           />
         )}
       </div>
-    </div>
+    </main>
   );
 };
 
