@@ -37,7 +37,7 @@
         ],
         "pathGroups": [
           {
-            "pattern": "./**/*.module.css",
+            "pattern": "./**/*.css",
             "group": "sibling",
             "position": "after"
           }
