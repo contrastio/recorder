@@ -1,7 +1,9 @@
 .root {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   justify-content: space-between;
+  column-gap: 8px;
 }
 
 .companyName {
