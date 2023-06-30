@@ -9,10 +9,10 @@ import styles from './Footer.module.css';
 
 const Footer = () => {
   const { screenshareStream, setScreenshareStream } = useStreams();
-  const { exitPipWindow } = usePictureInPicture();
+  const { requestPipWindow, exitPipWindow } = usePictureInPicture();
 
   const getScreenShare = async () => {
-    // await requestPipWindow();
+    await requestPipWindow();
     try {
       if (screenshareStream) {
         screenshareStream.getTracks().forEach((track) => track.stop());

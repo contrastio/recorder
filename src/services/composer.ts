@@ -1,7 +1,8 @@
-export const CAMERA_WIDTH = 200;
-export const CAMERA_HEIGHT = 200;
-export const CAMERA_MARGIN_RIGHT = 50;
-export const CAMERA_MARGIN_BOTTOM = 50;
+export const CAMERA_WIDTH = 240;
+export const CAMERA_HEIGHT = 240;
+export const CAMERA_BORDER_RADIUS = 8;
+export const CAMERA_MARGIN_RIGHT = 40;
+export const CAMERA_MARGIN_BOTTOM = 40;
 
 export const composeStreams = (
   cameraStream: MediaStream | null,

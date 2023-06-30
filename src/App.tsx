@@ -1,15 +1,21 @@
 import cx from 'classnames';
+import { useEffect } from 'react';
 
 import Footer from 'components/Footer';
 import PiPWindow from 'components/PiPWindow';
+import VideoStreams from 'components/VideoStreams';
 import { useStreams } from 'contexts/streams';
-import useVideoSource from 'hooks/useUpdateVideoSource';
 
 import styles from './App.module.css';
 
 const App = () => {
-  const { screenshareStream } = useStreams();
-  const updateScreenshareSource = useVideoSource(screenshareStream);
+  const { screenshareStream, setCameraStream } = useStreams();
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then(setCameraStream);
+  }, [setCameraStream]);
 
   return (
     <div
@@ -17,18 +23,8 @@ const App = () => {
         [styles.placeholder]: !screenshareStream,
       })}
     >
-      {/* <VideoStreams /> */}
       <main className={styles.main}>
-        {screenshareStream && (
-          <video
-            ref={updateScreenshareSource}
-            className={styles.video}
-            autoPlay
-            playsInline
-            muted
-            controls={false}
-          />
-        )}
+        <VideoStreams />
       </main>
       <Footer />
       <PiPWindow />
