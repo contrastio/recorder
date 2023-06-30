@@ -59,7 +59,7 @@ const VideoStreams = () => {
       )}
 
       {/*
-        If the screenshare stream is define but its size hasn't been retrieved yet,
+        If the screenshare stream is defined but its size hasn't been retrieved yet,
         we don't render the camera stream
       */}
       {cameraStream && (!screenshareStream || screenshareSize) && (
