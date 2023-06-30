@@ -19,18 +19,16 @@ const App = () => {
     >
       {/* <VideoStreams /> */}
       <main className={styles.main}>
-        <div className={styles.preview}>
-          {screenshareStream && (
-            <video
-              ref={updateScreenshareSource}
-              className={styles.video}
-              autoPlay
-              playsInline
-              muted
-              controls={false}
-            />
-          )}
-        </div>
+        {screenshareStream && (
+          <video
+            ref={updateScreenshareSource}
+            className={styles.video}
+            autoPlay
+            playsInline
+            muted
+            controls={false}
+          />
+        )}
       </main>
       <Footer />
       <PiPWindow />

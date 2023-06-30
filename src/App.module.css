@@ -15,27 +15,17 @@
 }
 
 .main {
-  display: flex;
-  justify-content: center;
-
-  .placeholder & {
-    justify-self: center;
-    max-width: 100%;
-    max-height: 100%;
-    aspect-ratio: 16 / 9;
-  }
-}
-
-.preview {
+  justify-self: center;
   border: 1px solid var(--mui-palette-divider);
   border-radius: 12px;
+  max-width: 100%;
   max-height: 100%;
   overflow: hidden;
   line-height: 0;
 
   .placeholder & {
-    flex: 1;
     background-color: var(--mui-palette-secondary-main);
+    aspect-ratio: 16 / 9;
   }
 }
 
