@@ -1,11 +1,10 @@
-import { createContext, useContext, useRef, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 import { useRecording } from './recording';
 
 type PictureInPictureContextType = {
   pipWindow: Window | null;
-  requestPipWindow: () => Promise<void>;
-  exitPipWindow: () => void;
+  requestPipWindow: () => Promise<Window>;
 };
 
 const PictureInPictureContext = createContext<
@@ -20,16 +19,7 @@ export const PictureInPictureProvider = ({
   children,
 }: PictureInPictureProviderProps) => {
   const { stopRecording } = useRecording();
-  const [pipWindow, _setPipWindow] = useState<Window | null>(null);
-
-  // Required to fix a race condition when trying to close the window before
-  // setPipWindow had a chance to update the state
-  const pipWindowRef = useRef<Window | null>(null);
-
-  const updatePipWindow = (pipWindow: Window | null) => {
-    pipWindowRef.current = pipWindow;
-    _setPipWindow(pipWindow);
-  };
+  const [pipWindow, setPipWindow] = useState<Window | null>(null);
 
   const requestPipWindow = async () => {
     const pipWindow = await window.documentPictureInPicture.requestWindow({
@@ -39,7 +29,7 @@ export const PictureInPictureProvider = ({
 
     pipWindow.onpagehide = () => {
       stopRecording();
-      updatePipWindow(null);
+      setPipWindow(null);
     };
 
     const allCSS = [...document.styleSheets]
@@ -52,18 +42,13 @@ export const PictureInPictureProvider = ({
     style.textContent = allCSS;
     pipWindow.document.head.appendChild(style);
 
-    updatePipWindow(pipWindow);
-  };
+    setPipWindow(pipWindow);
 
-  const exitPipWindow = () => {
-    pipWindowRef.current?.close();
-    updatePipWindow(null);
+    return pipWindow;
   };
 
   return (
-    <PictureInPictureContext.Provider
-      value={{ pipWindow, requestPipWindow, exitPipWindow }}
-    >
+    <PictureInPictureContext.Provider value={{ pipWindow, requestPipWindow }}>
       {children}
     </PictureInPictureContext.Provider>
   );

@@ -21,14 +21,13 @@ const PiPWindow = () => {
     isRecording,
     isPaused,
     startRecording,
-    stopRecording,
     pauseRecording,
     resumeRecording,
   } = useRecording();
 
   const { cameraStream } = useStreams();
   const updateCameraSource = useVideoSource(cameraStream);
-  const { pipWindow, exitPipWindow } = usePictureInPicture();
+  const { pipWindow } = usePictureInPicture();
 
   const cssCacheRef = useRef<EmotionCache | null>(null);
 
@@ -61,8 +60,7 @@ const PiPWindow = () => {
               color="error"
               onClick={() => {
                 if (isRecording) {
-                  stopRecording();
-                  exitPipWindow();
+                  pipWindow.close();
                 } else {
                   startRecording();
                 }

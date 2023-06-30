@@ -9,26 +9,27 @@ import styles from './Footer.module.css';
 
 const Footer = () => {
   const { screenshareStream, setScreenshareStream } = useStreams();
-  const { requestPipWindow, exitPipWindow } = usePictureInPicture();
+  const { pipWindow, requestPipWindow } = usePictureInPicture();
 
   const getScreenShare = async () => {
-    await requestPipWindow();
+    if (screenshareStream) {
+      screenshareStream.getTracks().forEach((track) => track.stop());
+      setScreenshareStream(null);
+    }
+    const latestPipWindow = pipWindow || (await requestPipWindow());
     try {
-      if (screenshareStream) {
-        screenshareStream.getTracks().forEach((track) => track.stop());
-      }
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false,
       });
       stream.getVideoTracks()[0].onended = () => {
         setScreenshareStream(null);
-        exitPipWindow();
+        latestPipWindow.close();
       };
       setScreenshareStream(stream);
     } catch {
       // Happens when the user aborts the screenshare
-      exitPipWindow();
+      latestPipWindow.close();
     }
   };
 
