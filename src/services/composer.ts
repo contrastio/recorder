@@ -36,7 +36,7 @@ export const composeStreams = (
       async transform(cameraFrame: VideoFrame, controller) {
         if (latestScreenshareFrame) {
           // Awaiting the read operation would block the recording until
-          // the next frame, which could come way later when the screen share
+          // the next frame, which could come way later when the screenshare
           // is fully static
           screenshareReader.read().then(({ value: screenshareFrame }) => {
             latestScreenshareFrame?.close();
