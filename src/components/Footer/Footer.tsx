@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useRef } from 'react';
 
 import ContrastLogo from 'components/icons/ContrastLogo';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
@@ -11,12 +12,16 @@ const Footer = () => {
   const { screenshareStream, setScreenshareStream } = useStreams();
   const { pipWindow, requestPipWindow } = usePictureInPicture();
 
-  const getScreenShare = async () => {
-    if (screenshareStream) {
-      screenshareStream.getTracks().forEach((track) => track.stop());
-      setScreenshareStream(null);
+  const pipWindowRef = useRef(pipWindow);
+  pipWindowRef.current = pipWindow;
+
+  const onRecordButtonClick = async () => {
+    if (!pipWindowRef.current) {
+      pipWindowRef.current = await requestPipWindow();
     }
-    const latestPipWindow = pipWindow || (await requestPipWindow());
+    if (screenshareStream) {
+      return;
+    }
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
@@ -24,12 +29,12 @@ const Footer = () => {
       });
       stream.getVideoTracks()[0].onended = () => {
         setScreenshareStream(null);
-        latestPipWindow.close();
+        pipWindowRef.current?.close();
       };
       setScreenshareStream(stream);
     } catch {
       // Happens when the user aborts the screenshare
-      latestPipWindow.close();
+      pipWindowRef.current?.close();
     }
   };
 
@@ -47,7 +52,7 @@ const Footer = () => {
         className={styles.recordButton}
         color="primary"
         startIcon={<ContrastLogo className={styles.logo} />}
-        onClick={getScreenShare}
+        onClick={onRecordButtonClick}
       >
         record
       </Button>
