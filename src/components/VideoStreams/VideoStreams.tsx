@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Placeholder from 'components/Placeholder/Placeholder';
-import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useUpdateVideoSource';
 import {
@@ -22,8 +21,6 @@ type ScreenshareSize = {
 
 const VideoStreams = () => {
   const { cameraStream, screenshareStream } = useStreams();
-  const { recordingStream } = useRecording();
-  const updateRecordingSource = useVideoSource(recordingStream);
   const updateCameraSource = useVideoSource(cameraStream);
   const updateScreenshareSource = useVideoSource(screenshareStream);
   const [screenshareSize, setScreenshareSize] =
@@ -35,23 +32,11 @@ const VideoStreams = () => {
   const screenshareWidth = screenshareSize?.width ?? 1920;
   const screenshareHeight = screenshareSize?.height ?? 1080;
 
-  if (recordingStream) {
-    return (
-      <video
-        className={styles.mainVideo}
-        ref={updateRecordingSource}
-        autoPlay
-        playsInline
-        muted
-      />
-    );
-  }
-
   return (
     <>
       {screenshareStream ? (
         <video
-          className={styles.mainVideo}
+          className={styles.screenshare}
           ref={updateScreenshareSource}
           autoPlay
           playsInline

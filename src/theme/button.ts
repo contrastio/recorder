@@ -5,7 +5,6 @@ const button: Components<CssVarsTheme>['MuiButton'] = {
     variant: 'outlined',
     size: 'large',
     color: 'inherit',
-    disableRipple: true,
   },
   styleOverrides: {
     root: {

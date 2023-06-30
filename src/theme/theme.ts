@@ -10,6 +10,7 @@ const theme = extendTheme({
   typography,
   components: {
     MuiCssBaseline: { styleOverrides: fontFaces },
+    MuiButtonBase: { defaultProps: { disableRipple: true } },
     MuiButton: button,
     MuiTooltip: tooltip,
   },

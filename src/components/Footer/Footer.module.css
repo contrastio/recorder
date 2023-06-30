@@ -16,3 +16,26 @@
   margin-bottom: -1px;
   font-size: 10px;
 }
+
+.recordButton {
+  box-sizing: content-box;
+  border: 2px solid var(--mui-palette-text-secondary);
+  padding: 0;
+  width: 52px;
+  height: 52px;
+}
+
+.recordIcon {
+  transition: all 300ms ease-in-out;
+  border-radius: 50%;
+  box-shadow: 0 0 24px 8px rgb(var(--mui-palette-primary-mainChannel) / 41%);
+  background-color: var(--mui-palette-primary-main);
+  width: 46px;
+  height: 46px;
+
+  .recording & {
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+  }
+}
