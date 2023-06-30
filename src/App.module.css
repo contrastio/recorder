@@ -25,7 +25,6 @@
   line-height: 0;
 
   .placeholder & {
-    background-color: var(--mui-palette-secondary-main);
     aspect-ratio: 16 / 9;
   }
 }

@@ -4,6 +4,7 @@
   align-content: center;
   justify-items: center;
   row-gap: 16px;
+  background-color: var(--mui-palette-secondary-main);
   height: 100%;
   color: var(--mui-palette-secondary-contrastText);
 }
