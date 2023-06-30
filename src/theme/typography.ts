@@ -8,6 +8,7 @@ import GilroySemiBold from './fonts/Gilroy-SemiBold.ttf';
 const typography: TypographyOptions = {
   fontFamily: 'Gilroy, Arial',
   button: {
+    fontWeight: 600,
     textTransform: undefined,
   },
 };

@@ -44,14 +44,14 @@ const Footer = () => {
       <Typography component="span" variant="subtitle2" color="text.secondary">
         Powered by{' '}
         <span className={styles.companyName}>
-          c<ContrastLogo className={styles.logo} />
+          c<ContrastLogo className={styles.companyLogo} />
           ntrast
         </span>
       </Typography>
       <Button
-        className={styles.recordButton}
+        variant="contained"
         color="primary"
-        startIcon={<ContrastLogo className={styles.logo} />}
+        startIcon={<ContrastLogo />}
         onClick={onRecordButtonClick}
       >
         record

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Placeholder from 'components/Placeholder/Placeholder';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useUpdateVideoSource';
@@ -48,7 +49,7 @@ const VideoStreams = () => {
 
   return (
     <>
-      {screenshareStream && (
+      {screenshareStream ? (
         <video
           className={styles.mainVideo}
           ref={updateScreenshareSource}
@@ -68,6 +69,8 @@ const VideoStreams = () => {
             });
           }}
         />
+      ) : (
+        <Placeholder />
       )}
 
       {/*

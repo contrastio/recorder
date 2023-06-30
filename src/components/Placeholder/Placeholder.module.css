@@ -1,0 +1,14 @@
+.root {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  justify-items: center;
+  row-gap: 16px;
+  height: 100%;
+  color: var(--mui-palette-secondary-contrastText);
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+}
