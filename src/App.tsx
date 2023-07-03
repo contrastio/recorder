@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { useEffect } from 'react';
 
 import Footer from 'components/Footer';
 import PiPWindow from 'components/PiPWindow';
@@ -9,13 +8,17 @@ import { useStreams } from 'contexts/streams';
 import styles from './App.module.css';
 
 const App = () => {
-  const { screenshareStream, setCameraStream } = useStreams();
+  const { screenshareStream /* , setCameraStream */ } = useStreams();
 
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then(setCameraStream);
-  }, [setCameraStream]);
+  // TODO Get selected devices streams
+  // useEffect(() => {
+  //   navigator.mediaDevices
+  //     .getUserMedia({
+  //       video: true,
+  //       audio: true,
+  //     })
+  //     .then(setCameraStream);
+  // }, [setCameraStream]);
 
   return (
     <div

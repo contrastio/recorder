@@ -15,5 +15,10 @@ export const outlinedInput: Components<CssVarsTheme>['MuiOutlinedInput'] = {
     root: {
       borderRadius: 100,
     },
+    notchedOutline: {
+      '.MuiOutlinedInput-root.Mui-focused &': {
+        borderColor: 'var(--mui-palette-text-primary)',
+      },
+    },
   },
 };
