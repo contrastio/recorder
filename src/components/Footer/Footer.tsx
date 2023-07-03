@@ -5,12 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import cx from 'classnames';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import ContrastLogo from 'components/icons/ContrastLogo';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useScreenshare } from 'contexts/screenshare';
+import { useStreams } from 'contexts/streams';
 
 import styles from './Footer.module.css';
 
@@ -53,6 +54,7 @@ const requestDevicesPermissions = async () => {
 };
 
 const Footer = () => {
+  const { cameraStream, setCameraStream } = useStreams();
   const { isRecording, startRecording } = useRecording();
   const { pipWindow } = usePictureInPicture();
   const { startScreenshare } = useScreenshare();
@@ -63,21 +65,64 @@ const Footer = () => {
   const [videoInputId, setVideoInputId] = useState('');
   const [audioInputId, setAudioInputId] = useState('');
 
+  const cameraStreamRef = useRef(cameraStream);
+  const videoInputIdRef = useRef(videoInputId);
+  const audioInputIdRef = useRef(audioInputId);
+  cameraStreamRef.current = cameraStream;
+  videoInputIdRef.current = videoInputId;
+  audioInputIdRef.current = audioInputId;
+
+  const getCamera = useCallback(
+    async (videoInputId: string, audioInputId: string) => {
+      if (
+        videoInputId === videoInputIdRef.current &&
+        audioInputId === audioInputIdRef.current
+      ) {
+        return;
+      }
+      cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
+      if (videoInputId || audioInputId) {
+        // TODO Avoid loosing the current camera/microphone while switching
+        //      Could we rely on applyConstraints instead?
+        const cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: videoInputId
+            ? {
+                deviceId: videoInputId,
+                aspectRatio: 16 / 9,
+                width: 3840,
+                height: 2160,
+              }
+            : false,
+          audio: audioInputId
+            ? {
+                deviceId: audioInputId,
+              }
+            : false,
+        });
+        setCameraStream(cameraStream);
+      } else {
+        setCameraStream(null);
+      }
+    },
+    [setCameraStream]
+  );
+
   useEffect(() => {
     const updateInputId = (
       inputs: MediaDeviceInfo[],
       preferredInputId: string,
       setInputId: React.Dispatch<React.SetStateAction<string>>
     ) => {
+      let inputId = '';
       if (inputs.some((input) => input.deviceId === preferredInputId)) {
-        setInputId(preferredInputId);
+        inputId = preferredInputId;
       } else if (inputs.some((input) => input.deviceId === 'default')) {
-        setInputId('default');
+        inputId = 'default';
       } else if (inputs.length) {
-        setInputId(inputs[0].deviceId);
-      } else {
-        setInputId('');
+        inputId = inputs[0].deviceId;
       }
+      setInputId(inputId);
+      return inputId;
     };
 
     const updateDevices = async () => {
@@ -90,11 +135,20 @@ const Footer = () => {
         (device) =>
           device.kind === 'audioinput' && device.deviceId && device.label
       );
-      const { videoInputId, audioInputId } = getDevicePreferences();
+      const preferences = getDevicePreferences();
       setVideoInputs(videoInputs);
       setAudioInputs(audioInputs);
-      updateInputId(videoInputs, videoInputId, setVideoInputId);
-      updateInputId(audioInputs, audioInputId, setAudioInputId);
+      const videoInputId = updateInputId(
+        videoInputs,
+        preferences.videoInputId,
+        setVideoInputId
+      );
+      const audioInputId = updateInputId(
+        audioInputs,
+        preferences.audioInputId,
+        setAudioInputId
+      );
+      await getCamera(videoInputId, audioInputId);
     };
 
     (async () => {
@@ -106,7 +160,7 @@ const Footer = () => {
     return () => {
       navigator.mediaDevices.removeEventListener('devicechange', updateDevices);
     };
-  }, []);
+  }, [getCamera]);
 
   return (
     <footer className={cx(styles.root, { [styles.recording]: isRecording })}>
@@ -136,12 +190,14 @@ const Footer = () => {
         <Select
           startAdornment={<MicIcon />}
           value={audioInputId}
-          onChange={(event) => {
+          onChange={async (event) => {
             const audioInputId = event.target.value;
             updateDevicePreferences({ audioInputId });
             setAudioInputId(audioInputId);
+            await getCamera(videoInputId, audioInputId);
           }}
         >
+          {/* TODO Handle no devices detected */}
           {audioInputs.map((audioInput) => (
             <MenuItem key={audioInput.deviceId} value={audioInput.deviceId}>
               {audioInput.label}
@@ -151,12 +207,14 @@ const Footer = () => {
         <Select
           startAdornment={<VideocamIcon />}
           value={videoInputId}
-          onChange={(event) => {
+          onChange={async (event) => {
             const videoInputId = event.target.value;
             updateDevicePreferences({ videoInputId });
             setVideoInputId(videoInputId);
+            await getCamera(videoInputId, audioInputId);
           }}
         >
+          {/* TODO Handle no devices detected */}
           {videoInputs.map((videoInput) => (
             <MenuItem key={videoInput.deviceId} value={videoInput.deviceId}>
               {videoInput.label}

@@ -8,17 +8,7 @@ import { useStreams } from 'contexts/streams';
 import styles from './App.module.css';
 
 const App = () => {
-  const { screenshareStream /* , setCameraStream */ } = useStreams();
-
-  // TODO Get selected devices streams
-  // useEffect(() => {
-  //   navigator.mediaDevices
-  //     .getUserMedia({
-  //       video: true,
-  //       audio: true,
-  //     })
-  //     .then(setCameraStream);
-  // }, [setCameraStream]);
+  const { screenshareStream } = useStreams();
 
   return (
     <div
