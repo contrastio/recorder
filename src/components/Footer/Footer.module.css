@@ -19,6 +19,7 @@
 
 .recordButton {
   box-sizing: content-box;
+  margin-block: -4px;
   border: 2px solid var(--mui-palette-text-secondary);
   padding: 0;
   width: 52px;
@@ -38,4 +39,10 @@
     width: 24px;
     height: 24px;
   }
+}
+
+.devices {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 8px;
 }

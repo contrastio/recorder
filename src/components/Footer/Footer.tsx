@@ -1,4 +1,8 @@
+import MicIcon from '@mui/icons-material/MicNone';
+import VideocamIcon from '@mui/icons-material/VideocamOutlined';
 import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import cx from 'classnames';
 
@@ -38,7 +42,16 @@ const Footer = () => {
       >
         <div className={styles.recordIcon} />
       </IconButton>
-      <div>{/* TODO Device settings */}</div>
+      <div className={styles.devices}>
+        <Select startAdornment={<MicIcon />}>
+          {/* TODO Detect audio input devices */}
+          <MenuItem />
+        </Select>
+        <Select startAdornment={<VideocamIcon />}>
+          {/* TODO Detect video devices */}
+          <MenuItem />
+        </Select>
+      </div>
     </footer>
   );
 };
