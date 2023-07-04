@@ -2,23 +2,16 @@ import MicIcon from '@mui/icons-material/MicNone';
 import MicOffIcon from '@mui/icons-material/MicOffOutlined';
 import VideocamOffIcon from '@mui/icons-material/VideocamOffOutlined';
 import VideocamIcon from '@mui/icons-material/VideocamOutlined';
-import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import cx from 'classnames';
 
 import Company from 'components/Company';
+import RecordButton from 'components/RecordButton';
 import { useMediaDevices } from 'contexts/mediaDevices';
-import { usePictureInPicture } from 'contexts/pictureInPicture';
-import { useRecording } from 'contexts/recording';
-import { useScreenshare } from 'contexts/screenshare';
 
 import styles from './Footer.module.css';
 
 const Footer = () => {
-  const { isRecording, startRecording } = useRecording();
-  const { pipWindow } = usePictureInPicture();
-  const { startScreenshare } = useScreenshare();
   const {
     cameras,
     cameraId,
@@ -33,22 +26,9 @@ const Footer = () => {
   } = useMediaDevices();
 
   return (
-    <footer className={cx(styles.root, { [styles.recording]: isRecording })}>
+    <footer className={styles.root}>
       <Company />
-      <IconButton
-        className={styles.recordButton}
-        onClick={() => {
-          if (!isRecording && !pipWindow) {
-            startScreenshare();
-          } else if (!isRecording && pipWindow) {
-            startRecording();
-          } else if (isRecording && pipWindow) {
-            pipWindow.close();
-          }
-        }}
-      >
-        <div className={styles.recordIcon} />
-      </IconButton>
+      <RecordButton />
       <div className={styles.devices}>
         <Select
           className={styles.device}
