@@ -80,11 +80,12 @@ const Footer = () => {
       ) {
         return;
       }
-      cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
+      let cameraStream: MediaStream | null = null;
       if (videoInputId || audioInputId) {
         // TODO Avoid loosing the current camera/microphone while switching
-        //      Could we rely on applyConstraints instead?
-        const cameraStream = await navigator.mediaDevices.getUserMedia({
+        //      Can't rely on applyConstraints so would need to handle
+        //      2 separated streams if needed
+        cameraStream = await navigator.mediaDevices.getUserMedia({
           video: videoInputId
             ? {
                 deviceId: videoInputId,
@@ -99,10 +100,9 @@ const Footer = () => {
               }
             : false,
         });
-        setCameraStream(cameraStream);
-      } else {
-        setCameraStream(null);
       }
+      cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
+      setCameraStream(cameraStream);
     },
     [setCameraStream]
   );

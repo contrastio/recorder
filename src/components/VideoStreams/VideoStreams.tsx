@@ -35,6 +35,7 @@ const VideoStreams = () => {
   return (
     <>
       {screenshareStream ? (
+        // TODO Loading state while loading screenshare stream
         <video
           className={styles.screenshare}
           ref={updateScreenshareSource}
@@ -63,6 +64,7 @@ const VideoStreams = () => {
         we don't render the camera stream
       */}
       {cameraStream && (!screenshareStream || screenshareSize) && (
+        // TODO Loading state while loading camera stream
         <video
           className={styles.camera}
           ref={updateCameraSource}
