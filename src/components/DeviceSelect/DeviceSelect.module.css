@@ -1,0 +1,10 @@
+.root {
+  .select {
+    opacity: 0;
+    width: 0;
+  }
+
+  > svg:nth-of-type(1) {
+    cursor: pointer;
+  }
+}
