@@ -7,6 +7,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import Compose from 'components/Compose';
+import { MediaDevicesProvider } from 'contexts/mediaDevices';
 import { PictureInPictureProvider } from 'contexts/pictureInPicture';
 import { RecordingProvider } from 'contexts/recording';
 import { ScreenshareProvider } from 'contexts/screenshare';
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
         <Compose
           components={[
             StreamsProvider,
+            MediaDevicesProvider,
             RecordingProvider,
             PictureInPictureProvider,
             ScreenshareProvider,

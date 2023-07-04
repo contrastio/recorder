@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
+import useCamera from 'hooks/useCamera';
+import useMicrophone from 'hooks/useMicrophone';
 import {
   getAuthorizedDevices,
   getDeviceId,
@@ -7,10 +9,7 @@ import {
 } from 'services/mediaDevices';
 import * as devicePreference from 'services/preference/device';
 
-import useCamera from './useCamera';
-import useMicrophone from './useMicrophone';
-
-export type MediaDevices = {
+type MediaDevicesContextType = {
   cameras: MediaDeviceInfo[];
   cameraId: string;
   microphones: MediaDeviceInfo[];
@@ -19,8 +18,17 @@ export type MediaDevices = {
   setPreferredMicrophone: (deviceId: string) => Promise<void>;
 };
 
-const useMediaDevices = (): MediaDevices => {
-  // TODO Move into a context to ensure they are requested only once
+const MediaDevicesContext = createContext<MediaDevicesContextType | undefined>(
+  undefined
+);
+
+type MediaDevicesProviderProps = {
+  children: React.ReactNode;
+};
+
+export const MediaDevicesProvider = ({
+  children,
+}: MediaDevicesProviderProps) => {
   const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]);
   const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
   const [cameraId, setCameraId] = useState('');
@@ -65,14 +73,30 @@ const useMediaDevices = (): MediaDevices => {
     await getMicrophone(deviceId);
   };
 
-  return {
-    cameras,
-    cameraId,
-    microphones,
-    microphoneId,
-    setPreferredCamera,
-    setPreferredMicrophone,
-  };
+  return (
+    <MediaDevicesContext.Provider
+      value={{
+        cameras,
+        cameraId,
+        microphones,
+        microphoneId,
+        setPreferredCamera,
+        setPreferredMicrophone,
+      }}
+    >
+      {children}
+    </MediaDevicesContext.Provider>
+  );
 };
 
-export default useMediaDevices;
+export const useMediaDevices = (): MediaDevicesContextType => {
+  const context = useContext(MediaDevicesContext);
+
+  if (context === undefined) {
+    throw new Error(
+      'useMediaDevices must be used within a MediaDevicesProvider'
+    );
+  }
+
+  return context;
+};

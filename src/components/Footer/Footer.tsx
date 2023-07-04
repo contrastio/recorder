@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 import cx from 'classnames';
 
 import ContrastLogo from 'components/icons/ContrastLogo';
+import { useMediaDevices } from 'contexts/mediaDevices';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useScreenshare } from 'contexts/screenshare';
-import useMediaDevices from 'hooks/useMediaDevices';
 
 import styles from './Footer.module.css';
 
