@@ -1,4 +1,4 @@
-const localStorageKey = 'devicePreferences';
+const localStorageKey = 'devicePreference';
 
 export type DevicePreference = {
   cameraId: string;

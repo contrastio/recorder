@@ -1,4 +1,6 @@
 import MicIcon from '@mui/icons-material/MicNone';
+import MicOffIcon from '@mui/icons-material/MicOffOutlined';
+import VideocamOffIcon from '@mui/icons-material/VideocamOffOutlined';
 import VideocamIcon from '@mui/icons-material/VideocamOutlined';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
@@ -53,7 +55,7 @@ const Footer = () => {
       </IconButton>
       <div className={styles.devices}>
         <Select
-          startAdornment={<MicIcon />}
+          startAdornment={microphones.length ? <MicIcon /> : <MicOffIcon />}
           value={microphoneId}
           onChange={(event) => setPreferredMicrophone(event.target.value)}
         >
@@ -70,7 +72,9 @@ const Footer = () => {
           )}
         </Select>
         <Select
-          startAdornment={<VideocamIcon />}
+          startAdornment={
+            cameras.length ? <VideocamIcon /> : <VideocamOffIcon />
+          }
           value={cameraId}
           onChange={(event) => setPreferredCamera(event.target.value)}
         >
