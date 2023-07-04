@@ -6,20 +6,21 @@ export const CAMERA_MARGIN_BOTTOM = 40;
 
 export const composeStreams = (
   cameraStream: MediaStream | null,
+  microphoneStream: MediaStream | null,
   screenshareStream: MediaStream
 ): MediaStream => {
-  const cameraVideoTrack = cameraStream?.getVideoTracks()[0];
-  const cameraAudioTrack = cameraStream?.getAudioTracks()[0];
-  const screenshareVideoTrack = screenshareStream.getVideoTracks()[0];
+  const cameraTrack = cameraStream?.getVideoTracks()[0];
+  const microphoneTrack = microphoneStream?.getAudioTracks()[0];
+  const screenshareTrack = screenshareStream.getVideoTracks()[0];
 
   const screenshareProcessor = new MediaStreamTrackProcessor({
-    track: screenshareVideoTrack,
+    track: screenshareTrack,
   });
   const recordingGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
 
-  if (cameraVideoTrack) {
+  if (cameraTrack) {
     const cameraProcessor = new MediaStreamTrackProcessor({
-      track: cameraVideoTrack,
+      track: cameraTrack,
     });
     const screenshareReader = screenshareProcessor.readable.getReader();
 
@@ -93,8 +94,8 @@ export const composeStreams = (
   }
 
   const recordingStream = new MediaStream([recordingGenerator]);
-  if (cameraAudioTrack) {
-    recordingStream.addTrack(cameraAudioTrack);
+  if (microphoneTrack) {
+    recordingStream.addTrack(microphoneTrack);
   }
 
   return recordingStream;

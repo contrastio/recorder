@@ -2,8 +2,12 @@ import { createContext, useContext, useState } from 'react';
 
 type StreamsContextType = {
   cameraStream: MediaStream | null;
+  microphoneStream: MediaStream | null;
   screenshareStream: MediaStream | null;
   setCameraStream: (value: React.SetStateAction<MediaStream | null>) => void;
+  setMicrophoneStream: (
+    value: React.SetStateAction<MediaStream | null>
+  ) => void;
   setScreenshareStream: (
     value: React.SetStateAction<MediaStream | null>
   ) => void;
@@ -16,6 +20,9 @@ type StreamsProviderProps = {
 };
 export const StreamsProvider = ({ children }: StreamsProviderProps) => {
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const [microphoneStream, setMicrophoneStream] = useState<MediaStream | null>(
+    null
+  );
   const [screenshareStream, setScreenshareStream] =
     useState<MediaStream | null>(null);
 
@@ -23,8 +30,10 @@ export const StreamsProvider = ({ children }: StreamsProviderProps) => {
     <StreamsContext.Provider
       value={{
         cameraStream,
+        microphoneStream,
         screenshareStream,
         setCameraStream,
+        setMicrophoneStream,
         setScreenshareStream,
       }}
     >

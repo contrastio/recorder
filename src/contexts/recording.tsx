@@ -23,7 +23,7 @@ type RecordingProviderProps = {
 export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const { cameraStream, screenshareStream } = useStreams();
+  const { cameraStream, microphoneStream, screenshareStream } = useStreams();
 
   const mediaRecorder = useRef<MediaRecorder>();
 
@@ -32,7 +32,11 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
 
     setIsRecording(true);
 
-    const composedStream = composeStreams(cameraStream, screenshareStream);
+    const composedStream = composeStreams(
+      cameraStream,
+      microphoneStream,
+      screenshareStream
+    );
     mediaRecorder.current = new MediaRecorder(composedStream, {
       mimeType: 'video/webm; codecs=vp9',
       videoBitsPerSecond: 8e6,

@@ -54,7 +54,13 @@ const requestDevicesPermissions = async () => {
 };
 
 const Footer = () => {
-  const { cameraStream, setCameraStream } = useStreams();
+  const {
+    cameraStream,
+    microphoneStream,
+    setCameraStream,
+    setMicrophoneStream,
+  } = useStreams();
+
   const { isRecording, startRecording } = useRecording();
   const { pipWindow } = usePictureInPicture();
   const { startScreenshare } = useScreenshare();
@@ -66,45 +72,54 @@ const Footer = () => {
   const [audioInputId, setAudioInputId] = useState('');
 
   const cameraStreamRef = useRef(cameraStream);
+  const microphoneStreamRef = useRef(microphoneStream);
   const videoInputIdRef = useRef(videoInputId);
   const audioInputIdRef = useRef(audioInputId);
+
   cameraStreamRef.current = cameraStream;
+  microphoneStreamRef.current = microphoneStream;
   videoInputIdRef.current = videoInputId;
   audioInputIdRef.current = audioInputId;
 
   const getCamera = useCallback(
-    async (videoInputId: string, audioInputId: string) => {
-      if (
-        videoInputId === videoInputIdRef.current &&
-        audioInputId === audioInputIdRef.current
-      ) {
+    async (videoInputId: string) => {
+      if (videoInputId === videoInputIdRef.current) {
         return;
       }
-      let cameraStream: MediaStream | null = null;
-      if (videoInputId || audioInputId) {
-        // TODO Avoid loosing the current camera/microphone while switching
-        //      Can't rely on applyConstraints so would need to handle
-        //      2 separated streams if needed
-        cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: videoInputId
-            ? {
-                deviceId: videoInputId,
-                aspectRatio: 16 / 9,
-                width: 3840,
-                height: 2160,
-              }
-            : false,
-          audio: audioInputId
-            ? {
-                deviceId: audioInputId,
-              }
-            : false,
-        });
-      }
       cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
-      setCameraStream(cameraStream);
+      setCameraStream(null);
+      if (videoInputId) {
+        const cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            deviceId: videoInputId,
+            aspectRatio: 16 / 9,
+            width: 3840,
+            height: 2160,
+          },
+          audio: false,
+        });
+        setCameraStream(cameraStream);
+      }
     },
     [setCameraStream]
+  );
+
+  const getMicrophone = useCallback(
+    async (audioInputId: string) => {
+      if (audioInputId === audioInputIdRef.current) {
+        return;
+      }
+      microphoneStreamRef.current?.getTracks().forEach((track) => track.stop());
+      setMicrophoneStream(null);
+      if (audioInputId) {
+        const microphoneStream = await navigator.mediaDevices.getUserMedia({
+          audio: { deviceId: audioInputId },
+          video: false,
+        });
+        setMicrophoneStream(microphoneStream);
+      }
+    },
+    [setMicrophoneStream]
   );
 
   useEffect(() => {
@@ -148,7 +163,7 @@ const Footer = () => {
         preferences.audioInputId,
         setAudioInputId
       );
-      await getCamera(videoInputId, audioInputId);
+      await Promise.all([getCamera(videoInputId), getMicrophone(audioInputId)]);
     };
 
     (async () => {
@@ -160,7 +175,7 @@ const Footer = () => {
     return () => {
       navigator.mediaDevices.removeEventListener('devicechange', updateDevices);
     };
-  }, [getCamera]);
+  }, [getCamera, getMicrophone]);
 
   return (
     <footer className={cx(styles.root, { [styles.recording]: isRecording })}>
@@ -194,7 +209,7 @@ const Footer = () => {
             const audioInputId = event.target.value;
             updateDevicePreferences({ audioInputId });
             setAudioInputId(audioInputId);
-            await getCamera(videoInputId, audioInputId);
+            await getMicrophone(audioInputId);
           }}
         >
           {/* TODO Handle no devices detected */}
@@ -211,7 +226,7 @@ const Footer = () => {
             const videoInputId = event.target.value;
             updateDevicePreferences({ videoInputId });
             setVideoInputId(videoInputId);
-            await getCamera(videoInputId, audioInputId);
+            await getCamera(videoInputId);
           }}
         >
           {/* TODO Handle no devices detected */}
