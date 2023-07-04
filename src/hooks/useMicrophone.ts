@@ -3,7 +3,11 @@ import { useCallback, useRef } from 'react';
 import { useStreams } from 'contexts/streams';
 import { getMicrophoneStream } from 'services/mediaDevices';
 
-const useMicrophone = (deviceId: string) => {
+const useMicrophone = (deviceId: string, enabled: boolean) => {
+  if (!enabled) {
+    deviceId = '';
+  }
+
   const { microphoneStream, setMicrophoneStream } = useStreams();
 
   const microphoneStreamRef = useRef(microphoneStream);
@@ -13,7 +17,10 @@ const useMicrophone = (deviceId: string) => {
   deviceIdRef.current = deviceId;
 
   return useCallback(
-    async (deviceId: string) => {
+    async (deviceId: string, enabled: boolean) => {
+      if (!enabled) {
+        deviceId = '';
+      }
       if (deviceId === deviceIdRef.current) {
         return;
       }

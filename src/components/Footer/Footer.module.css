@@ -46,3 +46,14 @@
   grid-auto-flow: column;
   column-gap: 8px;
 }
+
+.device {
+  .select {
+    opacity: 0;
+    width: 0;
+  }
+
+  > svg:nth-of-type(1) {
+    cursor: pointer;
+  }
+}

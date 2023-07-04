@@ -3,7 +3,11 @@ import { useCallback, useRef } from 'react';
 import { useStreams } from 'contexts/streams';
 import { getCameraStream } from 'services/mediaDevices';
 
-const useCamera = (deviceId: string) => {
+const useCamera = (deviceId: string, enabled: boolean) => {
+  if (!enabled) {
+    deviceId = '';
+  }
+
   const { cameraStream, setCameraStream } = useStreams();
 
   const cameraStreamRef = useRef(cameraStream);
@@ -13,7 +17,10 @@ const useCamera = (deviceId: string) => {
   deviceIdRef.current = deviceId;
 
   return useCallback(
-    async (deviceId: string) => {
+    async (deviceId: string, enabled: boolean) => {
+      if (!enabled) {
+        deviceId = '';
+      }
       if (deviceId === deviceIdRef.current) {
         return;
       }

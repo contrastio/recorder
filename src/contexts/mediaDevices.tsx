@@ -12,10 +12,14 @@ import * as devicePreference from 'services/preference/device';
 type MediaDevicesContextType = {
   cameras: MediaDeviceInfo[];
   cameraId: string;
+  cameraEnabled: boolean;
   microphones: MediaDeviceInfo[];
   microphoneId: string;
+  microphoneEnabled: boolean;
   setPreferredCamera: (deviceId: string) => Promise<void>;
+  setCameraEnabled: (enabled: boolean) => Promise<void>;
   setPreferredMicrophone: (deviceId: string) => Promise<void>;
+  setMicrophoneEnabled: (enabled: boolean) => Promise<void>;
 };
 
 const MediaDevicesContext = createContext<MediaDevicesContextType | undefined>(
@@ -30,12 +34,15 @@ export const MediaDevicesProvider = ({
   children,
 }: MediaDevicesProviderProps) => {
   const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]);
-  const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
   const [cameraId, setCameraId] = useState('');
-  const [microphoneId, setMicrophoneId] = useState('');
+  const [cameraEnabled, _setCameraEnabled] = useState(false);
 
-  const getCamera = useCamera(cameraId);
-  const getMicrophone = useMicrophone(microphoneId);
+  const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
+  const [microphoneId, setMicrophoneId] = useState('');
+  const [microphoneEnabled, _setMicrophoneEnabled] = useState(false);
+
+  const requestCamera = useCamera(cameraId, cameraEnabled);
+  const requestMicrophone = useMicrophone(microphoneId, microphoneEnabled);
 
   useEffect(() => {
     const updateDevices = async () => {
@@ -46,11 +53,17 @@ export const MediaDevicesProvider = ({
       const microphoneId = getDeviceId(microphones, preference.microphoneId);
 
       setCameras(cameras);
-      setMicrophones(microphones);
       setCameraId(cameraId);
-      setMicrophoneId(microphoneId);
+      _setCameraEnabled(preference.cameraEnabled);
 
-      await Promise.all([getCamera(cameraId), getMicrophone(microphoneId)]);
+      setMicrophones(microphones);
+      setMicrophoneId(microphoneId);
+      _setMicrophoneEnabled(preference.microphoneEnabled);
+
+      await Promise.all([
+        requestCamera(cameraId, preference.cameraEnabled),
+        requestMicrophone(microphoneId, preference.microphoneEnabled),
+      ]);
     };
 
     requestPermissions().then(updateDevices);
@@ -59,18 +72,30 @@ export const MediaDevicesProvider = ({
     return () => {
       navigator.mediaDevices.removeEventListener('devicechange', updateDevices);
     };
-  }, [getCamera, getMicrophone]);
+  }, [requestCamera, requestMicrophone]);
 
   const setPreferredCamera = async (deviceId: string) => {
     devicePreference.update({ cameraId: deviceId });
     setCameraId(deviceId);
-    await getCamera(deviceId);
+    await requestCamera(deviceId, cameraEnabled);
+  };
+
+  const setCameraEnabled = async (enabled: boolean) => {
+    devicePreference.update({ cameraEnabled: enabled });
+    _setCameraEnabled(enabled);
+    await requestCamera(cameraId, enabled);
   };
 
   const setPreferredMicrophone = async (deviceId: string) => {
     devicePreference.update({ microphoneId: deviceId });
     setMicrophoneId(deviceId);
-    await getMicrophone(deviceId);
+    await requestMicrophone(deviceId, microphoneEnabled);
+  };
+
+  const setMicrophoneEnabled = async (enabled: boolean) => {
+    devicePreference.update({ microphoneEnabled: enabled });
+    _setMicrophoneEnabled(enabled);
+    await requestMicrophone(microphoneId, enabled);
   };
 
   return (
@@ -78,10 +103,14 @@ export const MediaDevicesProvider = ({
       value={{
         cameras,
         cameraId,
+        cameraEnabled,
         microphones,
         microphoneId,
+        microphoneEnabled,
         setPreferredCamera,
+        setCameraEnabled,
         setPreferredMicrophone,
+        setMicrophoneEnabled,
       }}
     >
       {children}

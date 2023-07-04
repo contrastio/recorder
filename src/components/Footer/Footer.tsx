@@ -23,10 +23,14 @@ const Footer = () => {
   const {
     cameras,
     cameraId,
+    cameraEnabled,
     microphones,
     microphoneId,
+    microphoneEnabled,
     setPreferredCamera,
+    setCameraEnabled,
     setPreferredMicrophone,
+    setMicrophoneEnabled,
   } = useMediaDevices();
 
   return (
@@ -55,7 +59,15 @@ const Footer = () => {
       </IconButton>
       <div className={styles.devices}>
         <Select
-          startAdornment={microphones.length ? <MicIcon /> : <MicOffIcon />}
+          className={styles.device}
+          classes={{ select: styles.select }}
+          startAdornment={
+            microphones.length && microphoneEnabled ? (
+              <MicIcon onClick={() => setMicrophoneEnabled(false)} />
+            ) : (
+              <MicOffIcon onClick={() => setMicrophoneEnabled(true)} />
+            )
+          }
           value={microphoneId}
           onChange={(event) => setPreferredMicrophone(event.target.value)}
         >
@@ -72,8 +84,16 @@ const Footer = () => {
           )}
         </Select>
         <Select
+          className={styles.device}
+          classes={{ select: styles.select }}
           startAdornment={
-            cameras.length ? <VideocamIcon /> : <VideocamOffIcon />
+            cameras.length && cameraEnabled ? (
+              <VideocamIcon onClick={() => setCameraEnabled(false)} />
+            ) : (
+              <VideocamOffIcon
+                onClick={() => cameras.length && setCameraEnabled(true)}
+              />
+            )
           }
           value={cameraId}
           onChange={(event) => setPreferredCamera(event.target.value)}
