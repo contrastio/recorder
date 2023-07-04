@@ -57,24 +57,34 @@ const Footer = () => {
           value={microphoneId}
           onChange={(event) => setPreferredMicrophone(event.target.value)}
         >
-          {/* TODO Handle no microphones detected */}
-          {microphones.map((microphone) => (
-            <MenuItem key={microphone.deviceId} value={microphone.deviceId}>
-              {microphone.label}
+          {microphones.length ? (
+            microphones.map((microphone) => (
+              <MenuItem key={microphone.deviceId} value={microphone.deviceId}>
+                {microphone.label}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled value="">
+              No microphones available
             </MenuItem>
-          ))}
+          )}
         </Select>
         <Select
           startAdornment={<VideocamIcon />}
           value={cameraId}
           onChange={(event) => setPreferredCamera(event.target.value)}
         >
-          {/* TODO Handle no cameras detected */}
-          {cameras.map((camera) => (
-            <MenuItem key={camera.deviceId} value={camera.deviceId}>
-              {camera.label}
+          {cameras.length ? (
+            cameras.map((camera) => (
+              <MenuItem key={camera.deviceId} value={camera.deviceId}>
+                {camera.label}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled value="">
+              No cameras available
             </MenuItem>
-          ))}
+          )}
         </Select>
       </div>
     </footer>
