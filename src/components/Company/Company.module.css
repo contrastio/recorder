@@ -1,0 +1,10 @@
+.companyName {
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.logo {
+  margin-bottom: -1px;
+  font-size: 10px;
+}

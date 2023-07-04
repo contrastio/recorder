@@ -6,17 +6,6 @@
   column-gap: 8px;
 }
 
-.companyName {
-  white-space: nowrap;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.companyLogo {
-  margin-bottom: -1px;
-  font-size: 10px;
-}
-
 .recordButton {
   box-sizing: content-box;
   margin-block: -4px;

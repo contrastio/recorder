@@ -5,10 +5,9 @@ import VideocamIcon from '@mui/icons-material/VideocamOutlined';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Typography from '@mui/material/Typography';
 import cx from 'classnames';
 
-import ContrastLogo from 'components/icons/ContrastLogo';
+import Company from 'components/Company';
 import { useMediaDevices } from 'contexts/mediaDevices';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
@@ -35,14 +34,7 @@ const Footer = () => {
 
   return (
     <footer className={cx(styles.root, { [styles.recording]: isRecording })}>
-      {/* TODO Link to contrast website */}
-      <Typography component="span" variant="subtitle2" color="text.secondary">
-        Powered by{' '}
-        <span className={styles.companyName}>
-          c<ContrastLogo className={styles.companyLogo} />
-          ntrast
-        </span>
-      </Typography>
+      <Company />
       <IconButton
         className={styles.recordButton}
         onClick={() => {
