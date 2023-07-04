@@ -1,19 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useStreams } from 'contexts/streams';
+import {
+  getAuthorizedDevices,
+  getDeviceId,
+  requestPermissions,
+} from 'services/mediaDevices';
 import * as devicePreference from 'services/preference/device';
 
-const requestDevicesPermissions = async () => {
-  try {
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-    mediaStream.getTracks().forEach((track) => track.stop());
-  } catch (error) {
-    console.warn('Devices permissions denied', error);
-  }
-};
+import useCamera from './useCamera';
+import useMicrophone from './useMicrophone';
 
 export type MediaDevices = {
   cameras: MediaDeviceInfo[];
@@ -25,114 +20,32 @@ export type MediaDevices = {
 };
 
 const useMediaDevices = (): MediaDevices => {
-  const {
-    cameraStream,
-    microphoneStream,
-    setCameraStream,
-    setMicrophoneStream,
-  } = useStreams();
-
   // TODO Move into a context to ensure they are requested only once
   const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]);
   const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
   const [cameraId, setCameraId] = useState('');
   const [microphoneId, setMicrophoneId] = useState('');
 
-  const cameraStreamRef = useRef(cameraStream);
-  const microphoneStreamRef = useRef(microphoneStream);
-  const cameraIdRef = useRef(cameraId);
-  const microphoneIdRef = useRef(microphoneId);
-
-  cameraStreamRef.current = cameraStream;
-  microphoneStreamRef.current = microphoneStream;
-  cameraIdRef.current = cameraId;
-  microphoneIdRef.current = microphoneId;
-
-  const getCamera = useCallback(
-    async (deviceId: string) => {
-      if (deviceId === cameraIdRef.current) {
-        return;
-      }
-      cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
-      setCameraStream(null);
-      if (deviceId) {
-        const cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId,
-            aspectRatio: 16 / 9,
-            width: 3840,
-            height: 2160,
-          },
-          audio: false,
-        });
-        setCameraStream(cameraStream);
-      }
-    },
-    [setCameraStream]
-  );
-
-  const getMicrophone = useCallback(
-    async (deviceId: string) => {
-      if (deviceId === microphoneIdRef.current) {
-        return;
-      }
-      microphoneStreamRef.current?.getTracks().forEach((track) => track.stop());
-      setMicrophoneStream(null);
-      if (deviceId) {
-        const microphoneStream = await navigator.mediaDevices.getUserMedia({
-          audio: { deviceId },
-          video: false,
-        });
-        setMicrophoneStream(microphoneStream);
-      }
-    },
-    [setMicrophoneStream]
-  );
+  const getCamera = useCamera(cameraId);
+  const getMicrophone = useMicrophone(microphoneId);
 
   useEffect(() => {
-    const updateDevice = (
-      devices: MediaDeviceInfo[],
-      preferredDeviceId: string,
-      setDeviceId: React.Dispatch<React.SetStateAction<string>>
-    ) => {
-      let deviceId = '';
-      if (devices.some((device) => device.deviceId === preferredDeviceId)) {
-        deviceId = preferredDeviceId;
-      } else if (devices.some((device) => device.deviceId === 'default')) {
-        deviceId = 'default';
-      } else if (devices.length) {
-        deviceId = devices[0].deviceId;
-      }
-      setDeviceId(deviceId);
-      return deviceId;
-    };
-
     const updateDevices = async () => {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const cameras = devices.filter(
-        (device) =>
-          device.kind === 'videoinput' && device.deviceId && device.label
-      );
-      const microphones = devices.filter(
-        (device) =>
-          device.kind === 'audioinput' && device.deviceId && device.label
-      );
+      const { cameras, microphones } = await getAuthorizedDevices();
+
       const preference = devicePreference.get();
+      const cameraId = getDeviceId(cameras, preference.cameraId);
+      const microphoneId = getDeviceId(microphones, preference.microphoneId);
+
       setCameras(cameras);
       setMicrophones(microphones);
-      const cameraId = updateDevice(cameras, preference.cameraId, setCameraId);
-      const microphoneId = updateDevice(
-        microphones,
-        preference.microphoneId,
-        setMicrophoneId
-      );
+      setCameraId(cameraId);
+      setMicrophoneId(microphoneId);
+
       await Promise.all([getCamera(cameraId), getMicrophone(microphoneId)]);
     };
 
-    (async () => {
-      await requestDevicesPermissions();
-      await updateDevices();
-    })();
+    requestPermissions().then(updateDevices);
 
     navigator.mediaDevices.addEventListener('devicechange', updateDevices);
     return () => {
