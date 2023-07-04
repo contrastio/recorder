@@ -5,177 +5,27 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import cx from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 import ContrastLogo from 'components/icons/ContrastLogo';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useScreenshare } from 'contexts/screenshare';
-import { useStreams } from 'contexts/streams';
+import useMediaDevices from 'hooks/useMediaDevices';
 
 import styles from './Footer.module.css';
 
-// TODO Extract preferences management
-const localStorageKey = 'devicePreferences';
-
-type DevicePreferences = {
-  videoInputId: string;
-  audioInputId: string;
-};
-
-const getDevicePreferences = (): DevicePreferences => {
-  const devicePreferences = localStorage.getItem(localStorageKey);
-  const { videoInputId = '', audioInputId = '' }: DevicePreferences =
-    devicePreferences ? JSON.parse(devicePreferences) : {};
-
-  return { videoInputId, audioInputId };
-};
-
-const updateDevicePreferences = (
-  devicePreferences: Partial<DevicePreferences>
-) => {
-  const previousDevicePreferences = getDevicePreferences();
-  localStorage.setItem(
-    localStorageKey,
-    JSON.stringify({ ...previousDevicePreferences, ...devicePreferences })
-  );
-};
-
-const requestDevicesPermissions = async () => {
-  try {
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-    mediaStream.getTracks().forEach((track) => track.stop());
-  } catch (error) {
-    console.warn('Devices permissions denied', error);
-  }
-};
-
 const Footer = () => {
-  const {
-    cameraStream,
-    microphoneStream,
-    setCameraStream,
-    setMicrophoneStream,
-  } = useStreams();
-
   const { isRecording, startRecording } = useRecording();
   const { pipWindow } = usePictureInPicture();
   const { startScreenshare } = useScreenshare();
-
-  // TODO Extract devices management
-  const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
-  const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
-  const [videoInputId, setVideoInputId] = useState('');
-  const [audioInputId, setAudioInputId] = useState('');
-
-  const cameraStreamRef = useRef(cameraStream);
-  const microphoneStreamRef = useRef(microphoneStream);
-  const videoInputIdRef = useRef(videoInputId);
-  const audioInputIdRef = useRef(audioInputId);
-
-  cameraStreamRef.current = cameraStream;
-  microphoneStreamRef.current = microphoneStream;
-  videoInputIdRef.current = videoInputId;
-  audioInputIdRef.current = audioInputId;
-
-  const getCamera = useCallback(
-    async (videoInputId: string) => {
-      if (videoInputId === videoInputIdRef.current) {
-        return;
-      }
-      cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
-      setCameraStream(null);
-      if (videoInputId) {
-        const cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId: videoInputId,
-            aspectRatio: 16 / 9,
-            width: 3840,
-            height: 2160,
-          },
-          audio: false,
-        });
-        setCameraStream(cameraStream);
-      }
-    },
-    [setCameraStream]
-  );
-
-  const getMicrophone = useCallback(
-    async (audioInputId: string) => {
-      if (audioInputId === audioInputIdRef.current) {
-        return;
-      }
-      microphoneStreamRef.current?.getTracks().forEach((track) => track.stop());
-      setMicrophoneStream(null);
-      if (audioInputId) {
-        const microphoneStream = await navigator.mediaDevices.getUserMedia({
-          audio: { deviceId: audioInputId },
-          video: false,
-        });
-        setMicrophoneStream(microphoneStream);
-      }
-    },
-    [setMicrophoneStream]
-  );
-
-  useEffect(() => {
-    const updateInputId = (
-      inputs: MediaDeviceInfo[],
-      preferredInputId: string,
-      setInputId: React.Dispatch<React.SetStateAction<string>>
-    ) => {
-      let inputId = '';
-      if (inputs.some((input) => input.deviceId === preferredInputId)) {
-        inputId = preferredInputId;
-      } else if (inputs.some((input) => input.deviceId === 'default')) {
-        inputId = 'default';
-      } else if (inputs.length) {
-        inputId = inputs[0].deviceId;
-      }
-      setInputId(inputId);
-      return inputId;
-    };
-
-    const updateDevices = async () => {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoInputs = devices.filter(
-        (device) =>
-          device.kind === 'videoinput' && device.deviceId && device.label
-      );
-      const audioInputs = devices.filter(
-        (device) =>
-          device.kind === 'audioinput' && device.deviceId && device.label
-      );
-      const preferences = getDevicePreferences();
-      setVideoInputs(videoInputs);
-      setAudioInputs(audioInputs);
-      const videoInputId = updateInputId(
-        videoInputs,
-        preferences.videoInputId,
-        setVideoInputId
-      );
-      const audioInputId = updateInputId(
-        audioInputs,
-        preferences.audioInputId,
-        setAudioInputId
-      );
-      await Promise.all([getCamera(videoInputId), getMicrophone(audioInputId)]);
-    };
-
-    (async () => {
-      await requestDevicesPermissions();
-      await updateDevices();
-    })();
-
-    navigator.mediaDevices.addEventListener('devicechange', updateDevices);
-    return () => {
-      navigator.mediaDevices.removeEventListener('devicechange', updateDevices);
-    };
-  }, [getCamera, getMicrophone]);
+  const {
+    cameras,
+    cameraId,
+    microphones,
+    microphoneId,
+    setPreferredCamera,
+    setPreferredMicrophone,
+  } = useMediaDevices();
 
   return (
     <footer className={cx(styles.root, { [styles.recording]: isRecording })}>
@@ -204,35 +54,25 @@ const Footer = () => {
       <div className={styles.devices}>
         <Select
           startAdornment={<MicIcon />}
-          value={audioInputId}
-          onChange={async (event) => {
-            const audioInputId = event.target.value;
-            updateDevicePreferences({ audioInputId });
-            setAudioInputId(audioInputId);
-            await getMicrophone(audioInputId);
-          }}
+          value={microphoneId}
+          onChange={(event) => setPreferredMicrophone(event.target.value)}
         >
-          {/* TODO Handle no devices detected */}
-          {audioInputs.map((audioInput) => (
-            <MenuItem key={audioInput.deviceId} value={audioInput.deviceId}>
-              {audioInput.label}
+          {/* TODO Handle no microphones detected */}
+          {microphones.map((microphone) => (
+            <MenuItem key={microphone.deviceId} value={microphone.deviceId}>
+              {microphone.label}
             </MenuItem>
           ))}
         </Select>
         <Select
           startAdornment={<VideocamIcon />}
-          value={videoInputId}
-          onChange={async (event) => {
-            const videoInputId = event.target.value;
-            updateDevicePreferences({ videoInputId });
-            setVideoInputId(videoInputId);
-            await getCamera(videoInputId);
-          }}
+          value={cameraId}
+          onChange={(event) => setPreferredCamera(event.target.value)}
         >
-          {/* TODO Handle no devices detected */}
-          {videoInputs.map((videoInput) => (
-            <MenuItem key={videoInput.deviceId} value={videoInput.deviceId}>
-              {videoInput.label}
+          {/* TODO Handle no cameras detected */}
+          {cameras.map((camera) => (
+            <MenuItem key={camera.deviceId} value={camera.deviceId}>
+              {camera.label}
             </MenuItem>
           ))}
         </Select>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Placeholder from 'components/Placeholder/Placeholder';
 import { useStreams } from 'contexts/streams';
-import useVideoSource from 'hooks/useUpdateVideoSource';
+import useVideoSource from 'hooks/useVideoSource';
 import {
   CAMERA_BORDER_RADIUS,
   CAMERA_HEIGHT,

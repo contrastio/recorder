@@ -12,7 +12,7 @@ import ScreenRecordIcon from 'components/icons/ScreenRecord';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
-import useVideoSource from 'hooks/useUpdateVideoSource';
+import useVideoSource from 'hooks/useVideoSource';
 
 import styles from './PiPWindow.module.css';
 
