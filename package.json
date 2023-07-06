@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "deploy": "s3-spa-upload --cache-control-mapping cache-control.json dist",
+    "deploy": "s3-spa-upload --cache-control-mapping cache-control.json --delete dist",
     "preview": "vite preview",
     "format": "prettier . --cache",
     "format:fix": "yarn format --write",
