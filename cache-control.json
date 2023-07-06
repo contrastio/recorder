@@ -1,0 +1,8 @@
+{
+  "index.html": "no-cache",
+  "*.css": "public,max-age=31536000,immutable",
+  "*.js": "public,max-age=31536000,immutable",
+  "*.png": "public,max-age=86400,stale-while-revalidate=2592000",
+  "*.ico": "public,max-age=86400,stale-while-revalidate=2592000",
+  "*.txt": "public,max-age=86400,stale-while-revalidate=2592000"
+}
