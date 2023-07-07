@@ -34,5 +34,17 @@
     rgb(0 0 0 / 40%),
     rgb(0 0 0 / 0%) 120px
   );
+  background-repeat: no-repeat;
   padding: 16px;
+  animation: 500ms ease gradient-up;
+}
+
+@keyframes gradient-up {
+  from {
+    background-position-y: 120px;
+  }
+
+  to {
+    background-position-y: 0;
+  }
 }
