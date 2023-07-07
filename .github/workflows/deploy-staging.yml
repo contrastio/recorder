@@ -24,6 +24,6 @@ jobs:
           VITE_ORIGIN_TRIAL_PIP: ${{ vars.VITE_ORIGIN_TRIAL_PIP }}
       - uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::075355120710:role/contrast-github-actions-GithubActionsRoleD3FF383A-4LNILAGHF7FZ
-          aws-region: eu-west-3
-      - run: yarn deploy recorder.getcontrast.dev
+          role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - run: yarn deploy ${{ vars.S3_BUCKET_NAME }}
