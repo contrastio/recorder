@@ -54,32 +54,34 @@ const PiPWindow = () => {
           muted
           controls={false}
         />
-        <div className={styles.toolbar}>
-          <Tooltip title={isRecording ? 'Finish recording' : 'Start recording'}>
+        {!isRecording ? (
+          <Tooltip title="Start recording">
             <IconButton
+              className={styles.recordButton}
               color="error"
-              onClick={() => {
-                if (isRecording) {
-                  pipWindow.close();
-                } else {
-                  startRecording();
-                }
-              }}
+              onClick={startRecording}
             >
-              {isRecording ? <StopIcon /> : <ScreenRecordIcon />}
+              <ScreenRecordIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
-            <span>
-              <IconButton
-                disabled={!isRecording}
-                onClick={isPaused ? resumeRecording : pauseRecording}
-              >
-                {isPaused ? <ResumeIcon /> : <PauseIcon />}
+        ) : (
+          <div className={styles.controls}>
+            <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
+              <span>
+                <IconButton
+                  onClick={isPaused ? resumeRecording : pauseRecording}
+                >
+                  {isPaused ? <ResumeIcon /> : <PauseIcon />}
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Tooltip title={'Finish recording'}>
+              <IconButton color="error" onClick={pipWindow.close}>
+                <StopIcon />
               </IconButton>
-            </span>
-          </Tooltip>
-        </div>
+            </Tooltip>
+          </div>
+        )}
       </div>
     </CacheProvider>,
     pipWindow.document.body

@@ -1,11 +1,14 @@
-import { CssVarsThemeOptions } from '@mui/material/styles';
+import { ColorSystemOptions, CssVarsThemeOptions } from '@mui/material/styles';
 
-const common = {
+const common: ColorSystemOptions['palette'] = {
   primary: {
     main: '#FF5065',
   },
   secondary: {
     main: '#DEFFFD',
+  },
+  Tooltip: {
+    bg: '#1C1D1E',
   },
 };
 
