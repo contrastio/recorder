@@ -29,5 +29,10 @@
   gap: 8px;
   align-items: end;
   justify-content: end;
+  background-image: linear-gradient(
+    to top,
+    rgb(0 0 0 / 40%),
+    rgb(0 0 0 / 0%) 120px
+  );
   padding: 16px;
 }
