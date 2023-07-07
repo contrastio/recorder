@@ -1,0 +1,25 @@
+name: Check, build and deploy on staging
+on:
+  push:
+    branches: [main]
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: yarn
+      - run: yarn format:check
+      - run: yarn lint:check
+      - run: yarn lint:css:check
+      - run: yarn build
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::075355120710:role/contrast-github-actions-GithubActionsRoleD3FF383A-4LNILAGHF7FZ
+          aws-region: eu-west-3
+      - run: yarn deploy recorder.getcontrast.dev
