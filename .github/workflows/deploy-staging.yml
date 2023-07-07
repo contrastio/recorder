@@ -20,6 +20,8 @@ jobs:
       - run: yarn lint:check
       - run: yarn lint:css:check
       - run: yarn build
+        env:
+          VITE_ORIGIN_TRIAL_PIP: ${{ vars.VITE_ORIGIN_TRIAL_PIP }}
       - uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::075355120710:role/contrast-github-actions-GithubActionsRoleD3FF383A-4LNILAGHF7FZ
