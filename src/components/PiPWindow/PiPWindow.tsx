@@ -1,13 +1,13 @@
 import createCache from '@emotion/cache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
-import ResumeIcon from 'components/icons/Resume';
 import ScreenRecordIcon from 'components/icons/ScreenRecord';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
@@ -58,7 +58,7 @@ const PiPWindow = () => {
           <Tooltip title="Start recording">
             <IconButton
               className={styles.recordButton}
-              color="error"
+              color="primary"
               onClick={startRecording}
             >
               <ScreenRecordIcon />
@@ -67,16 +67,18 @@ const PiPWindow = () => {
         ) : (
           <div className={styles.controls}>
             <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
-              <span>
-                <IconButton
-                  onClick={isPaused ? resumeRecording : pauseRecording}
-                >
-                  {isPaused ? <ResumeIcon /> : <PauseIcon />}
-                </IconButton>
-              </span>
+              <IconButton
+                color={isPaused ? 'primary' : 'default'}
+                onClick={isPaused ? resumeRecording : pauseRecording}
+              >
+                {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
+              </IconButton>
             </Tooltip>
-            <Tooltip title={'Finish recording'}>
-              <IconButton color="error" onClick={pipWindow.close}>
+            <Tooltip title="Stop">
+              <IconButton
+                color={isPaused ? 'default' : 'primary'}
+                onClick={pipWindow.close}
+              >
                 <StopIcon />
               </IconButton>
             </Tooltip>
