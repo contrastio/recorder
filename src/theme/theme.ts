@@ -14,6 +14,22 @@ const theme = extendTheme({
     MuiCssBaseline: { styleOverrides: fontFaces },
     MuiButtonBase: { defaultProps: { disableRipple: true } },
     MuiButton: button,
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'var(--mui-palette-background-paper)',
+        },
+        colorError: {
+          ':hover': {
+            backgroundColor: `color-mix(
+              in srgb,
+              var(--mui-palette-background-paper),
+              var(--mui-palette-action-active) calc(var(--mui-palette-action-hoverOpacity) * 100%)
+            )`,
+          },
+        },
+      },
+    },
     MuiInputBase: inputBase,
     MuiOutlinedInput: outlinedInput,
     MuiSelect: select,
