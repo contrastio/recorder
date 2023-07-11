@@ -1,22 +1,18 @@
-import IconButton from '@mui/material/IconButton';
 import cx from 'classnames';
 import { forwardRef } from 'react';
 
+import RecordButton, { RecordButtonProps } from 'components/RecordButton';
+
 import styles from './PiPRecordButton.module.css';
 
-type PiPRecordButtonProps = Omit<
-  React.ComponentPropsWithoutRef<'button'>,
-  'color'
->;
+type PiPRecordButtonProps = RecordButtonProps;
 
 const PiPRecordButton = (
   { className, ...props }: PiPRecordButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) => {
   return (
-    <IconButton className={cx(styles.root, className)} ref={ref} {...props}>
-      <div className={styles.icon} />
-    </IconButton>
+    <RecordButton className={cx(styles.root, className)} ref={ref} {...props} />
   );
 };
 

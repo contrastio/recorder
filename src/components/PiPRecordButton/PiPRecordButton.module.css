@@ -1,33 +1,12 @@
-/* TODO Factorize with RecordButton */
-
 /*
   Needs to be nested to get a higher specificty
   than MUI icon button styles
  */
 .root:global(.MuiIconButton-root) {
-  box-sizing: content-box;
   grid-area: 1/1;
   align-self: end;
   justify-self: center;
   margin-bottom: 12px;
-  border: 2px solid var(--mui-palette-text-secondary);
-  background-color: transparent;
-  padding: 0;
   width: 46px;
   height: 46px;
-
-  &:hover {
-    background-color: rgba(
-      var(--mui-palette-action-activeChannel) /
-        var(--mui-palette-action-hoverOpacity)
-    );
-  }
-}
-
-.icon {
-  border-radius: 50%;
-  box-shadow: 0 0 24px 8px rgb(var(--mui-palette-primary-mainChannel) / 41%);
-  background-color: var(--mui-palette-primary-main);
-  width: 40px;
-  height: 40px;
 }
