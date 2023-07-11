@@ -2,17 +2,6 @@
   display: grid;
   position: fixed;
   inset: 0;
-
-  /*
-  Needs to be nested to get a higher specificty
-  than MUI icon button styles
-  */
-  .recordButton {
-    grid-area: 1/1;
-    align-self: end;
-    justify-self: center;
-    margin-bottom: 16px;
-  }
 }
 
 .camera {

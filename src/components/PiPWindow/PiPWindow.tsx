@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
-import ScreenRecordIcon from 'components/icons/ScreenRecord';
+import PiPRecordButton from 'components/PiPRecordButton/PiPRecordButton';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
@@ -56,13 +56,7 @@ const PiPWindow = () => {
         />
         {!isRecording ? (
           <Tooltip title="Start recording">
-            <IconButton
-              className={styles.recordButton}
-              color="primary"
-              onClick={startRecording}
-            >
-              <ScreenRecordIcon />
-            </IconButton>
+            <PiPRecordButton onClick={startRecording} />
           </Tooltip>
         ) : (
           <div className={styles.controls}>
