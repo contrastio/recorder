@@ -12,12 +12,13 @@
 }
 
 .controls {
-  display: flex;
-  flex-direction: row;
+  display: grid;
   grid-area: 1/1;
+  grid-template-columns: 1fr;
+  grid-auto-flow: column;
   gap: 8px;
-  align-items: end;
-  justify-content: end;
+  align-content: end;
+  align-items: center;
   background-image: linear-gradient(
     to top,
     rgb(0 0 0 / 40%),
@@ -36,4 +37,9 @@
   to {
     background-position-y: 0;
   }
+}
+
+.duration:global(.MuiTypography-root) {
+  font-family: 'SF Mono', monospace;
+  font-weight: 500;
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Placeholder from 'components/Placeholder/Placeholder';
+import Placeholder from 'components/Placeholder';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useVideoSource';
 import {

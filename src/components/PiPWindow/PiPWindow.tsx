@@ -5,18 +5,26 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { useRef } from 'react';
+import Typography from '@mui/material/Typography';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import PiPRecordButton from 'components/PiPRecordButton/PiPRecordButton';
-import { usePictureInPicture } from 'contexts/pictureInPicture';
+import PiPRecordButton from 'components/PiPRecordButton';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useVideoSource';
 
 import styles from './PiPWindow.module.css';
 
-const PiPWindow = () => {
+const divMod = (a: number, b: number) => {
+  return [Math.trunc(a / b), a % b] as const;
+};
+
+type PiPWindowProps = {
+  pipWindow: Window;
+};
+
+const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
   const {
     isRecording,
     isPaused,
@@ -27,21 +35,35 @@ const PiPWindow = () => {
 
   const { cameraStream } = useStreams();
   const updateCameraSource = useVideoSource(cameraStream);
-  const { pipWindow } = usePictureInPicture();
 
   const cssCacheRef = useRef<EmotionCache | null>(null);
-
-  if (!pipWindow) {
-    cssCacheRef.current = null;
-    return null;
-  }
-
   if (!cssCacheRef.current) {
     cssCacheRef.current = createCache({
       key: 'external',
       container: pipWindow.document.body,
     });
   }
+
+  const [previousDuration, setPreviousDuration] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [lastTime, setLastTime] = useState(0);
+
+  useEffect(() => {
+    if (!isRecording || isPaused) {
+      return;
+    }
+
+    const updateTime = (time: number) => {
+      setLastTime(time);
+      requestId = requestAnimationFrame(updateTime);
+    };
+
+    let requestId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(requestId);
+    };
+  }, [isPaused, isRecording]);
 
   return createPortal(
     <CacheProvider value={cssCacheRef.current}>
@@ -56,14 +78,47 @@ const PiPWindow = () => {
         />
         {!isRecording ? (
           <Tooltip title="Start recording">
-            <PiPRecordButton onClick={startRecording} />
+            <PiPRecordButton
+              onClick={() => {
+                startRecording();
+                const now = performance.now();
+                setStartTime(now);
+                setLastTime(now);
+              }}
+            />
           </Tooltip>
         ) : (
           <div className={styles.controls}>
+            <Typography className={styles.duration} variant="subtitle2">
+              {((milliseconds: number) => {
+                let hours: number, minutes: number;
+                [hours, milliseconds] = divMod(milliseconds, 60 * 60 * 1000);
+                [minutes, milliseconds] = divMod(milliseconds, 60 * 1000);
+                const seconds = Math.trunc(milliseconds / 1000);
+                return [hours, minutes, seconds]
+                  .filter((value, i) => i !== 0 || value)
+                  .map((value) => value.toString().padStart(2, '0'))
+                  .join(':');
+              })(previousDuration + lastTime - startTime)}
+            </Typography>
             <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
               <IconButton
                 color={isPaused ? 'primary' : 'default'}
-                onClick={isPaused ? resumeRecording : pauseRecording}
+                onClick={() => {
+                  if (isPaused) {
+                    resumeRecording();
+                    const now = performance.now();
+                    setStartTime(now);
+                    setLastTime(now);
+                  } else {
+                    setPreviousDuration(
+                      previousDuration + performance.now() - startTime
+                    );
+                    setStartTime(0);
+                    setLastTime(0);
+                    pauseRecording();
+                  }
+                }}
               >
                 {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
               </IconButton>
