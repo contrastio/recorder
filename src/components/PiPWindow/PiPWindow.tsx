@@ -13,12 +13,9 @@ import PiPRecordButton from 'components/PiPRecordButton';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useVideoSource';
+import { formatDuration } from 'services/format/duration';
 
 import styles from './PiPWindow.module.css';
-
-const divMod = (a: number, b: number) => {
-  return [Math.trunc(a / b), a % b] as const;
-};
 
 type PiPWindowProps = {
   pipWindow: Window;
@@ -90,16 +87,7 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
         ) : (
           <div className={styles.controls}>
             <Typography className={styles.duration} variant="subtitle2">
-              {((milliseconds: number) => {
-                let hours: number, minutes: number;
-                [hours, milliseconds] = divMod(milliseconds, 60 * 60 * 1000);
-                [minutes, milliseconds] = divMod(milliseconds, 60 * 1000);
-                const seconds = Math.trunc(milliseconds / 1000);
-                return [hours, minutes, seconds]
-                  .filter((value, i) => i !== 0 || value)
-                  .map((value) => value.toString().padStart(2, '0'))
-                  .join(':');
-              })(previousDuration + lastTime - startTime)}
+              {formatDuration(previousDuration + lastTime - startTime)}
             </Typography>
             <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
               <IconButton
