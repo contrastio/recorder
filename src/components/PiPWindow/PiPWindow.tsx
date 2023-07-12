@@ -6,12 +6,13 @@ import StopIcon from '@mui/icons-material/Stop';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import PiPRecordButton from 'components/PiPRecordButton';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
+import useStopWatch from 'hooks/useStopWatch';
 import useVideoSource from 'hooks/useVideoSource';
 import { formatDuration } from 'services/format/duration';
 
@@ -32,6 +33,7 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
 
   const { cameraStream } = useStreams();
   const updateCameraSource = useVideoSource(cameraStream);
+  const stopWatch = useStopWatch();
 
   const cssCacheRef = useRef<EmotionCache | null>(null);
   if (!cssCacheRef.current) {
@@ -40,27 +42,6 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
       container: pipWindow.document.body,
     });
   }
-
-  const [previousDuration, setPreviousDuration] = useState(0);
-  const [startTime, setStartTime] = useState(0);
-  const [lastTime, setLastTime] = useState(0);
-
-  useEffect(() => {
-    if (!isRecording || isPaused) {
-      return;
-    }
-
-    const updateTime = (time: number) => {
-      setLastTime(time);
-      requestId = requestAnimationFrame(updateTime);
-    };
-
-    let requestId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(requestId);
-    };
-  }, [isPaused, isRecording]);
 
   return createPortal(
     <CacheProvider value={cssCacheRef.current}>
@@ -78,16 +59,14 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
             <PiPRecordButton
               onClick={() => {
                 startRecording();
-                const now = performance.now();
-                setStartTime(now);
-                setLastTime(now);
+                stopWatch.start();
               }}
             />
           </Tooltip>
         ) : (
           <div className={styles.controls}>
             <Typography className={styles.duration} variant="subtitle2">
-              {formatDuration(previousDuration + lastTime - startTime)}
+              {formatDuration(stopWatch.elapsed)}
             </Typography>
             <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
               <IconButton
@@ -95,15 +74,9 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
                 onClick={() => {
                   if (isPaused) {
                     resumeRecording();
-                    const now = performance.now();
-                    setStartTime(now);
-                    setLastTime(now);
+                    stopWatch.start();
                   } else {
-                    setPreviousDuration(
-                      previousDuration + performance.now() - startTime
-                    );
-                    setStartTime(0);
-                    setLastTime(0);
+                    stopWatch.stop();
                     pauseRecording();
                   }
                 }}
