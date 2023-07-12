@@ -1,27 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const useStopWatch = () => {
-  const [isRunning, setIsRunning] = useState(false);
   const [previousDuration, setPreviousDuration] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [lastTime, setLastTime] = useState(0);
 
+  const requestIdRef = useRef(0);
+
+  const updateTime = (time: number) => {
+    setLastTime(time);
+    requestIdRef.current = requestAnimationFrame(updateTime);
+  };
+
   useEffect(() => {
-    if (!isRunning) {
-      return;
-    }
-
-    const updateTime = (time: number) => {
-      setLastTime(time);
-      requestId = requestAnimationFrame(updateTime);
-    };
-
-    let requestId = requestAnimationFrame(updateTime);
-
     return () => {
-      cancelAnimationFrame(requestId);
+      cancelAnimationFrame(requestIdRef.current);
     };
-  }, [isRunning]);
+  }, []);
 
   return {
     elapsed: previousDuration + lastTime - startTime,
@@ -30,11 +25,11 @@ const useStopWatch = () => {
       const now = performance.now();
       setStartTime(now);
       setLastTime(now);
-      setIsRunning(true);
+      requestIdRef.current = requestAnimationFrame(updateTime);
     },
 
     stop: () => {
-      setIsRunning(false);
+      cancelAnimationFrame(requestIdRef.current);
       setPreviousDuration(previousDuration + performance.now() - startTime);
       setStartTime(0);
       setLastTime(0);
