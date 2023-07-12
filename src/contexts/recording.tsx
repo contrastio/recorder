@@ -27,7 +27,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
 
   const mediaRecorder = useRef<MediaRecorder>();
 
-  const startRecording = async () => {
+  const startRecording = () => {
     if (!screenshareStream) return;
 
     setIsRecording(true);

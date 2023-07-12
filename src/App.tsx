@@ -4,6 +4,7 @@ import Footer from 'components/Footer';
 import PiPWindow from 'components/PiPWindow';
 import VideoStreams from 'components/VideoStreams';
 import { useMediaDevices } from 'contexts/mediaDevices';
+import { usePictureInPicture } from 'contexts/pictureInPicture';
 import { useStreams } from 'contexts/streams';
 import useKeyboardShorcut from 'hooks/useKeyboardShortcut';
 
@@ -11,6 +12,7 @@ import styles from './App.module.css';
 
 const App = () => {
   const { screenshareStream } = useStreams();
+  const { pipWindow } = usePictureInPicture();
   const {
     cameraEnabled,
     microphoneEnabled,
@@ -31,7 +33,7 @@ const App = () => {
         <VideoStreams />
       </main>
       <Footer />
-      <PiPWindow />
+      {pipWindow && <PiPWindow pipWindow={pipWindow} />}
     </div>
   );
 };

@@ -5,18 +5,24 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
-import PiPRecordButton from 'components/PiPRecordButton/PiPRecordButton';
-import { usePictureInPicture } from 'contexts/pictureInPicture';
+import PiPRecordButton from 'components/PiPRecordButton';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
+import useStopWatch from 'hooks/useStopWatch';
 import useVideoSource from 'hooks/useVideoSource';
+import { formatDuration } from 'services/format/duration';
 
 import styles from './PiPWindow.module.css';
 
-const PiPWindow = () => {
+type PiPWindowProps = {
+  pipWindow: Window;
+};
+
+const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
   const {
     isRecording,
     isPaused,
@@ -27,15 +33,9 @@ const PiPWindow = () => {
 
   const { cameraStream } = useStreams();
   const updateCameraSource = useVideoSource(cameraStream);
-  const { pipWindow } = usePictureInPicture();
+  const stopWatch = useStopWatch();
 
   const cssCacheRef = useRef<EmotionCache | null>(null);
-
-  if (!pipWindow) {
-    cssCacheRef.current = null;
-    return null;
-  }
-
   if (!cssCacheRef.current) {
     cssCacheRef.current = createCache({
       key: 'external',
@@ -56,14 +56,30 @@ const PiPWindow = () => {
         />
         {!isRecording ? (
           <Tooltip title="Start recording">
-            <PiPRecordButton onClick={startRecording} />
+            <PiPRecordButton
+              onClick={() => {
+                startRecording();
+                stopWatch.start();
+              }}
+            />
           </Tooltip>
         ) : (
           <div className={styles.controls}>
+            <Typography className={styles.duration} variant="subtitle2">
+              {formatDuration(stopWatch.elapsed)}
+            </Typography>
             <Tooltip title={isPaused ? 'Resume' : 'Pause'}>
               <IconButton
                 color={isPaused ? 'primary' : 'default'}
-                onClick={isPaused ? resumeRecording : pauseRecording}
+                onClick={() => {
+                  if (isPaused) {
+                    resumeRecording();
+                    stopWatch.start();
+                  } else {
+                    stopWatch.stop();
+                    pauseRecording();
+                  }
+                }}
               >
                 {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
               </IconButton>
