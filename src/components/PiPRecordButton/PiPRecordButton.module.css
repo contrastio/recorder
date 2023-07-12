@@ -9,4 +9,51 @@
   margin-bottom: 12px;
   width: 46px;
   height: 46px;
+
+  &.countingDown {
+    transition: border-color 300ms ease-in;
+    border-color: transparent;
+    pointer-events: none;
+  }
+}
+
+.countingDown .icon {
+  display: grid;
+  place-content: center;
+  transition: box-shadow 150ms ease 400ms;
+  box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
+  font-family: Gilroy, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+
+  &::after {
+    animation: 4s linear -350ms countdown;
+    content: '';
+  }
+}
+
+@keyframes countdown {
+  0% {
+    opacity: 0;
+    content: '3';
+  }
+
+  20% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  25% {
+    transform: scale(1);
+    opacity: 1;
+    content: '3';
+  }
+
+  50% {
+    content: '2';
+  }
+
+  75% {
+    content: '1';
+  }
 }
