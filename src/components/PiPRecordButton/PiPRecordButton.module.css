@@ -20,7 +20,7 @@
 .countingDown .icon {
   display: grid;
   place-content: center;
-  animation: 3.25s linear 400ms icon-out;
+  animation: 4s linear -350ms icon-out;
   font-family: Gilroy, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
@@ -55,66 +55,30 @@
     opacity: 0;
   }
 
-  20% {
-    transform: scale(0.8);
-    opacity: 0;
-    animation-timing-function: ease;
-  }
-
-  25% {
-    transform: scale(1.4);
-    opacity: 1;
-    animation-timing-function: ease;
-  }
-
-  30% {
-    transform: scale(1);
-  }
-
-  40% {
-    transform: scale(1);
-    opacity: 1;
-    animation-timing-function: ease-in;
-  }
-
-  45% {
-    transform: scale(0.8);
-    opacity: 0;
-    animation-timing-function: ease;
-  }
-
-  50% {
-    transform: scale(1.4);
-    opacity: 1;
-    animation-timing-function: ease;
-  }
-
-  55% {
-    transform: scale(1);
-  }
-
-  65% {
-    transform: scale(1);
-    opacity: 1;
-    animation-timing-function: ease-in;
-  }
-
+  20%,
+  45%,
   70% {
     transform: scale(0.8);
     opacity: 0;
     animation-timing-function: ease;
   }
 
+  25%,
+  50%,
   75% {
     transform: scale(1.4);
     opacity: 1;
     animation-timing-function: ease;
   }
 
+  30%,
+  55%,
   80% {
     transform: scale(1);
   }
 
+  40%,
+  65%,
   85% {
     transform: scale(1);
     opacity: 1;
@@ -132,22 +96,38 @@
 }
 
 @keyframes icon-out {
-  0% {
+  20% {
+    box-shadow: 0 0 24px 8px rgb(var(--mui-palette-primary-mainChannel) / 41%);
     animation-timing-function: ease;
   }
 
-  4.6% {
+  45%,
+  70% {
+    box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
+    animation-timing-function: ease;
+  }
+
+  25%,
+  50%,
+  75% {
+    box-shadow: 0 0 8px 20px rgb(var(--mui-palette-primary-mainChannel) / 40%);
+    animation-timing-function: ease;
+  }
+
+  30%,
+  55%,
+  80% {
     box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
   }
 
-  90% {
+  95% {
     transform: scale(1);
     opacity: 1;
     box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
     animation-timing-function: ease-in;
   }
 
-  95% {
+  97.5% {
     box-shadow: 0 0 0 32px rgb(var(--mui-palette-primary-mainChannel) / 0%);
   }
 
