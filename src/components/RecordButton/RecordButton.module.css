@@ -22,7 +22,7 @@
 }
 
 .icon {
-  transition: all 300ms ease-in-out;
+  transition: all 300ms ease;
   margin: 3px;
   border-radius: 50%;
   box-shadow: 0 0 24px 8px rgb(var(--mui-palette-primary-mainChannel) / 41%);
