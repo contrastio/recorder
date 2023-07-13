@@ -26,6 +26,7 @@
   font-weight: 700;
 
   &::after {
+    padding-top: 2px;
     animation: 4s linear -350ms countdown-content,
       4s linear -350ms countdown-in-out;
     content: '';
