@@ -23,6 +23,6 @@ export const update = (devicePreference: Partial<DevicePreference>) => {
   const previousDevicePreference = get();
   localStorage.setItem(
     localStorageKey,
-    JSON.stringify({ ...previousDevicePreference, ...devicePreference })
+    JSON.stringify({ ...previousDevicePreference, ...devicePreference }),
   );
 };

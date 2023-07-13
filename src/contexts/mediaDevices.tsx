@@ -23,7 +23,7 @@ type MediaDevicesContextType = {
 };
 
 const MediaDevicesContext = createContext<MediaDevicesContextType | undefined>(
-  undefined
+  undefined,
 );
 
 type MediaDevicesProviderProps = {
@@ -123,7 +123,7 @@ export const useMediaDevices = (): MediaDevicesContextType => {
 
   if (context === undefined) {
     throw new Error(
-      'useMediaDevices must be used within a MediaDevicesProvider'
+      'useMediaDevices must be used within a MediaDevicesProvider',
     );
   }
 

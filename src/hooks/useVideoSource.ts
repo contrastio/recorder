@@ -7,7 +7,7 @@ const useVideoSource = (videoStream: MediaStream | null) => {
         videoElement.srcObject = videoStream;
       }
     },
-    [videoStream]
+    [videoStream],
   );
 };
 

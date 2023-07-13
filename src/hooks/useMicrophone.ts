@@ -31,7 +31,7 @@ const useMicrophone = (deviceId: string, enabled: boolean) => {
         setMicrophoneStream(microphoneStream);
       }
     },
-    [setMicrophoneStream]
+    [setMicrophoneStream],
   );
 };
 

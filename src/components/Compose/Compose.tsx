@@ -6,7 +6,7 @@ type ComposeProps = {
 const Compose = ({ components, children }: ComposeProps) => {
   return components.reduceRight(
     (acc, Component) => <Component>{acc}</Component>,
-    children
+    children,
   );
 };
 

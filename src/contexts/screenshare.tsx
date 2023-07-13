@@ -8,7 +8,7 @@ type ScreenshareContextType = {
 };
 
 const ScreenshareContext = createContext<ScreenshareContextType | undefined>(
-  undefined
+  undefined,
 );
 
 type ScreenshareProviderProps = {

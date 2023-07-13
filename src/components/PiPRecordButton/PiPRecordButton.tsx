@@ -11,7 +11,7 @@ type PiPRecordButtonProps = RecordButtonProps & {
 
 const PiPRecordButton = (
   { className, onCountdownEnd, ...props }: PiPRecordButtonProps,
-  ref: React.ForwardedRef<HTMLButtonElement>
+  ref: React.ForwardedRef<HTMLButtonElement>,
 ) => {
   const [countingDown, setCountingDown] = useState(false);
 

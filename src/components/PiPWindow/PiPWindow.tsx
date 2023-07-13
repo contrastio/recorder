@@ -96,7 +96,7 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
         )}
       </div>
     </CacheProvider>,
-    pipWindow.document.body
+    pipWindow.document.body,
   );
 };
 

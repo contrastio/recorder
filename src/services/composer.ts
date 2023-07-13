@@ -7,7 +7,7 @@ export const CAMERA_MARGIN_BOTTOM = 40;
 export const composeStreams = (
   cameraStream: MediaStream | null,
   microphoneStream: MediaStream | null,
-  screenshareStream: MediaStream
+  screenshareStream: MediaStream,
 ): MediaStream => {
   const cameraTrack = cameraStream?.getVideoTracks()[0];
   const microphoneTrack = microphoneStream?.getAudioTracks()[0];
@@ -60,7 +60,7 @@ export const composeStreams = (
           canvas.height - CAMERA_HEIGHT - CAMERA_MARGIN_BOTTOM,
           CAMERA_WIDTH,
           CAMERA_HEIGHT,
-          CAMERA_BORDER_RADIUS
+          CAMERA_BORDER_RADIUS,
         );
         ctx.clip();
 
@@ -73,7 +73,7 @@ export const composeStreams = (
           canvas.width - CAMERA_WIDTH - CAMERA_MARGIN_RIGHT,
           canvas.height - CAMERA_HEIGHT - CAMERA_MARGIN_BOTTOM,
           CAMERA_WIDTH,
-          CAMERA_HEIGHT
+          CAMERA_HEIGHT,
         );
 
         ctx.restore();
