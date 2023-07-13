@@ -20,20 +20,20 @@
 .countingDown .icon {
   display: grid;
   place-content: center;
-  animation: 4s linear -350ms icon-out;
+  animation: 4s linear -350ms forwards iconPulse;
   font-family: Gilroy, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
 
   &::after {
     padding-top: 2px;
-    animation: 4s linear -350ms countdown-content,
-      4s linear -350ms countdown-in-out;
+    animation: 4s linear -350ms forwards countdown,
+      4s linear -350ms forwards countdownPulse;
     content: '';
   }
 }
 
-@keyframes countdown-content {
+@keyframes countdown {
   0% {
     animation-timing-function: step-end;
     content: '3';
@@ -50,7 +50,7 @@
   }
 }
 
-@keyframes countdown-in-out {
+@keyframes countdownPulse {
   0% {
     opacity: 0;
   }
@@ -95,7 +95,7 @@
   }
 }
 
-@keyframes icon-out {
+@keyframes iconPulse {
   20% {
     box-shadow: 0 0 24px 8px rgb(var(--mui-palette-primary-mainChannel) / 41%);
     animation-timing-function: ease;

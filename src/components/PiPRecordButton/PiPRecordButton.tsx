@@ -5,13 +5,15 @@ import RecordButton, { RecordButtonProps } from 'components/RecordButton';
 
 import styles from './PiPRecordButton.module.css';
 
-type PiPRecordButtonProps = RecordButtonProps;
+type PiPRecordButtonProps = RecordButtonProps & {
+  onCountdownEnd: () => void;
+};
 
 const PiPRecordButton = (
-  { className, ...props }: PiPRecordButtonProps,
+  { className, onCountdownEnd, ...props }: PiPRecordButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) => {
-  const [countingDown] = useState(false);
+  const [countingDown, setCountingDown] = useState(false);
 
   return (
     <RecordButton
@@ -21,6 +23,12 @@ const PiPRecordButton = (
       classes={{ icon: styles.icon }}
       ref={ref}
       {...props}
+      onClick={() => setCountingDown(true)}
+      onAnimationEnd={(event) => {
+        if (event.animationName === styles.countdown) {
+          onCountdownEnd();
+        }
+      }}
     />
   );
 };
