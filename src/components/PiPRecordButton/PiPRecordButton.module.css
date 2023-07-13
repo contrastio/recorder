@@ -20,40 +20,89 @@
 .countingDown .icon {
   display: grid;
   place-content: center;
-  transition: box-shadow 150ms ease 400ms;
-  box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
+  animation: 3.25s linear 400ms icon-out;
   font-family: Gilroy, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
 
   &::after {
-    animation: 4s linear -350ms countdown;
+    animation: 4s linear -350ms countdown-content,
+      4s linear -350ms countdown-in-out;
     content: '';
   }
 }
 
-@keyframes countdown {
+@keyframes countdown-content {
+  0% {
+    animation-timing-function: step-end;
+    content: '3';
+  }
+
+  50% {
+    animation-timing-function: step-end;
+    content: '2';
+  }
+
+  75% {
+    animation-timing-function: step-end;
+    content: '1';
+  }
+}
+
+@keyframes countdown-in-out {
   0% {
     opacity: 0;
-    content: '3';
   }
 
   20% {
     transform: scale(0.8);
     opacity: 0;
+    animation-timing-function: ease;
   }
 
   25% {
     transform: scale(1);
     opacity: 1;
-    content: '3';
   }
 
-  50% {
-    content: '2';
+  85% {
+    transform: scale(1);
+    opacity: 1;
   }
 
-  75% {
-    content: '1';
+  95% {
+    transform: scale(0.8);
+    opacity: 0;
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes icon-out {
+  0% {
+    animation-timing-function: ease;
+  }
+
+  4.6% {
+    box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
+  }
+
+  90% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 12.5px rgb(var(--mui-palette-primary-mainChannel) / 40%);
+    animation-timing-function: ease-in;
+  }
+
+  95% {
+    box-shadow: 0 0 0 32px rgb(var(--mui-palette-primary-mainChannel) / 0%);
+  }
+
+  100% {
+    transform: scale(10);
+    opacity: 0;
   }
 }
