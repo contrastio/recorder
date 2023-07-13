@@ -32,17 +32,37 @@ export const composeStreams = (
     }
 
     let latestScreenshareFrame: VideoFrame | undefined;
+    let readingScreenshare = false;
 
     const transformer = new TransformStream({
       async transform(cameraFrame: VideoFrame, controller) {
+        if (recordingGenerator.readyState === 'ended') {
+          cameraFrame.close();
+          latestScreenshareFrame?.close();
+          controller.terminate();
+          return;
+        }
+
         if (latestScreenshareFrame) {
-          // Awaiting the read operation would block the recording until
-          // the next frame, which could come way later when the screenshare
-          // is fully static
-          screenshareReader.read().then(({ value: screenshareFrame }) => {
-            latestScreenshareFrame?.close();
-            latestScreenshareFrame = screenshareFrame;
-          });
+          if (!readingScreenshare) {
+            // Prevents queueing unnecessary promises while awaiting for
+            // the next screenshare frame
+            readingScreenshare = true;
+
+            // Awaiting the read operation would block the recording until
+            // the next frame, which could come way later when the screenshare
+            // is fully static
+            screenshareReader.read().then(({ value: screenshareFrame }) => {
+              readingScreenshare = false;
+
+              latestScreenshareFrame?.close();
+              if (recordingGenerator.readyState === 'ended') {
+                screenshareFrame?.close();
+              } else {
+                latestScreenshareFrame = screenshareFrame;
+              }
+            });
+          }
         } else {
           // Waits for the 1st frame to initialize the canvas dimensions
           const { value: screenshareFrame } = await screenshareReader.read();
