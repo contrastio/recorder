@@ -49,6 +49,10 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
     };
 
     mediaRecorder.current.onstop = () => {
+      composedStream
+        .getVideoTracks()
+        .forEach((composedTrack) => composedTrack.stop());
+
       const blob = new Blob(chunks);
 
       const url = URL.createObjectURL(blob);
