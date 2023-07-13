@@ -15,13 +15,13 @@ const isAuthorized = (device: MediaDeviceInfo) =>
 
 const getAuthorizedCameras = (devices: MediaDeviceInfo[]) => {
   return devices.filter(
-    (device) => device.kind === 'videoinput' && isAuthorized(device)
+    (device) => device.kind === 'videoinput' && isAuthorized(device),
   );
 };
 
 const getAuthorizedMicrophones = (devices: MediaDeviceInfo[]) => {
   return devices.filter(
-    (device) => device.kind === 'audioinput' && isAuthorized(device)
+    (device) => device.kind === 'audioinput' && isAuthorized(device),
   );
 };
 
@@ -35,7 +35,7 @@ export const getAuthorizedDevices = async () => {
 
 export const getDeviceId = (
   devices: MediaDeviceInfo[],
-  preferredDeviceId: string
+  preferredDeviceId: string,
 ) => {
   if (devices.some((device) => device.deviceId === preferredDeviceId)) {
     return preferredDeviceId;

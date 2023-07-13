@@ -14,7 +14,7 @@ type RecordingContextType = {
 };
 
 const RecordingContext = createContext<RecordingContextType | undefined>(
-  undefined
+  undefined,
 );
 
 type RecordingProviderProps = {
@@ -35,7 +35,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
     const composedStream = composeStreams(
       cameraStream,
       microphoneStream,
-      screenshareStream
+      screenshareStream,
     );
     mediaRecorder.current = new MediaRecorder(composedStream, {
       mimeType: 'video/webm; codecs=vp9',

@@ -27,7 +27,8 @@
 
   &::after {
     padding-top: 2px;
-    animation: 4s linear -350ms forwards countdown,
+    animation:
+      4s linear -350ms forwards countdown,
       4s linear -350ms forwards countdownPulse;
     content: '';
   }

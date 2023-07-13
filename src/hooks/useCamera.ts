@@ -31,7 +31,7 @@ const useCamera = (deviceId: string, enabled: boolean) => {
         setCameraStream(cameraStream);
       }
     },
-    [setCameraStream]
+    [setCameraStream],
   );
 };
 

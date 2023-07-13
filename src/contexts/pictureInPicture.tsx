@@ -34,7 +34,7 @@ export const PictureInPictureProvider = ({
 
     const allCSS = [...document.styleSheets]
       .map((styleSheet) =>
-        [...styleSheet.cssRules].map((r) => r.cssText).join('')
+        [...styleSheet.cssRules].map((r) => r.cssText).join(''),
       )
       .filter(Boolean)
       .join('\n');
@@ -59,7 +59,7 @@ export const usePictureInPicture = (): PictureInPictureContextType => {
 
   if (context === undefined) {
     throw new Error(
-      'usePictureInPicture must be used within a PictureInPictureProvider'
+      'usePictureInPicture must be used within a PictureInPictureProvider',
     );
   }
 

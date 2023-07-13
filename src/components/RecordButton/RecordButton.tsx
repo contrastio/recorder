@@ -17,7 +17,7 @@ export type RecordButtonProps = Omit<
 
 const RecordButton = (
   { className, classes, ...props }: RecordButtonProps,
-  ref: React.ForwardedRef<HTMLButtonElement>
+  ref: React.ForwardedRef<HTMLButtonElement>,
 ) => {
   return (
     <IconButton className={cx(styles.root, className)} ref={ref} {...props}>

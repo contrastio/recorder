@@ -34,5 +34,5 @@ createRoot(document.getElementById('root') as HTMLElement).render(
         </Compose>
       </CssVarsProvider>
     </StyledEngineProvider>
-  </StrictMode>
+  </StrictMode>,
 );
