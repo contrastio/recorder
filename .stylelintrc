@@ -2,6 +2,7 @@
   "extends": ["stylelint-config-standard", "./stylelint-config-order"],
   "rules": {
     "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$|^Mui[a-zA-Z0-9]*(-[a-z][a-zA-Z0-9]+)$",
+    "keyframes-name-pattern": "^[a-z][a-zA-Z0-9]+$",
     "custom-property-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$|^mui(-[a-zA-Z0-9]+)*$",
     "selector-pseudo-class-no-unknown": [
       true,

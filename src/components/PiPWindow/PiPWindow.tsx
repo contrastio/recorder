@@ -57,7 +57,7 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
         {!isRecording ? (
           <Tooltip title="Start recording">
             <PiPRecordButton
-              onClick={() => {
+              onCountdownEnd={() => {
                 startRecording();
                 stopWatch.start();
               }}

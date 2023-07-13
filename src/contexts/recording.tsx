@@ -64,13 +64,14 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   };
 
   const stopRecording = () => {
-    setIsRecording(false);
     mediaRecorder.current?.stop();
+    setIsRecording(false);
+    setIsPaused(false);
   };
 
   const pauseRecording = () => {
-    setIsPaused(true);
     mediaRecorder.current?.pause();
+    setIsPaused(true);
   };
 
   const resumeRecording = () => {
