@@ -1,0 +1,11 @@
+.root {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 16px;
+  background-color: rgba(var(--mui-palette-common-backgroundChannel) / 90%);
+  backdrop-filter: blur(4px);
+  width: 423px;
+  height: 88px;
+}
