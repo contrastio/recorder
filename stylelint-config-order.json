@@ -232,6 +232,10 @@
           ]
         },
         {
+          "groupName": "backdropFilter",
+          "properties": ["backdrop-filter"]
+        },
+        {
           "groupName": "cursor",
           "properties": ["cursor"]
         },
