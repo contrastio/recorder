@@ -32,7 +32,7 @@ const App = () => {
     >
       <main className={styles.main}>
         <VideoStreams />
-        <LayoutSwitcher />
+        {import.meta.env.VITE_ENABLE_LAYOUT_SWITCHER && <LayoutSwitcher />}
       </main>
       <Footer />
       {pipWindow && <PiPWindow pipWindow={pipWindow} />}
