@@ -18,6 +18,7 @@ const StreamsContext = createContext<StreamsContextType | undefined>(undefined);
 type StreamsProviderProps = {
   children: React.ReactNode;
 };
+
 export const StreamsProvider = ({ children }: StreamsProviderProps) => {
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const [microphoneStream, setMicrophoneStream] = useState<MediaStream | null>(
