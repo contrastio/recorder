@@ -20,6 +20,7 @@ const RecordingContext = createContext<RecordingContextType | undefined>(
 type RecordingProviderProps = {
   children: React.ReactNode;
 };
+
 export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
