@@ -6,6 +6,25 @@
   border-radius: 16px;
   background-color: rgba(var(--mui-palette-common-backgroundChannel) / 90%);
   backdrop-filter: blur(4px);
-  width: 423px;
-  height: 88px;
+
+  :global(.MuiToggleButton-root) {
+    display: grid;
+    justify-items: center;
+    row-gap: 8px;
+    border: none;
+    padding: 16px;
+    line-height: 16px;
+    color: var(--mui-palette-text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  svg {
+    box-sizing: content-box;
+    border: 1px solid rgba(var(--mui-palette-dividerChannel) / 15%);
+    border-radius: 8px;
+    padding: 4px;
+    width: 32px;
+    height: 20px;
+  }
 }
