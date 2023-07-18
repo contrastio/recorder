@@ -10,6 +10,7 @@ import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import PiPRecordButton from 'components/PiPRecordButton';
+import { useLayout } from 'contexts/layout';
 import { useRecording } from 'contexts/recording';
 import { useStreams } from 'contexts/streams';
 import useStopWatch from 'hooks/useStopWatch';
@@ -23,6 +24,7 @@ type PiPWindowProps = {
 };
 
 const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
+  const { layout } = useLayout();
   const {
     isRecording,
     isPaused,
@@ -46,14 +48,16 @@ const PiPWindow = ({ pipWindow }: PiPWindowProps) => {
   return createPortal(
     <CacheProvider value={cssCacheRef.current}>
       <div className={styles.root}>
-        <video
-          className={styles.camera}
-          ref={updateCameraSource}
-          autoPlay
-          playsInline
-          muted
-          controls={false}
-        />
+        {layout !== 'screenOnly' && (
+          <video
+            className={styles.camera}
+            ref={updateCameraSource}
+            autoPlay
+            playsInline
+            muted
+            controls={false}
+          />
+        )}
         {!isRecording ? (
           <Tooltip title="Start recording">
             <PiPRecordButton
