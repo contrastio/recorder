@@ -1,6 +1,8 @@
 import { createContext, useContext, useRef } from 'react';
 
+import { useLayout } from './layout';
 import { usePictureInPicture } from './pictureInPicture';
+import { useRecording } from './recording';
 import { useStreams } from './streams';
 
 type ScreenshareContextType = {
@@ -17,6 +19,14 @@ type ScreenshareProviderProps = {
 
 export const ScreenshareProvider = ({ children }: ScreenshareProviderProps) => {
   const { screenshareStream, setScreenshareStream } = useStreams();
+
+  const { layout } = useLayout();
+  const layoutRef = useRef(layout);
+  layoutRef.current = layout;
+
+  const { isRecording } = useRecording();
+  const isRecordingRef = useRef(isRecording);
+  isRecordingRef.current = isRecording;
 
   const { pipWindow, requestPipWindow } = usePictureInPicture();
   const pipWindowRef = useRef(pipWindow);
@@ -36,12 +46,16 @@ export const ScreenshareProvider = ({ children }: ScreenshareProviderProps) => {
       });
       stream.getVideoTracks()[0].onended = () => {
         setScreenshareStream(null);
-        pipWindowRef.current?.close();
+        if (isRecordingRef.current && layoutRef.current !== 'cameraOnly') {
+          pipWindowRef.current?.close();
+        }
       };
       setScreenshareStream(stream);
     } catch {
       // Happens when the user aborts the screenshare
-      pipWindowRef.current?.close();
+      if (isRecordingRef.current && layoutRef.current !== 'cameraOnly') {
+        pipWindowRef.current?.close();
+      }
     }
   };
 
