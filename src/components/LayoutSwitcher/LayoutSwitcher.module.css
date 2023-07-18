@@ -1,7 +1,10 @@
 .root {
+  display: grid;
   position: absolute;
   bottom: 24px;
   left: 50%;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
   transform: translateX(-50%);
   border-radius: 16px;
   background-color: rgba(var(--mui-palette-common-backgroundChannel) / 90%);
@@ -26,5 +29,6 @@
     padding: 4px;
     width: 32px;
     height: 20px;
+    overflow: visible;
   }
 }
