@@ -232,8 +232,8 @@
           ]
         },
         {
-          "groupName": "backdropFilter",
-          "properties": ["backdrop-filter"]
+          "groupName": "filter",
+          "properties": ["filter", "backdrop-filter"]
         },
         {
           "groupName": "cursor",

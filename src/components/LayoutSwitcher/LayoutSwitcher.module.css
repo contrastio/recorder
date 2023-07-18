@@ -13,22 +13,46 @@
   :global(.MuiToggleButton-root) {
     display: grid;
     justify-items: center;
-    row-gap: 8px;
+    row-gap: 10px;
     border: none;
-    padding: 16px;
+    padding: 18px 16px 16px;
     line-height: 16px;
     color: var(--mui-palette-text-secondary);
     font-size: 12px;
     font-weight: 500;
+
+    svg {
+      box-sizing: content-box;
+      border-radius: 8px;
+      box-shadow: 0 0 0 1px rgba(var(--mui-palette-dividerChannel) / 15%);
+      padding: 4px;
+      width: 32px;
+      height: 20px;
+      overflow: visible;
+    }
   }
 
-  svg {
-    box-sizing: content-box;
-    border: 1px solid rgba(var(--mui-palette-dividerChannel) / 15%);
-    border-radius: 8px;
-    padding: 4px;
-    width: 32px;
-    height: 20px;
-    overflow: visible;
+  :global(.MuiToggleButton-root:hover) {
+    svg {
+      filter: brightness(1.5);
+    }
+  }
+
+  :global(.MuiToggleButton-root.Mui-selected) {
+    background-color: transparent;
+    color: var(--mui-palette-text-primary);
+
+    &:hover {
+      background-color: rgba(
+        var(--mui-palette-text-primaryChannel) /
+          var(--mui-palette-action-hoverOpacity)
+      );
+    }
+
+    svg {
+      box-shadow: 0 0 0 2px
+        rgba(var(--mui-palette-common-backgroundChannel) / 70%);
+      filter: invert(1) brightness(1.175);
+    }
   }
 }

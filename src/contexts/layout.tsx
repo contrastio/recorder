@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-type Layout = 'screenOnly' | 'screenAndCamera' | 'cameraOnly';
+export type Layout = 'screenOnly' | 'screenAndCamera' | 'cameraOnly';
 
 type LayoutContextType = {
   layout: Layout;
