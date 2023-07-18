@@ -26,9 +26,9 @@ createRoot(document.getElementById('root') as HTMLElement).render(
           components={[
             LayoutProvider,
             StreamsProvider,
-            MediaDevicesProvider,
             RecordingProvider,
             PictureInPictureProvider,
+            MediaDevicesProvider,
             ScreenshareProvider,
           ]}
         >

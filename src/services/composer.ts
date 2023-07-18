@@ -7,21 +7,27 @@ export const CAMERA_MARGIN_BOTTOM = 40;
 export const composeStreams = (
   cameraStream: MediaStream | null,
   microphoneStream: MediaStream | null,
-  screenshareStream: MediaStream,
+  screenshareStream: MediaStream | null,
 ): MediaStream => {
   const cameraTrack = cameraStream?.getVideoTracks()[0];
   const microphoneTrack = microphoneStream?.getAudioTracks()[0];
-  const screenshareTrack = screenshareStream.getVideoTracks()[0];
+  const screenshareTrack = screenshareStream?.getVideoTracks()[0];
 
-  const screenshareProcessor = new MediaStreamTrackProcessor({
-    track: screenshareTrack,
-  });
-  const recordingGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
+  const screenshareProcessor =
+    screenshareTrack &&
+    new MediaStreamTrackProcessor({
+      track: screenshareTrack,
+    });
 
-  if (cameraTrack) {
-    const cameraProcessor = new MediaStreamTrackProcessor({
+  const cameraProcessor =
+    cameraTrack &&
+    new MediaStreamTrackProcessor({
       track: cameraTrack,
     });
+
+  const recordingGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
+
+  if (screenshareProcessor && cameraProcessor) {
     const screenshareReader = screenshareProcessor.readable.getReader();
 
     const canvas = new OffscreenCanvas(0, 0);
@@ -109,7 +115,9 @@ export const composeStreams = (
     cameraProcessor.readable
       .pipeThrough(transformer)
       .pipeTo(recordingGenerator.writable);
-  } else {
+  } else if (cameraProcessor) {
+    cameraProcessor.readable.pipeTo(recordingGenerator.writable);
+  } else if (screenshareProcessor) {
     screenshareProcessor.readable.pipeTo(recordingGenerator.writable);
   }
 

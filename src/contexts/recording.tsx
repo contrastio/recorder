@@ -2,6 +2,7 @@ import { createContext, useContext, useRef, useState } from 'react';
 
 import { composeStreams } from 'services/composer';
 
+import { useLayout } from './layout';
 import { useStreams } from './streams';
 
 type RecordingContextType = {
@@ -22,6 +23,7 @@ type RecordingProviderProps = {
 };
 
 export const RecordingProvider = ({ children }: RecordingProviderProps) => {
+  const { layout } = useLayout();
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const { cameraStream, microphoneStream, screenshareStream } = useStreams();
@@ -29,14 +31,12 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const mediaRecorder = useRef<MediaRecorder>();
 
   const startRecording = () => {
-    if (!screenshareStream) return;
-
     setIsRecording(true);
 
     const composedStream = composeStreams(
-      cameraStream,
+      layout === 'screenOnly' ? null : cameraStream,
       microphoneStream,
-      screenshareStream,
+      layout === 'cameraOnly' ? null : screenshareStream,
     );
     mediaRecorder.current = new MediaRecorder(composedStream, {
       mimeType: 'video/webm; codecs=vp9',

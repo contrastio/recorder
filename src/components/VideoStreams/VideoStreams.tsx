@@ -38,7 +38,6 @@ const VideoStreams = () => {
   return (
     <>
       {screenshareStream || layout === 'cameraOnly' ? (
-        // TODO Loading state while loading screenshare stream
         <video
           className={cx(styles.mainStream, {
             [styles.cameraStream]: layout === 'cameraOnly',
@@ -77,7 +76,6 @@ const VideoStreams = () => {
       {layout === 'screenAndCamera' &&
         cameraStream &&
         (!screenshareStream || screenshareSize) && (
-          // TODO Loading state while loading camera stream
           <video
             className={cx(styles.pipStream, styles.cameraStream)}
             ref={updateCameraSource}
