@@ -7,6 +7,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import Compose from 'components/Compose';
+import { CountdownProvider } from 'contexts/countdown';
 import { LayoutProvider } from 'contexts/layout';
 import { MediaDevicesProvider } from 'contexts/mediaDevices';
 import { PictureInPictureProvider } from 'contexts/pictureInPicture';
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
             PictureInPictureProvider,
             MediaDevicesProvider,
             ScreenshareProvider,
+            CountdownProvider,
           ]}
         >
           <App />

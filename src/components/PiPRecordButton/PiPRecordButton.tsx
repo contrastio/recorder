@@ -1,7 +1,8 @@
 import cx from 'classnames';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 
 import RecordButton, { RecordButtonProps } from 'components/RecordButton';
+import { useCountdown } from 'contexts/countdown';
 
 import styles from './PiPRecordButton.module.css';
 
@@ -13,7 +14,7 @@ const PiPRecordButton = (
   { className, onCountdownEnd, ...props }: PiPRecordButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>,
 ) => {
-  const [countingDown, setCountingDown] = useState(false);
+  const { countingDown, setCountingDown } = useCountdown();
 
   return (
     <RecordButton
@@ -27,6 +28,7 @@ const PiPRecordButton = (
       onAnimationEnd={(event) => {
         if (event.animationName === styles.countdown) {
           onCountdownEnd();
+          setCountingDown(false);
         }
       }}
     />
