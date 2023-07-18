@@ -2,6 +2,7 @@
   display: grid;
   position: fixed;
   inset: 0;
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .camera {
