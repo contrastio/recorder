@@ -15,6 +15,7 @@
     justify-items: center;
     row-gap: 10px;
     border: none;
+    border-radius: 16px;
     padding: 18px 16px 16px;
     line-height: 16px;
     color: var(--mui-palette-text-secondary);
