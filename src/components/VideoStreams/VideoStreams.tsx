@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { useState } from 'react';
 
 import Placeholder from 'components/Placeholder';
@@ -39,7 +40,9 @@ const VideoStreams = () => {
       {screenshareStream || layout === 'cameraOnly' ? (
         // TODO Loading state while loading screenshare stream
         <video
-          className={styles.mainStream}
+          className={cx(styles.mainStream, {
+            [styles.cameraStream]: layout === 'cameraOnly',
+          })}
           ref={
             layout === 'cameraOnly'
               ? updateCameraSource
@@ -76,7 +79,7 @@ const VideoStreams = () => {
         (!screenshareStream || screenshareSize) && (
           // TODO Loading state while loading camera stream
           <video
-            className={styles.pipStream}
+            className={cx(styles.pipStream, styles.cameraStream)}
             ref={updateCameraSource}
             style={{
               right: percentage(CAMERA_MARGIN_RIGHT / screenshareWidth),
