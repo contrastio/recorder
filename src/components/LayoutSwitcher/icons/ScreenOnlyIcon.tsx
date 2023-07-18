@@ -1,6 +1,6 @@
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
-const ScreenIcon = (props: SvgIconProps) => {
+const ScreenOnlyIcon = (props: SvgIconProps) => {
   return (
     <SvgIcon viewBox="0 0 32 20" {...props}>
       <rect width="32" height="20" rx="4" fill="#2A2B2D" />
@@ -49,4 +49,4 @@ const ScreenIcon = (props: SvgIconProps) => {
   );
 };
 
-export default ScreenIcon;
+export default ScreenOnlyIcon;
