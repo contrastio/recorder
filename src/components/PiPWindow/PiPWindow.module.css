@@ -6,6 +6,7 @@
 
 .camera {
   grid-area: 1/1;
+  transform: scaleX(-1);
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -13,6 +14,7 @@
 
 .controls {
   display: grid;
+  position: relative;
   grid-area: 1/1;
   grid-template-columns: 1fr;
   grid-auto-flow: column;
