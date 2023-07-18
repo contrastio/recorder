@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Placeholder from 'components/Placeholder';
+import { useLayout } from 'contexts/layout';
 import { useStreams } from 'contexts/streams';
 import useVideoSource from 'hooks/useVideoSource';
 import {
@@ -20,6 +21,7 @@ type ScreenshareSize = {
 };
 
 const VideoStreams = () => {
+  const { layout } = useLayout();
   const { cameraStream, screenshareStream } = useStreams();
   const updateCameraSource = useVideoSource(cameraStream);
   const updateScreenshareSource = useVideoSource(screenshareStream);
@@ -34,11 +36,15 @@ const VideoStreams = () => {
 
   return (
     <>
-      {screenshareStream ? (
+      {screenshareStream || layout === 'cameraOnly' ? (
         // TODO Loading state while loading screenshare stream
         <video
-          className={styles.screenshare}
-          ref={updateScreenshareSource}
+          className={styles.mainStream}
+          ref={
+            layout === 'cameraOnly'
+              ? updateCameraSource
+              : updateScreenshareSource
+          }
           autoPlay
           playsInline
           muted
@@ -49,10 +55,12 @@ const VideoStreams = () => {
           //
           // eslint-disable-next-line react/no-unknown-property
           onResize={(event) => {
-            setScreenshareSize({
-              width: event.currentTarget.videoWidth,
-              height: event.currentTarget.videoHeight,
-            });
+            if (layout !== 'cameraOnly') {
+              setScreenshareSize({
+                width: event.currentTarget.videoWidth,
+                height: event.currentTarget.videoHeight,
+              });
+            }
           }}
         />
       ) : (
@@ -63,26 +71,28 @@ const VideoStreams = () => {
         If the screenshare stream is defined but its size hasn't been retrieved yet,
         we don't render the camera stream
       */}
-      {cameraStream && (!screenshareStream || screenshareSize) && (
-        // TODO Loading state while loading camera stream
-        <video
-          className={styles.camera}
-          ref={updateCameraSource}
-          style={{
-            right: percentage(CAMERA_MARGIN_RIGHT / screenshareWidth),
-            bottom: percentage(CAMERA_MARGIN_BOTTOM / screenshareHeight),
-            width: percentage(CAMERA_WIDTH / screenshareWidth),
-            height: percentage(CAMERA_HEIGHT / screenshareHeight),
-            borderRadius: [
-              percentage(CAMERA_BORDER_RADIUS / CAMERA_WIDTH),
-              percentage(CAMERA_BORDER_RADIUS / CAMERA_HEIGHT),
-            ].join('/'),
-          }}
-          autoPlay
-          playsInline
-          muted
-        />
-      )}
+      {layout === 'screenAndCamera' &&
+        cameraStream &&
+        (!screenshareStream || screenshareSize) && (
+          // TODO Loading state while loading camera stream
+          <video
+            className={styles.pipStream}
+            ref={updateCameraSource}
+            style={{
+              right: percentage(CAMERA_MARGIN_RIGHT / screenshareWidth),
+              bottom: percentage(CAMERA_MARGIN_BOTTOM / screenshareHeight),
+              width: percentage(CAMERA_WIDTH / screenshareWidth),
+              height: percentage(CAMERA_HEIGHT / screenshareHeight),
+              borderRadius: [
+                percentage(CAMERA_BORDER_RADIUS / CAMERA_WIDTH),
+                percentage(CAMERA_BORDER_RADIUS / CAMERA_HEIGHT),
+              ].join('/'),
+            }}
+            autoPlay
+            playsInline
+            muted
+          />
+        )}
     </>
   );
 };
