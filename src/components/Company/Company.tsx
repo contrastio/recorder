@@ -5,7 +5,6 @@ import ContrastLogo from 'components/icons/ContrastLogo';
 import styles from './Company.module.css';
 
 const Company = () => {
-  // TODO Link to contrast website
   return (
     <Typography component="span" variant="subtitle2" color="text.secondary">
       Powered by{' '}
