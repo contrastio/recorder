@@ -6,6 +6,13 @@
   column-gap: 8px;
 }
 
+.githubLink {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  column-gap: 8px;
+}
+
 .devices {
   display: grid;
   grid-auto-flow: column;

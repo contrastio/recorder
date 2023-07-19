@@ -12,12 +12,11 @@ const button: Components<CssVarsTheme>['MuiButton'] = {
     },
     sizeLarge: {
       fontSize: 16,
-      padding: '10px 24px',
+      paddingBlock: 9,
     },
     startIcon: {
-      marginRight: 10,
       ['& > *:nth-of-type(1)']: {
-        fontSize: 16,
+        fontSize: 20,
       },
     },
     outlined: {

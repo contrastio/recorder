@@ -25,7 +25,7 @@
     svg {
       box-sizing: content-box;
       border-radius: 8px;
-      box-shadow: 0 0 0 1px rgba(var(--mui-palette-dividerChannel) / 15%);
+      box-shadow: 0 0 0 1px var(--mui-palette-divide);
       padding: 4px;
       width: 32px;
       height: 20px;

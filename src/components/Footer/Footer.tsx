@@ -1,5 +1,5 @@
 import CameraSelect from 'components/CameraSelect';
-import Company from 'components/Company';
+import GitHubButton from 'components/GitHubButton';
 import MainRecordButton from 'components/MainRecordButton';
 import MicrophoneSelect from 'components/MicrophoneSelect';
 
@@ -8,7 +8,7 @@ import styles from './Footer.module.css';
 const Footer = () => {
   return (
     <footer className={styles.root}>
-      <Company />
+      <GitHubButton />
       <MainRecordButton />
       <div className={styles.devices}>
         <MicrophoneSelect />
