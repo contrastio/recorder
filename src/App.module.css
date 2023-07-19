@@ -17,7 +17,7 @@
 .main {
   position: relative;
   justify-self: center;
-  border: 1px solid var(--mui-palette-divider);
+  border: 1px solid rgba(var(--mui-palette-dividerChannel) / 8%);
   border-radius: 12px;
   max-width: 100%;
   max-height: 100%;
