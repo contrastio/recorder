@@ -1,0 +1,20 @@
+.root {
+  display: grid;
+  position: fixed;
+  inset: 0;
+  grid-template-columns: minmax(0, 440px);
+  place-content: center;
+  justify-items: center;
+  row-gap: 32px;
+  text-align: center;
+}
+
+.chromeLink {
+  display: grid;
+  justify-items: center;
+  row-gap: 4px;
+}
+
+.chromeIcon {
+  width: 48px;
+}
