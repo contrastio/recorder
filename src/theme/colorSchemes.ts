@@ -16,7 +16,7 @@ const colorSchemes: CssVarsThemeOptions['colorSchemes'] = {
   dark: {
     palette: {
       ...common,
-      divider: 'rgba(255, 255, 255, 0.08)',
+      divider: 'rgba(255, 255, 255, 0.15)',
     },
   },
   light: {
