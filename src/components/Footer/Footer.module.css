@@ -1,14 +1,6 @@
 .root {
   display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: 8px;
-}
-
-.githubLink {
-  display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   column-gap: 8px;
 }
@@ -16,5 +8,6 @@
 .devices {
   display: grid;
   grid-auto-flow: column;
+  justify-self: end;
   column-gap: 8px;
 }
