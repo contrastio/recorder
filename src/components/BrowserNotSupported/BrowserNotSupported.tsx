@@ -8,12 +8,9 @@ import styles from './BrowserNotSupported.module.css';
 const BrowserNotSupported = () => {
   return (
     <div className={styles.root}>
-      <Typography variant="h6">
-        This browser doesn&apos;t support Document Picture-in-Picture and
-        Insertable Streams APIs.
-      </Typography>
+      <Typography variant="h6">This browser is not yet supported</Typography>
       <Typography variant="subtitle1">
-        For the moment, recordings can be created only with:
+        You can use the recorder with the following browser(s)
       </Typography>
       <Link
         className={styles.chromeLink}
