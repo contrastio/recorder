@@ -9,11 +9,11 @@ Welcome to Recorder, the coolest open-source web application that lets you captu
 
 ## Features
 
-- **Simple and Intuitive:** Recorder offers a user-friendly interface, making recording a breeze for everyone.
-- **Screen and Camera Recording:** Capture your browser tab or window while simultaneously adding a personal touch with your camera stream.
-- **Picture-in-Picture View:** Experience the magic of picture-in-picture, observing your camera stream overlay while recording your screen.
-- **Local and Secure:** Your privacy is a top priority! All recordings take place directly in your browser, keeping your data safe and sound.
-- **Real-time Preview:** Preview your camera stream and screen recording in real-time before diving into the action.
+- ✨ **Simple and Intuitive:** Recorder offers a user-friendly interface, making recording a breeze for everyone.
+- 🎥 **Screen and Camera Recording:** Capture your browser tab or window while simultaneously adding a personal touch with your camera stream.
+- 🖼️ **Picture-in-Picture View:** Experience the magic of picture-in-picture, observing your camera stream overlay while recording your screen.
+- 🔒 **Local and Secure:** Your privacy is a top priority! All recordings take place directly in your browser, keeping your data safe and sound.
+- 🎬 **Real-time Preview:** Preview your camera stream and screen recording in real-time before diving into the action.
 
 ## Browser Compatibility
 
