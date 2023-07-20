@@ -1,6 +1,6 @@
 # 🎥 Recorder
 
-Welcome to Recorder, the coolest open-source web application that lets you capture your screen and camera stream right in your browser! No downloads or installations needed – just head over to https://recorder.getcontrast.io, and let the recording begin! 🚀
+Welcome to Recorder, the coolest open-source web application that lets you capture your screen and camera stream right in your browser! No downloads or installations needed – just head over to [recorder.getcontrast.io](https://recorder.getcontrast.io), and let the recording begin! 🚀
 
 <a align="center" href="https://recorder.getcontrast.io">
   <img alt="" src="screenshots/main-window.png" width="49%"/>
