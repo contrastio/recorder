@@ -6,6 +6,7 @@
   place-content: center;
   justify-items: center;
   row-gap: 32px;
+  padding: 32px;
   text-align: center;
 }
 
