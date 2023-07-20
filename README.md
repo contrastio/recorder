@@ -15,6 +15,22 @@ Welcome to Recorder, the coolest open-source web application that lets you captu
 - 🔒 **Local and Secure:** Your privacy is a top priority! All recordings take place directly in your browser, keeping your data safe and sound.
 - 🎬 **Real-time Preview:** Preview your camera stream and screen recording in real-time before diving into the action.
 
+## How to Use
+
+1. **Access the Web Application:** Fire up your Google Chrome browser and head to [recorder.getcontrast.io](https://recorder.getcontrast.io).
+
+2. **Choose Your Mode:** Select your desired recording mode:
+
+   - 🖥️ **Screen only:** Capture your browser tab or window without the camera stream.
+   - 🎥 **Screen and camera:** Record your browser tab or window along with your awesome camera stream.
+   - 📷 **Camera only:** Focus solely on your camera stream for a personal touch.
+
+3. **Start Recording:** Click the big red "Record" button to kickstart your screen and camera recording adventure.
+
+4. **Picture-in-Picture View:** Your camera stream will appear in a nifty picture-in-picture view while recording the screen.
+
+5. **Save and Share:** Ready to wrap it up? Click the stop button and save your masterpiece as a video file to share with the world! 🌎
+
 ## Browser Compatibility
 
 Recorder is designed to rock **Google Chrome**! It leverages certain browser capabilities that may not be available in other browsers at the moment.
