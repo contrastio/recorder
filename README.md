@@ -29,7 +29,7 @@ Welcome to Recorder, the coolest open-source web application that lets you captu
 
 4. **Picture-in-Picture View:** Your camera stream will appear in a nifty picture-in-picture view while recording the screen.
 
-5. **Save and Share:** Ready to wrap it up? Click the stop button and save your masterpiece as a video file to share with the world! 🌎
+5. **Save and Share:** Ready to wrap it up? Click the "Stop" button and save your masterpiece as a video file to share with the world! 🌎
 
 ## Browser Compatibility
 
