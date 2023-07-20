@@ -1,48 +1,84 @@
-# Vite React TypeScript
+# 🎥 Recorder
 
-Vite starter template with opinionated predefined settings.
+Welcome to Recorder, the coolest open-source web application that lets you capture your screen and camera stream right in your browser! No downloads or installations needed – just head over to [recorder.getcontrast.io](https://recorder.getcontrast.io), and let the recording begin! 🚀
+
+<a align="center" href="https://recorder.getcontrast.io">
+  <img alt="" src="screenshots/main-window.png" width="49%"/>
+  <img alt="" src="screenshots/recording.png" width="49%"/>
+</a>
 
 ## Features
 
-- [Vite](https://vitejs.dev/) with [React](https://reactjs.org/) and [TypeScript](https://www.typescriptlang.org/)
-- [ESLint](https://eslint.org/), [Stylelint](https://stylelint.io/) and [Prettier](https://prettier.io/)
-- Pre-commit hook with [Husky](https://typicode.github.io/husky/) and [lint-staged](https://github.com/okonet/lint-staged)
-- Static typing for CSS modules with [typescript-plugin-css-modules](https://github.com/mrmckeb/typescript-plugin-css-modules)
-- [PostCSS Nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)
-- Import aliases for an opinionated folder structure (can be customized in [vite.config.ts](vite.config.ts)). Highly inspired by [Robin Wieruch's post](https://www.robinwieruch.de/react-folder-structure)
+- ✨ **Simple and Intuitive:** Recorder offers a user-friendly interface, making recording a breeze for everyone.
+- 🎥 **Screen and Camera Recording:** Capture your browser tab or window while simultaneously adding a personal touch with your camera stream.
+- 🖼️ **Picture-in-Picture View:** Experience the magic of picture-in-picture, observing your camera stream overlay while recording your screen.
+- 🔒 **Local and Secure:** Your privacy is a top priority! All recordings take place directly in your browser, keeping your data safe and sound.
+- 🎬 **Real-time Preview:** Preview your camera stream and screen recording in real-time before diving into the action.
 
-## Getting started
+## How to Use
 
-Use this repository as a [GitHub template](https://github.com/Volcomix/vite-react-ts/generate) or use [degit](https://github.com/Rich-Harris/degit) to scaffold your project locally:
+1. **Access the Web Application:** Fire up your Google Chrome browser and head to [recorder.getcontrast.io](https://recorder.getcontrast.io).
 
-```bash
-npx degit volcomix/vite-react-ts my-project
-cd my-project
+2. **Choose Your Mode:** Select your desired recording mode:
 
-yarn
-yarn dev
-```
+   - 🖥️ **Screen only:** Capture your browser tab or window without the camera stream.
+   - 🎥 **Screen and camera:** Record your browser tab or window along with your awesome camera stream.
+   - 📷 **Camera only:** Focus solely on your camera stream for a personal touch.
 
-## VSCode integration
+3. **Start Recording:** Click the big red "Record" button to kickstart your screen and camera recording adventure.
 
-You need to [use the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript) in order to get CSS modules static typing working. See the [TypeScript plugin repository](https://github.com/mrmckeb/typescript-plugin-css-modules#visual-studio-code) for advanced usage.
+4. **Picture-in-Picture View:** Your camera stream will appear in a nifty picture-in-picture view while recording the screen.
 
-This starter template works well with the following extensions:
+5. **Save and Share:** Ready to wrap it up? Click the stop button and save your masterpiece as a video file to share with the world! 🌎
 
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [PostCSS Language Support](https://marketplace.visualstudio.com/items?itemName=csstools.postcss)
+## Browser Compatibility
 
-Fix all, organize imports and format on save work seamlessly when configured in user or workspace settings:
+Recorder is designed to rock **Google Chrome**! It leverages certain browser capabilities that may not be available in other browsers at the moment.
 
-```json
-{
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
-  },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
-}
-```
+## Support
+
+If you encounter any issues, have questions, or need assistance, please feel free to [open an issue](https://github.com/contrastio/recorder/issues) on GitHub. We welcome your feedback and are happy to assist with any questions or concerns you may have.
+
+## Development & Contributions
+
+Excited to dive into the code and make this app even cooler? To get started, follow these steps:
+
+1. **Clone the Repository:** Fork the Recorder repository and clone it to your local machine using Git.
+
+   ```bash
+   git clone https://github.com/contrastio/recorder.git
+   ```
+
+2. **Navigate to the Directory:** Move into the Recorder project directory.
+
+   ```bash
+   cd recorder
+   ```
+
+3. **Install Dependencies:** Install the necessary dependencies using Yarn.
+
+   ```bash
+   yarn
+   ```
+
+4. **Run the Development Server:** Start the development server with Yarn.
+
+   ```bash
+   yarn dev
+   ```
+
+5. **Make Your Changes:** Work your magic! Make the desired improvements, add features, or fix issues.
+
+6. **Create a Pull Request:** Once you're happy with your changes, create a pull request on the main Recorder repository. We'll review your contribution and merge it if everything looks good!
+
+## License
+
+Recorder is released under the [MIT License](LICENSE), allowing you to freely use, modify, and distribute the application.
+
+<br/>
+
+---
+
+<br/>
+
+Time to unleash your creativity and capture those moments with Recorder! 🎬🌟 Lights, camera, action!
