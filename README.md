@@ -7,6 +7,10 @@ Welcome to Recorder, the coolest open-source web application that lets you captu
   <img alt="" src="screenshots/recording.png" width="49%"/>
 </a>
 
+&nbsp;
+
+**Want to learn more about us?** Visit our website: [getcontrast.io](https://getcontrast.io?utm_source=recorder&utm_campaign=opensource)
+
 ## Features
 
 - ✨ **Simple and Intuitive:** Recorder offers a user-friendly interface, making recording a breeze for everyone.
