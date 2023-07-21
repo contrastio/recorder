@@ -1,4 +1,4 @@
-name: Check, build and deploy on staging
+name: Check, build and deploy
 on:
   push:
     branches: [main]
@@ -8,7 +8,7 @@ permissions:
 jobs:
   check-build-deploy:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
