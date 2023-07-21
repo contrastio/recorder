@@ -9,7 +9,7 @@ Welcome to Recorder, the coolest open-source web application that lets you captu
 
 &nbsp;
 
-**Want to learn more about us?** Visit our website: [getcontrast.io](https://getcontrast.io)
+**Want to learn more about us?** We are passionate about creating innovative video tools. Visit our website: [getcontrast.io](https://getcontrast.io)
 
 ## Features
 
