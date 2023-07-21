@@ -16,7 +16,7 @@ const Placeholder = () => {
         variant="h5"
         color="secondary.contrastText"
       >
-        Don&apos;t leave it empty
+        Start sharing your screen to see it here
       </Typography>
       <Button startIcon={<PresentToAllIcon />} onClick={startScreenshare}>
         Share screen
