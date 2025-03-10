@@ -7,7 +7,7 @@ const GitHubButton = () => {
   return (
     <Button
       className={styles.root}
-      href="https://github.com/contrastio/recorder"
+      href="https://github.com/QuocVietHa08/recorder"
       target="_blank"
       startIcon={<GitHubIcon />}
     >
