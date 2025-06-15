@@ -5,10 +5,11 @@
 
 .pipStream {
   position: absolute;
-  border-radius: 8px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
 .cameraStream {
   transform: scaleX(-1);
+  border-radius: 50%;
 }

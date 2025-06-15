@@ -88,6 +88,7 @@ const VideoStreams = () => {
                 percentage(CAMERA_BORDER_RADIUS / CAMERA_WIDTH),
                 percentage(CAMERA_BORDER_RADIUS / CAMERA_HEIGHT),
               ].join('/'),
+              // borderRadius: '50%',
             }}
             autoPlay
             playsInline

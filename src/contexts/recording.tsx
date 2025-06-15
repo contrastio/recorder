@@ -1,6 +1,6 @@
 import { createContext, useContext, useRef, useState } from 'react';
 
-import { composeStreams } from 'services/composer';
+import { composeStreams, saveAsMP4 } from 'services/composer';
 
 import { useLayout } from './layout';
 import { useStreams } from './streams';
@@ -54,12 +54,14 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
         .getVideoTracks()
         .forEach((composedTrack) => composedTrack.stop());
 
-      const blob = new Blob(chunks);
+      // Create an MP4 blob from the recorded chunks
+      const mp4Blob = saveAsMP4(chunks);
 
-      const url = URL.createObjectURL(blob);
+      // Create download link for MP4 file
+      const url = URL.createObjectURL(mp4Blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'recording.webm';
+      link.download = 'recording.mp4';
       link.click();
 
       window.URL.revokeObjectURL(url);

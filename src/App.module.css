@@ -8,10 +8,10 @@
   justify-content: center;
   row-gap: 24px;
   padding: 24px;
+}
 
-  &.placeholder {
-    grid-template-rows: minmax(0, 1fr) auto;
-  }
+.root .placeholder {
+  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 .main {
@@ -23,8 +23,8 @@
   max-height: 100%;
   overflow: hidden;
   line-height: 0;
+}
 
-  .placeholder & {
-    aspect-ratio: 16 / 9;
-  }
+.main .placeholder {
+  aspect-ratio: 16 / 9;
 }
