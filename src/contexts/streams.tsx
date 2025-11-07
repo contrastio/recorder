@@ -12,9 +12,7 @@ type StreamsContextType = {
   setScreenshareStream: (
     value: React.SetStateAction<MediaStream | null>,
   ) => void;
-  setTabAudioStream: (
-    value: React.SetStateAction<MediaStream | null>,
-  ) => void;
+  setTabAudioStream: (value: React.SetStateAction<MediaStream | null>) => void;
 };
 
 const StreamsContext = createContext<StreamsContextType | undefined>(undefined);
