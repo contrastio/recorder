@@ -26,7 +26,8 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const { layout } = useLayout();
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const { cameraStream, microphoneStream, screenshareStream } = useStreams();
+  const { cameraStream, microphoneStream, screenshareStream, tabAudioStream } =
+    useStreams();
 
   const mediaRecorder = useRef<MediaRecorder>();
 
@@ -37,6 +38,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
       layout === 'screenOnly' ? null : cameraStream,
       microphoneStream,
       layout === 'cameraOnly' ? null : screenshareStream,
+      tabAudioStream,
     );
     mediaRecorder.current = new MediaRecorder(composedStream, {
       mimeType: 'video/webm; codecs=vp9',
