@@ -18,7 +18,8 @@ type ScreenshareProviderProps = {
 };
 
 export const ScreenshareProvider = ({ children }: ScreenshareProviderProps) => {
-  const { screenshareStream, setScreenshareStream } = useStreams();
+  const { screenshareStream, setScreenshareStream, setTabAudioStream } =
+    useStreams();
 
   const { layout } = useLayout();
   const layoutRef = useRef(layout);
@@ -42,10 +43,20 @@ export const ScreenshareProvider = ({ children }: ScreenshareProviderProps) => {
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
-        audio: false,
+        audio: true,
       });
+
+      // Extract audio tracks from the screenshare stream
+      const audioTracks = stream.getAudioTracks();
+      if (audioTracks.length > 0) {
+        // Create a separate stream for tab audio
+        const tabAudioStream = new MediaStream(audioTracks);
+        setTabAudioStream(tabAudioStream);
+      }
+
       stream.getVideoTracks()[0].onended = () => {
         setScreenshareStream(null);
+        setTabAudioStream(null);
         if (isRecordingRef.current && layoutRef.current !== 'cameraOnly') {
           pipWindowRef.current?.close();
         }
