@@ -4,11 +4,15 @@ type StreamsContextType = {
   cameraStream: MediaStream | null;
   microphoneStream: MediaStream | null;
   screenshareStream: MediaStream | null;
+  tabAudioStream: MediaStream | null;
   setCameraStream: (value: React.SetStateAction<MediaStream | null>) => void;
   setMicrophoneStream: (
     value: React.SetStateAction<MediaStream | null>,
   ) => void;
   setScreenshareStream: (
+    value: React.SetStateAction<MediaStream | null>,
+  ) => void;
+  setTabAudioStream: (
     value: React.SetStateAction<MediaStream | null>,
   ) => void;
 };
@@ -26,6 +30,9 @@ export const StreamsProvider = ({ children }: StreamsProviderProps) => {
   );
   const [screenshareStream, setScreenshareStream] =
     useState<MediaStream | null>(null);
+  const [tabAudioStream, setTabAudioStream] = useState<MediaStream | null>(
+    null,
+  );
 
   return (
     <StreamsContext.Provider
@@ -33,9 +40,11 @@ export const StreamsProvider = ({ children }: StreamsProviderProps) => {
         cameraStream,
         microphoneStream,
         screenshareStream,
+        tabAudioStream,
         setCameraStream,
         setMicrophoneStream,
         setScreenshareStream,
+        setTabAudioStream,
       }}
     >
       {children}
