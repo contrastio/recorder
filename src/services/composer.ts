@@ -1,3 +1,5 @@
+import { getAudioTrack } from './audioMixer';
+
 export const CAMERA_WIDTH = 240;
 export const CAMERA_HEIGHT = 240;
 export const CAMERA_BORDER_RADIUS = 8;
@@ -8,9 +10,9 @@ export const composeStreams = (
   cameraStream: MediaStream | null,
   microphoneStream: MediaStream | null,
   screenshareStream: MediaStream | null,
+  tabAudioStream: MediaStream | null,
 ): MediaStream => {
   const cameraTrack = cameraStream?.getVideoTracks()[0];
-  const microphoneTrack = microphoneStream?.getAudioTracks()[0];
   const screenshareTrack = screenshareStream?.getVideoTracks()[0];
 
   const screenshareProcessor =
@@ -122,8 +124,11 @@ export const composeStreams = (
   }
 
   const recordingStream = new MediaStream([recordingGenerator]);
-  if (microphoneTrack) {
-    recordingStream.addTrack(microphoneTrack);
+
+  // Mix microphone and tab audio, or use whichever is available
+  const audioTrack = getAudioTrack(microphoneStream, tabAudioStream);
+  if (audioTrack) {
+    recordingStream.addTrack(audioTrack);
   }
 
   return recordingStream;
