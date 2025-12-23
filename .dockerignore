@@ -1,0 +1,5 @@
+.git*
+.husky
+screenshots
+Dockerfile
+README.md

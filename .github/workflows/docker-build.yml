@@ -1,0 +1,39 @@
+name: Build and test Docker image
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  docker-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: runtime
+          load: true
+          tags: |
+            recorder
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Test Docker image
+        shell: bash
+        run: |
+          docker run --detach --name recorder recorder
+
+          echo "Waiting for container to become healthy..."
+          STATE="$(docker inspect recorder | jq --raw-output '.[0].State.Health.Status')"
+          while [[ "$STATE" != "healthy" ]]; do
+            if [[ "$STATE" != "starting" ]]; then
+              echo "Container is unhealthy. Healthcheck output:"
+              docker inspect recorder | jq --raw-output '.[0].State.Health.Log[-1].Output'
+              exit 1
+            fi
+            sleep 5;
+            echo "Still waiting..."
+            STATE="$(docker inspect recorder | jq --raw-output '.[0].State.Health.Status')"
+          done
+          echo "Container is healthy"
+          docker stop recorder
